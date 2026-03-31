@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Elixir">
+    <meta name="theme-color" content="#0F172A">
+    <title>Elixir | نظام إدارة العيادة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { -webkit-tap-highlight-color: transparent; touch-action: manipulation; box-sizing: border-box; }
+        html, body { max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0; background: #0F172A; color: white; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        .safe-top { padding-top: env(safe-area-inset-top); }
+        .safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom) + 100px); }
+        .btn-huge { min-height: 72px; border-radius: 24px; font-size: 24px; font-weight: 700; }
+        .btn-profile { min-height: 72px; min-width: 72px; border-radius: 24px; font-size: 16px; font-weight: 700; padding: 8px 12px; flex: 1; }
+        .btn-zoom { min-height: 72px; border-radius: 24px; font-size: 20px; font-weight: 700; background: #14B8A6; color: white; box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
+        .btn-zoom:active { transform: scale(0.98); background: #0D9488; }
+        .btn-primary { background: #14B8A6; color: white; box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
+        .btn-primary:active { transform: scale(0.98); background: #0D9488; }
+        .btn-secondary { background: #1E2937; color: white; border: 3px solid #334155; }
+        .btn-secondary:active { transform: scale(0.98); background: #0F172A; }
+        .btn-active { background: #14B8A6; color: white; border-color: #14B8A6; box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
+        .card { background: #1E2937; border-radius: 28px; padding: 28px; }
+        .patient-card { background: #1E2937; border-radius: 28px; padding: 24px; margin-bottom: 16px; }
+        .patient-nhi { font-size: 14px; color: #94A3B8; background: #0F172A; padding: 4px 12px; border-radius: 12px; display: inline-block; margin-bottom: 8px; }
+        .patient-dob { font-size: 16px; color: #64748B; margin-bottom: 4px; }
+        .patient-address { font-size: 14px; color: #64748B; margin-bottom: 12px; }
+        .tab-active { color: #14B8A6; }
+        .tab-inactive { color: #64748B; }
+        .time-slot { min-height: 72px; border-radius: 20px; background: #1E2937; border: 3px solid #334155; font-size: 22px; font-weight: 600; }
+        .time-slot.selected { background: #14B8A6; border-color: #14B8A6; color: white; }
+        .day-pill { min-width: 64px; min-height: 88px; border-radius: 20px; font-size: 18px; }
+        .day-pill.today { background: #14B8A6; color: white; box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
+        .day-pill.other { background: #1E2937; color: #94A3B8; border: 3px solid #334155; }
+        
+        /* أنماط المراجع */
+        .month-card {
+            background: #1E2937;
+            border-radius: 24px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .month-header {
+            background: #14B8A6;
+            padding: 16px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            padding: 16px;
+        }
+        .day-box {
+            aspect-ratio: 1;
+            background: #0F172A;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid #334155;
+            position: relative;
+        }
+        .day-box:hover {
+            transform: scale(1.05);
+            border-color: #14B8A6;
+        }
+        .day-box.has-data {
+            border-color: #14B8A6;
+            background: linear-gradient(135deg, #1E2937, #0F172A);
+        }
+        .day-box.future-data {
+            border-color: #22C55E;
+            background: linear-gradient(135deg, #1E2937, #0F172A);
+        }
+        .day-number {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .day-indicator {
+            font-size: 10px;
+            margin-top: 4px;
+            color: #94A3B8;
+        }
+        .day-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 8px;
+            height: 8px;
+            background: #14B8A6;
+            border-radius: 50%;
+        }
+        .day-details-modal {
+            max-width: 600px;
+        }
+        .detail-item {
+            background: #0F172A;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-right: 3px solid #14B8A6;
+        }
+        
+        #install-banner { position: fixed; bottom: 120px; left: 20px; right: 20px; background: #14B8A6; border-radius: 28px; padding: 28px; z-index: 1000; display: none; }
+        #install-banner.show { display: block; animation: slideUp 0.3s ease; }
+        #offline-banner { position: fixed; top: 0; left: 0; right: 0; background: #EF4444; color: white; padding: 12px; z-index: 9999; display: none; font-weight: 600; text-align: center; }
+        #offline-banner.show { display: block; }
+        #toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: #1E2937; color: white; padding: 16px 24px; border-radius: 16px; z-index: 10000; display: none; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        #toast.show { display: block; animation: fadeIn 0.3s ease; }
+        #api-debug { position: fixed; bottom: 100px; left: 20px; right: 20px; background: #1E2937; border: 2px solid #14B8A6; border-radius: 16px; padding: 16px; z-index: 5000; display: none; max-height: 300px; overflow-y: auto; }
+        #api-debug.show { display: block; }
+        @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .hidden { display: none !important; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal.show { display: flex; }
+        .modal-content { background: #1E2937; border-radius: 32px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 28px; }
+        input, select, textarea { background: #0F172A; border: 3px solid #334155; border-radius: 20px; color: white; min-height: 72px; padding: 0 24px; font-size: 22px; width: 100%; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #14B8A6; }
+        .stat-num { font-size: 44px; font-weight: 800; }
+        .profile-bar { height: 80px; background: #0F172A; border-bottom: 3px solid #1E2937; padding: 8px 12px; display: flex; gap: 12px; justify-content: center; }
+        .notes-area { min-height: 200px; resize: vertical; padding: 16px; font-size: 18px; }
+        .rtl { direction: rtl; }
+        .text-right { text-align: right; }
+        
+        .medication-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .medication-card:hover {
+            transform: translateY(-4px);
+            background: #14B8A6 !important;
+            border-color: #14B8A6;
+        }
+        .medication-card:hover .text-teal-400 {
+            color: white !important;
+        }
+        .prescription-item {
+            transition: all 0.2s ease;
+            cursor: pointer;
+            background: #1E2937;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-right: 3px solid transparent;
+        }
+        .prescription-item:hover {
+            background: #0F172A;
+            border-right-color: #14B8A6;
+        }
+        
+        .session-box {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .session-box.present {
+            background: #22C55E;
+            color: white;
+            border: 2px solid #15803d;
+        }
+        .session-box.absent {
+            background: #EF4444;
+            color: white;
+            border: 2px solid #b91c1c;
+        }
+        .session-box.pending {
+            background: #334155;
+            color: #94A3B8;
+            border: 2px solid #475569;
+        }
+        .session-box:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        .session-number {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .session-status-icon {
+            font-size: 16px;
+            margin-top: 2px;
+        }
+        
+        .revenue-card {
+            background: linear-gradient(135deg, #1E2937 0%, #0F172A 100%);
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(20,184,166,0.2);
+        }
+        .revenue-amount {
+            font-size: 48px;
+            font-weight: 800;
+            color: #14B8A6;
+            margin: 16px 0;
+        }
+        .transaction-item {
+            background: #1E2937;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid #14B8A6;
+        }
+        .transaction-positive {
+            color: #22C55E;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="safe-top safe-bottom rtl">
+    <div id="offline-banner">📡 لا يوجد اتصال بالإنترنت - وضع غير متصل</div>
+    <div id="toast"></div>
+    <div id="api-debug">
+        <div class="flex justify-between items-center mb-2">
+            <h3 class="font-bold">API Debug</h3>
+            <button onclick="toggleDebug()" class="text-sm text-teal-400">إغلاق</button>
+        </div>
+        <div id="debug-logs"></div>
+    </div>
+
+    <!-- شريط الأطباء (3 أطباء: فاطمة، أميرة، يسري) -->
+    <div class="profile-bar flex items-center gap-2 sticky top-0 z-50">
+        <button onclick="switchProfile('dr-fatma')" class="btn-profile btn-active" id="btn-dr-fatma">د.<br>فاطمة</button>
+        <button onclick="switchProfile('dr-amira')" class="btn-profile btn-secondary" id="btn-dr-amira">د.<br>أميرة</button>
+        <button onclick="switchProfile('dr-yosry')" class="btn-profile btn-secondary" id="btn-dr-yosry">د.<br>يسري</button>
+    </div>
+
+    <header class="bg-slate-900 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-teal-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">E</div>
+            <div>
+                <span class="font-bold text-2xl">Elixir</span>
+                <div class="text-teal-400 text-sm" id="current-user">د. فاطمة محمد</div>
+            </div>
+        </div>
+        <button onclick="toggleDebug()" class="text-teal-400 text-sm">تصحيح</button>
+    </header>
+
+    <div class="px-6 py-3 text-center">
+        <span class="text-slate-400 text-lg" id="week-range">الاثنين 16 فبراير - الأحد 22 فبراير 2026</span>
+    </div>
+
+    <div class="px-6 py-3 grid grid-cols-3 gap-3">
+        <div class="card text-center py-4">
+            <div class="stat-num text-teal-400" id="stat-today">0</div>
+            <div class="text-base text-slate-400 mt-1">اليوم</div>
+        </div>
+        <div class="card text-center py-4">
+            <div class="stat-num text-teal-400" id="stat-tasks">0</div>
+            <div class="text-base text-slate-400 mt-1">الإيرادات</div>
+        </div>
+        <div class="card text-center py-4">
+            <div class="stat-num text-teal-400" id="stat-recalls">0</div>
+            <div class="text-base text-slate-400 mt-1">الروشتات</div>
+        </div>
+    </div>
+
+    <div class="px-6 py-3 overflow-x-auto">
+        <div class="flex gap-2 min-w-max" id="week-selector"></div>
+    </div>
+
+    <main class="px-6 pb-40">
+        <div id="view-schedule" class="view-section">
+            <button onclick="openBookingModal()" class="btn-huge btn-primary w-full mb-4 flex items-center justify-center gap-2">
+                <span class="text-3xl">+</span> حجز جديد
+            </button>
+            <div class="card text-center py-8" id="empty-state">
+                <div class="text-7xl mb-4">📅</div>
+                <h3 class="font-bold text-2xl mb-2">لا توجد مواعيد</h3>
+                <p class="text-slate-400 text-lg" id="selected-date-display">اختر تاريخاً لعرض المواعيد</p>
+            </div>
+            <div id="appointments-list" class="space-y-3 hidden"></div>
+        </div>
+
+        <div id="view-daylist" class="view-section hidden">
+            <div class="card text-center py-10">
+                <div class="text-7xl mb-4">📋</div>
+                <h3 class="font-bold text-2xl mb-2">قائمة اليوم</h3>
+                <p class="text-slate-400 text-lg">قائمة الانتظار تظهر هنا</p>
+            </div>
+        </div>
+
+        <!-- قسم المراجع الجديد -->
+        <div id="view-archive" class="view-section hidden">
+            <div class="card mb-4 text-center">
+                <h2 class="font-bold text-2xl mb-2">📆 المراجع - قاعدة بيانات سنوية</h2>
+                <p class="text-slate-400 text-sm">كل يوم يحفظ الكشوفات والمدفوعات | الأيام ذات اللون الأخضر تحتوي على بيانات</p>
+            </div>
+            <div class="flex gap-3 mb-4">
+                <button onclick="saveAllDatesToArchive()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">
+                    💾 حفظ جميع التواريخ
+                </button>
+                <button onclick="showUpcomingAppointments()" class="btn-huge btn-secondary flex-1">
+                    📅 الحجوزات المستقبلية
+                </button>
+            </div>
+            <div id="months-container"></div>
+        </div>
+
+        <div id="view-patients" class="view-section hidden">
+            <button onclick="testAPIConnection()" class="btn-huge btn-secondary w-full mb-4">🔄 مزامنة من Elixir</button>
+            <button onclick="openAddPatientModal()" class="btn-huge btn-primary w-full mb-4 flex items-center justify-center gap-2" style="background: #22C55E;">
+                <span class="text-3xl">+</span> إضافة مريض
+            </button>
+            <input type="text" id="patient-search" placeholder="🔍 بحث عن مريض" class="mb-4" oninput="searchPatients(this.value)">
+            <div id="patients-list" class="space-y-4"></div>
+        </div>
+
+        <!-- قسم المكتب المعدل بالكامل -->
+        <div id="view-office" class="view-section hidden">
+            <!-- ملخص اليوم -->
+            <div class="card mb-4">
+                <h3 class="font-bold text-xl mb-4">📊 ملخص اليوم</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
+                        <div class="text-3xl font-bold text-teal-400" id="office-bookings">0</div>
+                        <div class="text-sm text-slate-400">المواعيد</div>
+                    </div>
+                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
+                        <div class="text-3xl font-bold text-teal-400" id="office-patients">0</div>
+                        <div class="text-sm text-slate-400">المرضى</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8 أدوية للأمراض النفسية -->
+            <div class="card mb-4">
+                <h3 class="font-bold text-xl mb-4">💊 الأدوية النفسية</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('سيرترالين (Zoloft) - مضاد اكتئاب SSRI')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">سيرترالين</div>
+                        <p class="text-xs text-slate-400 mt-1">Zoloft · مضاد اكتئاب SSRI</p>
+                    </div>
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('فلوكستين (Prozac) - مضاد اكتئاب SSRI')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">فلوكستين</div>
+                        <p class="text-xs text-slate-400 mt-1">Prozac · مضاد اكتئاب SSRI</p>
+                    </div>
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('إسيتالوبرام (Lexapro) - مضاد اكتئاب SSRI')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">إسيتالوبرام</div>
+                        <p class="text-xs text-slate-400 mt-1">Lexapro · مضاد اكتئاب SSRI</p>
+                    </div>
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('فينلافاكسين (Effexor) - مضاد اكتئاب SNRI')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">فينلافاكسين</div>
+                        <p class="text-xs text-slate-400 mt-1">Effexor · مضاد اكتئاب SNRI</p>
+                    </div>
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('أولانزابين (Zyprexa) - مضاد ذهان غير نمطي')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">أولانزابين</div>
+                        <p class="text-xs text-slate-400 mt-1">Zyprexa · مضاد ذهان</p>
+                    </div>
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('ريسبيريدون (Risperdal) - مضاد ذهان')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">ريسبيريدون</div>
+                        <p class="text-xs text-slate-400 mt-1">Risperdal · مضاد ذهان</p>
+                    </div>
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('كلونازيبام (Klonopin) - مزيل قلق')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">كلونازيبام</div>
+                        <p class="text-xs text-slate-400 mt-1">Klonopin · مزيل قلق</p>
+                    </div>
+                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('ميثيلفينيديت (Ritalin) - منبه ADHD')">
+                        <div class="text-3xl mb-2">💊</div>
+                        <div class="font-bold text-teal-400">ميثيلفينيديت</div>
+                        <p class="text-xs text-slate-400 mt-1">Ritalin · علاج ADHD</p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 text-center mt-3">👆 اضغط على أي دواء لإضافته إلى الروشتة</p>
+            </div>
+
+            <!-- الروشتة -->
+            <div class="card mb-4">
+                <h3 class="font-bold text-xl mb-4">📋 الروشتة (الوصفات الطبية)</h3>
+                <div id="prescriptions-list" class="space-y-3"></div>
+                <div class="mt-4 flex gap-3">
+                    <button onclick="addPrescriptionWithInput()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">+ إضافة روشتة يدوياً</button>
+                    <button onclick="clearPrescriptions()" class="btn-huge btn-secondary flex-1" style="background: #EF4444;">مسح الكل</button>
+                </div>
+            </div>
+
+            <!-- الملاحظات -->
+            <div class="card">
+                <h3 class="font-bold text-xl mb-4">📝 ملاحظات</h3>
+                <textarea id="office-notes" class="notes-area" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+                <button onclick="saveNotes()" class="btn-huge btn-primary w-full mt-4">حفظ الملاحظات</button>
+            </div>
+        </div>
+
+        <!-- قسم الإيرادات المالية -->
+        <div id="view-tasks" class="view-section hidden">
+            <!-- إجمالي الإيرادات -->
+            <div class="revenue-card mb-4">
+                <div class="text-xl text-slate-400 mb-2">💰 إجمالي الإيرادات</div>
+                <div class="revenue-amount" id="totalRevenue">0</div>
+                <div class="text-sm text-slate-500">جنيه مصري</div>
+                <div class="mt-3 text-xs text-slate-500">سعر الحجز: 200 جنيه</div>
+            </div>
+
+            <!-- عدد الحجوزات المكتملة -->
+            <div class="card mb-4">
+                <h3 class="font-bold text-xl mb-4">📊 إحصائيات اليوم</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
+                        <div class="text-3xl font-bold text-teal-400" id="todayCompleted">0</div>
+                        <div class="text-sm text-slate-400">حجوزات اليوم المكتملة</div>
+                    </div>
+                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
+                        <div class="text-3xl font-bold text-teal-400" id="todayRevenue">0</div>
+                        <div class="text-sm text-slate-400">إيرادات اليوم</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- سجل المعاملات المالية -->
+            <div class="card">
+                <h3 class="font-bold text-xl mb-4">📜 سجل المعاملات المالية</h3>
+                <div id="transactions-list" class="space-y-3 max-h-96 overflow-y-auto">
+                    <!-- سيتم عرض المعاملات هنا -->
+                </div>
+                <button onclick="clearAllTransactions()" class="btn-huge btn-secondary w-full mt-4" style="background: #EF4444;">مسح سجل المعاملات</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="font-bold text-3xl mb-6">حجز جديد</h2>
+            <label class="block text-slate-400 mb-2 text-lg">الطبيب</label>
+            <select id="booking-doctor" class="mb-4">
+                <option value="dr-fatma">د. فاطمة محمد (أخصائية نفسية)</option>
+                <option value="dr-amira">د. أميرة حسن (طب نفسي)</option>
+                <option value="dr-yosry">د. يسري عبدالله (علاج سلوكي معرفي)</option>
+            </select>
+            <label class="block text-slate-400 mb-2 text-lg">المريض</label>
+            <input type="text" id="booking-patient" list="patient-suggestions" placeholder="اسم المريض" class="mb-4" autocomplete="off">
+            <datalist id="patient-suggestions"></datalist>
+            <label class="block text-slate-400 mb-2 text-lg">التاريخ</label>
+            <input type="date" id="booking-date" class="mb-4">
+            <label class="block text-slate-400 mb-2 text-lg">الوقت</label>
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '01:00')">01:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '02:00')">02:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '03:00')">03:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '04:00')">04:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '05:00')">05:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '06:00')">06:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '07:00')">07:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '08:00')">08:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '09:00')">09:00</button>
+                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '10:00')">10:00</button>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="closeBookingModal()" class="btn-huge btn-secondary flex-1">إلغاء</button>
+                <button onclick="saveAppointment()" class="btn-huge btn-primary flex-1">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal">
+        <div class="modal-content text-center">
+            <div class="text-7xl mb-4">✅</div>
+            <h2 class="font-bold text-3xl mb-3">تم الحفظ!</h2>
+            <p class="text-slate-400 text-xl mb-6" id="success-message">تم حجز الموعد</p>
+            <button onclick="closeSuccessModal()" class="btn-huge btn-primary w-full">تم</button>
+        </div>
+    </div>
+
+    <!-- Patient Modal - المعدل بالكامل مع 12 جلسة -->
+    <div id="patient-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-3xl" id="patient-name">المريض</h2>
+                <button onclick="closePatientModal()" class="text-slate-400 text-2xl">✕</button>
+            </div>
+            
+            <div class="patient-nhi" id="patient-nhi"></div>
+            <div class="patient-dob" id="patient-dob"></div>
+            <div class="patient-address" id="patient-address"></div>
+            <p class="text-teal-400 text-lg mb-4" id="patient-phone"></p>
+            
+            <!-- جلسات المريض (12 جلسة) -->
+            <div class="card mb-4 p-4">
+                <h3 class="font-bold text-xl mb-3 text-teal-400">📋 جلسات العلاج (12 جلسة)</h3>
+                <div class="grid grid-cols-4 gap-2" id="sessions-grid">
+                    <!-- سيتم إنشاء 12 مربع هنا ديناميكياً -->
+                </div>
+                <div class="flex justify-between mt-4 pt-3 border-t border-slate-700">
+                    <div class="text-sm text-slate-400">
+                        <span class="inline-block w-4 h-4 bg-green-500 rounded ml-1"></span> حاضر
+                    </div>
+                    <div class="text-sm text-slate-400">
+                        <span class="inline-block w-4 h-4 bg-red-500 rounded ml-1"></span> غائب
+                    </div>
+                    <div class="text-sm text-slate-400">
+                        <span class="inline-block w-4 h-4 bg-slate-600 rounded ml-1"></span> لم يحضر بعد
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="viewPatientRecords()" class="btn-huge btn-primary w-full flex items-center justify-center gap-3">
+                    <span class="text-2xl">📋</span> السجل الطبي
+                </button>
+                <button onclick="openPatientPrescription()" class="btn-huge btn-primary w-full flex items-center justify-center gap-3" id="prescriptionBtn">
+                    <span class="text-2xl">💊</span> وصف دواء
+                </button>
+                <button onclick="callPatientZoom()" class="btn-zoom w-full flex items-center justify-center gap-3">
+                    <span class="text-2xl">📞</span> الاتصال عبر Zoom
+                </button>
+                <button class="btn-huge btn-secondary w-full" onclick="closePatientModal()">رجوع</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة عرض الروشتة -->
+    <div id="prescription-view-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-3xl">💊 روشتة المريض</h2>
+                <button onclick="closePrescriptionModal()" class="text-slate-400 text-2xl">✕</button>
+            </div>
+            <div id="prescription-details" class="space-y-3">
+                <!-- سيتم عرض الروشتة هنا -->
+            </div>
+            <button onclick="closePrescriptionModal()" class="btn-huge btn-secondary w-full mt-4">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة عرض تفاصيل اليوم من المراجع -->
+    <div id="day-details-modal" class="modal">
+        <div class="modal-content day-details-modal">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-3xl" id="day-details-title"></h2>
+                <button onclick="closeDayDetailsModal()" class="text-slate-400 text-2xl">✕</button>
+            </div>
+            <div id="day-details-content"></div>
+        </div>
+    </div>
+
+    <div id="add-patient-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="font-bold text-3xl mb-6">إضافة مريض</h2>
+            <label class="block text-slate-400 mb-2 text-lg">الاسم</label>
+            <input type="text" id="new-patient-name" placeholder="الاسم الكامل" class="mb-4">
+            <label class="block text-slate-400 mb-2 text-lg">NHI</label>
+            <input type="text" id="new-patient-nhi" placeholder="مثال: XRK2639" class="mb-4">
+            <label class="block text-slate-400 mb-2 text-lg">تاريخ الميلاد</label>
+            <input type="text" id="new-patient-dob" placeholder="مثال: 24/12/1997" class="mb-4">
+            <label class="block text-slate-400 mb-2 text-lg">العنوان</label>
+            <input type="text" id="new-patient-address" placeholder="العنوان الكامل" class="mb-4">
+            <label class="block text-slate-400 mb-2 text-lg">رقم الهاتف</label>
+            <input type="tel" id="new-patient-phone" placeholder="+64 21 123 4567" class="mb-6">
+            <div class="flex gap-3">
+                <button onclick="closeAddPatientModal()" class="btn-huge btn-secondary flex-1">إلغاء</button>
+                <button onclick="saveNewPatient()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-4 border-slate-800 px-2 py-3 safe-bottom z-50">
+        <div class="flex justify-around items-center">
+            <button onclick="switchTab('schedule')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-active" data-tab="schedule">
+                <span class="text-3xl">📅</span>
+                <span class="text-sm font-bold">حجز</span>
+            </button>
+            <button onclick="switchTab('daylist')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="daylist">
+                <span class="text-3xl">📋</span>
+                <span class="text-sm font-bold">قائمة</span>
+            </button>
+            <button onclick="switchTab('archive')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="archive">
+                <span class="text-3xl">📆</span>
+                <span class="text-sm font-bold">المراجع</span>
+            </button>
+            <button onclick="switchTab('patients')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="patients">
+                <span class="text-3xl">👤</span>
+                <span class="text-sm font-bold">المرضى</span>
+            </button>
+            <button onclick="switchTab('office')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="office">
+                <span class="text-3xl">🏢</span>
+                <span class="text-sm font-bold">الادوية</span>
+            </button>
+            <button onclick="switchTab('tasks')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="tasks">
+                <span class="text-3xl">💰</span>
+                <span class="text-sm font-bold">الدفع</span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // State
+        let selectedTime = null;
+        let currentProfile = localStorage.getItem('elixir_current_profile') || 'dr-fatma';
+        let currentPatientPhone = null;
+        let currentPatientName = '';
+        let isOnline = navigator.onLine;
+        let selectedDate = new Date().toISOString().split('T')[0];
+        let deferredPrompt = null;
+        
+        // بيانات الأطباء الثلاثة
+        const profileNames = {
+            'dr-fatma': 'د. فاطمة محمد',
+            'dr-amira': 'د. أميرة حسن',
+            'dr-yosry': 'د. يسري عبدالله'
+        };
+        
+        const DOCTORS_DATA = {
+            'dr-fatma': {
+                name: 'د. فاطمة محمد',
+                initials: 'ف م',
+                role: 'أخصائية نفسية',
+                patients: ['أحمد سعيد', 'منى خالد', 'يوسف علي', 'ليلى إبراهيم', 'مصطفى']
+            },
+            'dr-amira': {
+                name: 'د. أميرة حسن',
+                initials: 'أ ح',
+                role: 'طب نفسي',
+                patients: ['سارة محمود', 'عمر رشاد', 'نورا سامي', 'كريم مصطفى']
+            },
+            'dr-yosry': {
+                name: 'د. يسري عبدالله',
+                initials: 'ي ع',
+                role: 'علاج سلوكي معرفي',
+                patients: ['هبة سليمان', 'محمد إبراهيم', 'فاطمة علي', 'أحمد كمال']
+            }
+        };
+        
+        let patientsData = [];
+        let prescriptionsData = [];
+        
+        // بيانات الإيرادات المالية
+        let totalRevenue = 0;
+        let transactions = [];
+        const APPOINTMENT_PRICE = 200; // سعر الحجز 200 جنيه
+        
+        // أسماء الأشهر للمراجع
+        const monthNames = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+        
+        // ============================================================
+        // دوال المراجع (قاعدة البيانات السنوية) - محسنة لحفظ جميع التواريخ
+        // ============================================================
+        
+        function getArchiveKey() {
+            return `elixir_${currentProfile}_yearly_archive`;
+        }
+        
+        function loadYearlyArchive() {
+            const saved = localStorage.getItem(getArchiveKey());
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            // إنشاء قاعدة بيانات سنة كاملة (12 شهر)
+            const archive = {};
+            for (let month = 0; month < 12; month++) {
+                archive[month] = {};
+            }
+            localStorage.setItem(getArchiveKey(), JSON.stringify(archive));
+            return archive;
+        }
+        
+        function saveYearlyArchive(archive) {
+            localStorage.setItem(getArchiveKey(), JSON.stringify(archive));
+        }
+        
+        // دالة لحفظ أي تاريخ محدد في الأرشيف
+        function saveToArchiveForDate(dateStr) {
+            if (!dateStr) return;
+            
+            // تحويل التاريخ إلى كائن Date
+            const targetDate = new Date(dateStr);
+            if (isNaN(targetDate.getTime())) return;
+            
+            const month = targetDate.getMonth();
+            const day = targetDate.getDate();
+            const year = targetDate.getFullYear();
+            
+            // جلب جميع المواعيد
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const dayAppointments = appointments.filter(a => a.date === dateStr);
+            
+            // جلب المعاملات المالية لذلك التاريخ
+            const transactionsData = JSON.parse(localStorage.getItem(getStorageKey('transactions')) || '[]');
+            const targetDateFormatted = targetDate.toLocaleDateString('ar-EG');
+            const dayTransactions = transactionsData.filter(t => t.date === targetDateFormatted);
+            
+            // جلب الروشتات لذلك التاريخ
+            const prescriptionsDataLocal = JSON.parse(localStorage.getItem(getStorageKey('prescriptions')) || '[]');
+            const dayPrescriptions = prescriptionsDataLocal.filter(p => p.date === targetDateFormatted);
+            
+            // ملاحظات ذلك اليوم
+            const notesKey = getStorageKey(`notes_${dateStr}`);
+            const notes = localStorage.getItem(notesKey) || '';
+            
+            // حساب إيرادات ذلك اليوم
+            const dayRevenue = dayTransactions.reduce((sum, t) => {
+                if (t.type === 'إيراد حجز') return sum + t.amount;
+                if (t.type === 'استرداد حجز') return sum - t.amount;
+                return sum;
+            }, 0);
+            
+            // حفظ في الأرشيف
+            const archive = loadYearlyArchive();
+            
+            // التأكد من وجود البيانات للشهر واليوم
+            if (!archive[month]) archive[month] = {};
+            
+            archive[month][day] = {
+                appointments: dayAppointments,
+                transactions: dayTransactions,
+                prescriptions: dayPrescriptions,
+                notes: notes,
+                totalRevenue: dayRevenue,
+                hasData: dayAppointments.length > 0 || dayTransactions.length > 0 || dayPrescriptions.length > 0 || notes !== '',
+                date: dateStr
+            };
+            
+            saveYearlyArchive(archive);
+        }
+        
+        // دالة لحفظ جميع التواريخ الموجودة في النظام
+        function saveAllDatesToArchive() {
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            
+            // الحصول على جميع التواريخ الفريدة من المواعيد
+            const uniqueDates = [...new Set(appointments.map(a => a.date))];
+            
+            // إضافة التاريخ الحالي أيضاً
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (!uniqueDates.includes(todayStr)) {
+                uniqueDates.push(todayStr);
+            }
+            
+            // حفظ كل تاريخ في الأرشيف
+            uniqueDates.forEach(dateStr => {
+                saveToArchiveForDate(dateStr);
+            });
+            
+            console.log(`✅ تم حفظ ${uniqueDates.length} تاريخ في الأرشيف`);
+            showToast(`✅ تم حفظ ${uniqueDates.length} تاريخ في المراجع`);
+            renderArchive();
+        }
+        
+        function saveCurrentDayToArchive() {
+            // حفظ التاريخ الحالي
+            const todayStr = new Date().toISOString().split('T')[0];
+            saveToArchiveForDate(todayStr);
+            
+            // أيضاً حفظ جميع التواريخ الأخرى
+            saveAllDatesToArchive();
+        }
+        
+        function getDayData(month, day) {
+            const archive = loadYearlyArchive();
+            return archive[month]?.[day] || { appointments: [], transactions: [], prescriptions: [], notes: '', totalRevenue: 0, hasData: false };
+        }
+        
+        function renderArchive() {
+            const archive = loadYearlyArchive();
+            const container = document.getElementById('months-container');
+            if (!container) return;
+            
+            // جلب جميع المواعيد
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            
+            let html = '';
+            for (let month = 0; month < 12; month++) {
+                const monthName = monthNames[month];
+                let daysHtml = '<div class="days-grid">';
+                
+                // أيام الأسبوع
+                const weekDays = ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'];
+                daysHtml += weekDays.map(wd => `<div class="text-center text-slate-500 text-xs py-2">${wd}</div>`).join('');
+                
+                // الأيام
+                for (let day = 1; day <= 31; day++) {
+                    // التحقق من وجود تاريخ صحيح
+                    const dateObj = new Date(currentYear, month, day);
+                    if (dateObj.getMonth() !== month) continue; // تجاوز الأيام غير الصحيحة
+                    
+                    const dateStr = dateObj.toISOString().split('T')[0];
+                    const dayData = archive[month]?.[day];
+                    const hasData = dayData?.hasData || false;
+                    
+                    // التحقق من وجود مواعيد مستقبلية لهذا اليوم
+                    const hasFutureAppointments = appointments.some(a => a.date === dateStr);
+                    const isFuture = dateObj > today;
+                    const isToday = (today.getMonth() === month && today.getDate() === day);
+                    
+                    let indicator = '○';
+                    let extraClass = '';
+                    let badgeHtml = '';
+                    
+                    if (hasData || hasFutureAppointments) {
+                        indicator = '📋';
+                        extraClass = 'has-data';
+                        badgeHtml = '<div class="day-badge"></div>';
+                        if (isFuture && !hasData && hasFutureAppointments) {
+                            extraClass += ' future-data';
+                        }
+                    }
+                    
+                    daysHtml += `
+                        <div class="day-box ${extraClass}" onclick="showDayDetails(${month}, ${day})">
+                            ${badgeHtml}
+                            <div class="day-number ${isToday ? 'text-teal-400' : ''}">${day}</div>
+                            <div class="day-indicator">${indicator}</div>
+                            ${isFuture && hasFutureAppointments && !hasData ? '<div class="text-[8px] text-green-400">مستقبل</div>' : ''}
+                        </div>
+                    `;
+                }
+                daysHtml += '</div>';
+                
+                html += `
+                    <div class="month-card">
+                        <div class="month-header" onclick="toggleMonth(${month})">
+                            📅 ${monthName} ${currentYear}
+                        </div>
+                        <div id="month-${month}" class="month-content">
+                            ${daysHtml}
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+        
+        function toggleMonth(month) {
+            const content = document.getElementById(`month-${month}`);
+            if (content) {
+                content.classList.toggle('hidden');
+            }
+        }
+        
+        function showDayDetails(month, day) {
+            const dayData = getDayData(month, day);
+            const dateObj = new Date(new Date().getFullYear(), month, day);
+            const dateStr = dateObj.toISOString().split('T')[0];
+            const dateAr = `${day} ${monthNames[month]} ${dateObj.getFullYear()}`;
+            
+            // جلب المواعيد لهذا التاريخ من التخزين الرئيسي
+            const allAppointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const dayAppointmentsFromMain = allAppointments.filter(a => a.date === dateStr);
+            
+            // دمج البيانات من الأرشيف والبيانات الحية
+            const appointmentsToShow = dayData.appointments.length > 0 ? dayData.appointments : dayAppointmentsFromMain;
+            
+            document.getElementById('day-details-title').textContent = `📅 ${dateAr}`;
+            
+            const appointmentsHtml = appointmentsToShow.length > 0 
+                ? appointmentsToShow.map(a => `<div class="detail-item">🩺 ${a.patient} - ${a.time} (${a.doctor || a.doctorId || 'الطبيب'})</div>`).join('')
+                : '<div class="detail-item text-slate-500">لا توجد مواعيد</div>';
+            
+            const transactionsHtml = dayData.transactions.length > 0
+                ? dayData.transactions.map(t => `<div class="detail-item">💰 ${t.patient} - ${t.amount} جنيه (${t.type})</div>`).join('')
+                : '<div class="detail-item text-slate-500">لا توجد معاملات مالية</div>';
+            
+            const prescriptionsHtml = dayData.prescriptions.length > 0
+                ? dayData.prescriptions.map(p => `<div class="detail-item">💊 ${p.patient} - ${p.medication}</div>`).join('')
+                : '<div class="detail-item text-slate-500">لا توجد روشتات</div>';
+            
+            document.getElementById('day-details-content').innerHTML = `
+                <div class="revenue-card mb-4">
+                    <div class="text-xl">💰 إجمالي إيرادات اليوم</div>
+                    <div class="revenue-amount">${dayData.totalRevenue?.toLocaleString() || 0} جنيه</div>
+                </div>
+                <div class="card mb-4">
+                    <h3 class="font-bold text-xl mb-3">📋 المواعيد</h3>
+                    ${appointmentsHtml}
+                </div>
+                <div class="card mb-4">
+                    <h3 class="font-bold text-xl mb-3">💰 المعاملات المالية</h3>
+                    ${transactionsHtml}
+                </div>
+                <div class="card mb-4">
+                    <h3 class="font-bold text-xl mb-3">💊 الروشتات</h3>
+                    ${prescriptionsHtml}
+                </div>
+                ${dayData.notes ? `<div class="card"><h3 class="font-bold text-xl mb-3">📝 ملاحظات</h3><p class="text-slate-300">${dayData.notes}</p></div>` : ''}
+            `;
+            
+            document.getElementById('day-details-modal').classList.add('show');
+        }
+        
+        function closeDayDetailsModal() {
+            document.getElementById('day-details-modal').classList.remove('show');
+        }
+        
+        // عرض الحجوزات المستقبلية
+        function showUpcomingAppointments() {
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const futureAppointments = appointments.filter(a => {
+                const aptDate = new Date(a.date);
+                aptDate.setHours(0, 0, 0, 0);
+                return aptDate > today;
+            });
+            
+            // ترتيب حسب التاريخ
+            futureAppointments.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            if (futureAppointments.length === 0) {
+                showToast('📅 لا توجد حجوزات مستقبلية');
+                return;
+            }
+            
+            let message = '📅 الحجوزات المستقبلية:\n';
+            message += `📊 العدد: ${futureAppointments.length}\n`;
+            message += '━'.repeat(30) + '\n';
+            futureAppointments.forEach(apt => {
+                message += `\n📌 ${apt.date}:\n   🩺 ${apt.patient}\n   ⏰ ${apt.time}\n   👨‍⚕️ ${apt.doctor}\n`;
+            });
+            
+            alert(message);
+        }
+        
+        // ============================================================
+        // دوال جلسات المريض (12 جلسة)
+        // ============================================================
+        
+        function loadPatientSessions(patientName) {
+            const sessionsKey = getStorageKey(`sessions_${patientName.replace(/\s/g, '_')}`);
+            const saved = localStorage.getItem(sessionsKey);
+            if (saved) {
+                return JSON.parse(saved);
+            } else {
+                const sessions = {};
+                for (let i = 1; i <= 12; i++) {
+                    sessions[i] = 'pending';
+                }
+                localStorage.setItem(sessionsKey, JSON.stringify(sessions));
+                return sessions;
+            }
+        }
+        
+        function savePatientSessions(patientName, sessions) {
+            const sessionsKey = getStorageKey(`sessions_${patientName.replace(/\s/g, '_')}`);
+            localStorage.setItem(sessionsKey, JSON.stringify(sessions));
+        }
+        
+        function renderSessionsGrid(patientName) {
+            const sessions = loadPatientSessions(patientName);
+            const grid = document.getElementById('sessions-grid');
+            
+            let html = '';
+            for (let i = 1; i <= 12; i++) {
+                const status = sessions[i];
+                let bgClass = 'pending';
+                let icon = '○';
+                let statusText = 'قادم';
+                
+                if (status === 'present') {
+                    bgClass = 'present';
+                    icon = '✓';
+                    statusText = 'حاضر';
+                } else if (status === 'absent') {
+                    bgClass = 'absent';
+                    icon = '✗';
+                    statusText = 'غائب';
+                }
+                
+                html += `
+                    <div class="session-box ${bgClass}" onclick="toggleSessionStatus(${i}, '${patientName}')">
+                        <div class="session-number">جلسة ${i}</div>
+                        <div class="session-status-icon">${icon}</div>
+                        <div class="text-xs mt-1">${statusText}</div>
+                    </div>
+                `;
+            }
+            grid.innerHTML = html;
+        }
+        
+        function toggleSessionStatus(sessionNumber, patientName) {
+            const sessions = loadPatientSessions(patientName);
+            
+            if (!sessions[sessionNumber] || sessions[sessionNumber] === 'pending') {
+                sessions[sessionNumber] = 'present';
+                showToast(`✅ تم تسجيل حضور الجلسة ${sessionNumber} للمريض ${patientName}`);
+            } else if (sessions[sessionNumber] === 'present') {
+                sessions[sessionNumber] = 'absent';
+                showToast(`❌ تم تسجيل غياب الجلسة ${sessionNumber} للمريض ${patientName}`);
+            } else if (sessions[sessionNumber] === 'absent') {
+                sessions[sessionNumber] = 'pending';
+                showToast(`🔄 تم إعادة تعيين الجلسة ${sessionNumber} للمريض ${patientName}`);
+            }
+            
+            savePatientSessions(patientName, sessions);
+            renderSessionsGrid(patientName);
+        }
+        
+        function viewPatientRecords() {
+            const sessions = loadPatientSessions(currentPatientName);
+            let presentCount = 0;
+            let absentCount = 0;
+            let pendingCount = 0;
+            
+            for (let i = 1; i <= 12; i++) {
+                if (sessions[i] === 'present') presentCount++;
+                else if (sessions[i] === 'absent') absentCount++;
+                else pendingCount++;
+            }
+            
+            const attendanceRate = ((presentCount / 12) * 100).toFixed(1);
+            
+            showToast(`
+📊 السجل الطبي لـ ${currentPatientName}:
+✅ حاضر: ${presentCount} جلسة
+❌ غائب: ${absentCount} جلسة
+⏳ قادم: ${pendingCount} جلسة
+📈 نسبة الحضور: ${attendanceRate}%
+            `);
+        }
+        
+        // ============================================================
+        // دوال عرض الروشتة
+        // ============================================================
+        
+        function openPatientPrescription() {
+            const prescriptions = JSON.parse(localStorage.getItem(getStorageKey('prescriptions')) || '[]');
+            const patientPrescriptions = prescriptions.filter(p => p.patient === currentPatientName);
+            
+            const modal = document.getElementById('prescription-view-modal');
+            const details = document.getElementById('prescription-details');
+            
+            if (patientPrescriptions.length === 0) {
+                details.innerHTML = `
+                    <div class="text-center text-slate-500 py-8">
+                        <div class="text-6xl mb-3">💊</div>
+                        <p>لا توجد روشتة مسجلة للمريض ${currentPatientName}</p>
+                        <p class="text-xs mt-2">يمكنك إضافة روشتة من قسم "الأدوية" في المكتب</p>
+                    </div>
+                `;
+            } else {
+                let html = '<div class="space-y-3">';
+                patientPrescriptions.forEach(p => {
+                    html += `
+                        <div class="prescription-item bg-slate-800 rounded-2xl p-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="font-bold text-teal-400 text-lg">💊 ${p.medication.split(' - ')[0]}</div>
+                                    <div class="text-sm text-slate-300 mt-1">${p.medication}</div>
+                                    <div class="text-xs text-slate-500 mt-2">📅 تاريخ الوصفة: ${p.date}</div>
+                                    <div class="text-xs text-teal-400 mt-1">👨‍⚕️ وصف بواسطة: ${DOCTORS_DATA[currentProfile].name}</div>
+                                </div>
+                                <div class="text-xs bg-teal-500/20 text-teal-400 px-2 py-1 rounded-full">${p.status}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                details.innerHTML = html;
+            }
+            
+            modal.classList.add('show');
+        }
+        
+        function closePrescriptionModal() {
+            document.getElementById('prescription-view-modal').classList.remove('show');
+        }
+        
+        // ============================================================
+        // دوال الإيرادات المالية
+        // ============================================================
+        
+        function addRevenue(patientName, appointmentDate) {
+            totalRevenue += APPOINTMENT_PRICE;
+            
+            const transaction = {
+                id: Date.now(),
+                patient: patientName,
+                amount: APPOINTMENT_PRICE,
+                date: new Date().toLocaleDateString('ar-EG'),
+                time: new Date().toLocaleTimeString('ar-EG'),
+                type: 'إيراد حجز',
+                status: 'مكتمل'
+            };
+            
+            transactions.unshift(transaction);
+            localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
+            localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
+            
+            updateRevenueDisplay();
+            showToast(`✅ تم إضافة ${APPOINTMENT_PRICE} جنيه من ${patientName}`);
+            saveToArchiveForDate(appointmentDate);
+        }
+        
+        function updateRevenueDisplay() {
+            document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString();
+            
+            const today = new Date().toLocaleDateString('ar-EG');
+            const todayTransactions = transactions.filter(t => t.date === today);
+            const todayRevenue = todayTransactions.reduce((sum, t) => sum + t.amount, 0);
+            document.getElementById('todayRevenue').textContent = todayRevenue.toLocaleString();
+            document.getElementById('todayCompleted').textContent = todayTransactions.length;
+            
+            document.getElementById('stat-tasks').textContent = totalRevenue.toLocaleString();
+            
+            renderTransactionsList();
+        }
+        
+        function renderTransactionsList() {
+            const list = document.getElementById('transactions-list');
+            
+            if (transactions.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center text-slate-500 py-8">
+                        <div class="text-5xl mb-3">💰</div>
+                        <p>لا توجد معاملات مالية مسجلة</p>
+                        <p class="text-xs mt-2">سيتم تسجيل الإيرادات تلقائياً عند إتمام الحجوزات</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            list.innerHTML = transactions.map(t => `
+                <div class="transaction-item">
+                    <div>
+                        <div class="font-bold text-teal-400">${t.patient}</div>
+                        <div class="text-xs text-slate-500 mt-1">${t.date} - ${t.time}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="transaction-positive text-lg">+ ${t.amount.toLocaleString()} جنيه</div>
+                        <div class="text-xs text-slate-500">${t.type}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function clearAllTransactions() {
+            if (!confirm('⚠️ هل أنت متأكد من مسح جميع المعاملات المالية؟ هذا الإجراء لا يمكن التراجع عنه.')) return;
+            totalRevenue = 0;
+            transactions = [];
+            localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
+            localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
+            updateRevenueDisplay();
+            showToast('تم مسح جميع المعاملات المالية');
+            saveCurrentDayToArchive();
+        }
+        
+        function loadRevenueData() {
+            const savedRevenue = localStorage.getItem(getStorageKey('totalRevenue'));
+            if (savedRevenue) {
+                totalRevenue = parseInt(savedRevenue);
+            } else {
+                totalRevenue = 0;
+            }
+            
+            const savedTransactions = localStorage.getItem(getStorageKey('transactions'));
+            if (savedTransactions) {
+                transactions = JSON.parse(savedTransactions);
+            } else {
+                transactions = [];
+            }
+            
+            updateRevenueDisplay();
+        }
+        
+        // ============================================================
+        // دوال الروشتة والأدوية
+        // ============================================================
+        
+        function selectMedication(medicationName) {
+            const patientName = prompt('اسم المريض:');
+            if (!patientName) return;
+            const today = new Date().toLocaleDateString('ar-EG');
+            const prescription = {
+                id: Date.now(),
+                patient: patientName,
+                medication: medicationName,
+                date: today,
+                status: 'نشط'
+            };
+            prescriptionsData.push(prescription);
+            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
+            renderPrescriptionsList();
+            showToast(`تمت إضافة ${medicationName.split(' - ')[0]} للمريض ${patientName}`);
+            updateStats();
+            saveCurrentDayToArchive();
+        }
+        
+        function addPrescriptionWithInput() {
+            const patientName = prompt('اسم المريض:');
+            if (!patientName) return;
+            const medication = prompt('الدواء والجرعة:');
+            if (!medication) return;
+            const today = new Date().toLocaleDateString('ar-EG');
+            const prescription = {
+                id: Date.now(),
+                patient: patientName,
+                medication: medication,
+                date: today,
+                status: 'نشط'
+            };
+            prescriptionsData.push(prescription);
+            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
+            renderPrescriptionsList();
+            showToast(`تمت إضافة الروشتة للمريض ${patientName}`);
+            updateStats();
+            saveCurrentDayToArchive();
+        }
+        
+        function renderPrescriptionsList() {
+            const list = document.getElementById('prescriptions-list');
+            if (prescriptionsData.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center text-slate-500 py-8">
+                        <div class="text-5xl mb-3">📋</div>
+                        <p>لا توجد روشتات مسجلة</p>
+                        <p class="text-xs mt-2">اختر دواء من القائمة أعلاه أو أضف روشتة يدوياً</p>
+                    </div>
+                `;
+                return;
+            }
+            const sortedPrescriptions = [...prescriptionsData].reverse();
+            list.innerHTML = sortedPrescriptions.map(p => `
+                <div class="prescription-item">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-bold text-teal-400 text-lg">${p.patient}</span>
+                                <span class="text-xs bg-slate-700 px-2 py-1 rounded-full">${p.status}</span>
+                            </div>
+                            <div class="text-sm text-slate-300 mb-1">💊 ${p.medication}</div>
+                            <div class="text-xs text-slate-500 mt-1">📅 ${p.date}</div>
+                        </div>
+                        <button onclick="deletePrescription(${p.id})" class="text-red-400 text-xl p-2 hover:bg-red-500/20 rounded-full">🗑</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function deletePrescription(id) {
+            if (!confirm('هل أنت متأكد من حذف هذه الروشتة؟')) return;
+            prescriptionsData = prescriptionsData.filter(p => p.id !== id);
+            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
+            renderPrescriptionsList();
+            showToast('تم حذف الروشتة');
+            updateStats();
+            saveCurrentDayToArchive();
+        }
+        
+        function clearPrescriptions() {
+            if (!confirm('⚠️ هل أنت متأكد من مسح جميع الروشتات؟')) return;
+            prescriptionsData = [];
+            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
+            renderPrescriptionsList();
+            showToast('تم مسح جميع الروشتات');
+            updateStats();
+            saveCurrentDayToArchive();
+        }
+        
+        function loadPrescriptions() {
+            const saved = localStorage.getItem(getStorageKey('prescriptions'));
+            if (saved) {
+                prescriptionsData = JSON.parse(saved);
+            } else {
+                prescriptionsData = [];
+            }
+            renderPrescriptionsList();
+        }
+        
+        // ============================================================
+        // باقي دوال التطبيق
+        // ============================================================
+        
+        function getStorageKey(key) { return `elixir_${currentProfile}_${key}`; }
+        
+        function generateWeekSelector() {
+            const container = document.getElementById('week-selector');
+            const today = new Date();
+            const weekStart = new Date(today);
+            weekStart.setDate(today.getDate() - today.getDay() + 1);
+            const days = ['الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد'];
+            const engDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            container.innerHTML = days.map((day, index) => {
+                const date = new Date(weekStart);
+                date.setDate(weekStart.getDate() + index);
+                const dateStr = date.toISOString().split('T')[0];
+                const dayNum = date.getDate();
+                const isToday = dateStr === today.toISOString().split('T')[0];
+                return `<button class="day-pill ${isToday ? 'today' : 'other'} flex flex-col items-center justify-center" onclick="selectDay('${engDays[index]}', '${dateStr}')"><span class="text-sm">${day}</span><span class="font-bold text-xl">${dayNum}</span></button>`;
+            }).join('');
+        }
+        
+        function selectDay(day, date) {
+            selectedDate = date;
+            document.querySelectorAll('.day-pill').forEach(pill => {
+                pill.classList.remove('today');
+                pill.classList.add('other');
+            });
+            event.currentTarget.classList.remove('other');
+            event.currentTarget.classList.add('today');
+            const dateObj = new Date(date);
+            document.getElementById('selected-date-display').textContent = dateObj.toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'short' });
+            loadAppointments();
+        }
+        
+        function switchProfile(profileId) {
+            saveCurrentDayToArchive();
+            currentProfile = profileId;
+            localStorage.setItem('elixir_current_profile', profileId);
+            document.getElementById('current-user').textContent = profileNames[profileId];
+            updateProfileButtons();
+            updatePatientList();
+            loadAppointments();
+            loadPatients();
+            loadPrescriptions();
+            loadNotes();
+            loadRevenueData();
+            updateStats();
+            updateOfficeStats();
+            populatePatientSuggestions();
+            renderArchive();
+        }
+        
+        function updateProfileButtons() {
+            document.querySelectorAll('.btn-profile').forEach(btn => {
+                btn.classList.remove('btn-active');
+                btn.classList.add('btn-secondary');
+            });
+            const activeBtn = document.getElementById('btn-' + currentProfile);
+            if (activeBtn) {
+                activeBtn.classList.remove('btn-secondary');
+                activeBtn.classList.add('btn-active');
+            }
+        }
+        
+        function updatePatientList() {
+            const doctor = DOCTORS_DATA[currentProfile];
+            const patientList = document.getElementById('patients-list');
+            if (patientList) {
+                patientList.innerHTML = doctor.patients.map(p => `<div class="patient-item" onclick="selectPatient('${p}')">${p}</div>`).join('');
+            }
+        }
+        function switchTab(tabName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('view-' + tabName).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.remove('tab-inactive');
+                    btn.classList.add('tab-active');
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                }
+            });
+            if (tabName === 'office') updateOfficeStats();
+            if (tabName === 'archive') renderArchive();
+        }
+        
+        function openBookingModal() { document.getElementById('booking-modal').classList.add('show'); }
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.remove('show');
+            selectedTime = null;
+            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
+            document.getElementById('booking-patient').value = '';
+        }
+        
+        function selectTime(element, time) {
+            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedTime = time;
+        }
+        
+        function populatePatientSuggestions() {
+            const dl = document.getElementById('patient-suggestions');
+            dl.innerHTML = patientsData.map(p => `<option value="${p.name}">`).join('');
+        }
+        
+        async function saveAppointment() {
+            const doctorId = document.getElementById('booking-doctor').value;
+            const patient = document.getElementById('booking-patient').value;
+            const date = document.getElementById('booking-date').value;
+            if (!patient || !selectedTime) { alert('الرجاء إدخال اسم المريض واختيار الوقت'); return; }
+            
+            const doctor = DOCTORS_DATA[doctorId];
+            const appointment = { id: Date.now(), patient, doctor: doctor.name, doctorId, date, time: selectedTime, created: new Date().toISOString() };
+            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            appointments.push(appointment);
+            localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
+            
+            addRevenue(patient, date);
+            
+            // حفظ الأرشيف لهذا التاريخ فوراً
+            saveToArchiveForDate(date);
+            
+            closeBookingModal();
+            document.getElementById('success-message').textContent = `تم حجز ${patient} مع ${doctor.name} الساعة ${selectedTime} (تم إضافة ${APPOINTMENT_PRICE} جنيه)`;
+            document.getElementById('success-modal').classList.add('show');
+            loadAppointments();
+            updateStats();
+            updateOfficeStats();
+            renderArchive(); // تحديث عرض الأرشيف
+        }
+        
+        function closeSuccessModal() { document.getElementById('success-modal').classList.remove('show'); }
+        
+        async function loadAppointments() {
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const list = document.getElementById('appointments-list');
+            const emptyState = document.getElementById('empty-state');
+            const dayAppointments = appointments.filter(a => a.date === selectedDate);
+            
+            if (dayAppointments.length === 0) {
+                list.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            } else {
+                list.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                list.innerHTML = dayAppointments.map(a => `
+                    <div class="card flex items-center justify-between">
+                        <div>
+                            <div class="font-bold text-2xl">${a.patient}</div>
+                            <div class="text-teal-400 text-xl mt-1">${a.time} · ${a.doctor}</div>
+                        </div>
+                        <button onclick="deleteAppointment(${a.id})" class="text-red-400 p-3 text-3xl">🗑</button>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        async function deleteAppointment(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا الموعد؟ سيتم خصم الإيراد؟')) return;
+            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const appointmentToDelete = appointments.find(a => a.id === id);
+            if (appointmentToDelete) {
+                totalRevenue -= APPOINTMENT_PRICE;
+                localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
+                
+                const refundTransaction = {
+                    id: Date.now(),
+                    patient: appointmentToDelete.patient,
+                    amount: APPOINTMENT_PRICE,
+                    date: new Date().toLocaleDateString('ar-EG'),
+                    time: new Date().toLocaleTimeString('ar-EG'),
+                    type: 'استرداد حجز',
+                    status: 'ملغي'
+                };
+                transactions.unshift(refundTransaction);
+                localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
+                updateRevenueDisplay();
+                showToast(`تم استرداد ${APPOINTMENT_PRICE} جنيه من ${appointmentToDelete.patient}`);
+                
+                // حفظ الأرشيف بعد الحذف
+                saveToArchiveForDate(appointmentToDelete.date);
+            }
+            appointments = appointments.filter(a => a.id !== id);
+            localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
+            loadAppointments();
+            updateStats();
+            updateOfficeStats();
+            renderArchive();
+        }
+        
+        function renderPatientsList(patients) {
+            const list = document.getElementById('patients-list');
+            if (patients.length === 0) {
+                list.innerHTML = `<div class="card text-center py-8"><div class="text-6xl mb-4">👤</div><h3 class="font-bold text-xl mb-2">لا يوجد مرضى</h3><p class="text-slate-400">اضغط "+ إضافة مريض"</p></div>`;
+                return;
+            }
+            list.innerHTML = patients.map(p => `
+                <div class="patient-card" onclick="selectPatient('${p.name}', '${p.phone || ''}', '${p.nhi || ''}', '${p.dob || ''}', '${p.address || ''}')">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="font-bold text-2xl">${p.name}</div>
+                        ${p.nhi ? `<span class="patient-nhi">${p.nhi}</span>` : ''}
+                    </div>
+                    ${p.dob ? `<div class="patient-dob">تاريخ الميلاد: ${p.dob}</div>` : ''}
+                    ${p.address ? `<div class="patient-address">📍 ${p.address}</div>` : ''}
+                    <button onclick="event.stopPropagation(); callZoom('${p.phone || ''}')" class="btn-zoom w-full flex items-center justify-center gap-3 mt-3">
+                        <span class="text-2xl">📞</span> ${p.phone || 'لا يوجد هاتف'}
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function searchPatients(query) {
+            const filtered = patientsData.filter(p => p.name.includes(query) || (p.nhi && p.nhi.includes(query)));
+            renderPatientsList(filtered);
+        }
+        
+        function selectPatient(name, phone, nhi, dob, address) {
+            currentPatientName = name;
+            document.getElementById('patient-name').textContent = name;
+            document.getElementById('patient-phone').textContent = phone || 'لا يوجد هاتف';
+            document.getElementById('patient-nhi').textContent = nhi || '';
+            document.getElementById('patient-dob').textContent = dob ? `تاريخ الميلاد: ${dob}` : '';
+            document.getElementById('patient-address').textContent = address ? `📍 ${address}` : '';
+            currentPatientPhone = phone;
+            
+            renderSessionsGrid(name);
+            
+            document.getElementById('patient-modal').classList.add('show');
+        }
+        
+        function closePatientModal() {
+            document.getElementById('patient-modal').classList.remove('show');
+            currentPatientPhone = null;
+        }
+        
+        function callPatientZoom() { if (currentPatientPhone) callZoom(currentPatientPhone); }
+        
+        function callZoom(phoneNumber) {
+            const cleanNumber = (phoneNumber || '').replace(/[^\d+]/g, '');
+            if (!cleanNumber) { showToast('لا يوجد رقم هاتف'); return; }
+            window.location.href = `zoomphonecall:${cleanNumber}`;
+            setTimeout(() => showToast('افتح تطبيق Zoom'), 500);
+        }
+        
+        function openAddPatientModal() { document.getElementById('add-patient-modal').classList.add('show'); }
+        function closeAddPatientModal() {
+            document.getElementById('add-patient-modal').classList.remove('show');
+            ['name', 'nhi', 'dob', 'address', 'phone'].forEach(f => document.getElementById(`new-patient-${f}`).value = '');
+        }
+        
+        async function saveNewPatient() {
+            const name = document.getElementById('new-patient-name').value.trim();
+            const nhi = document.getElementById('new-patient-nhi').value.trim();
+            const dob = document.getElementById('new-patient-dob').value.trim();
+            const address = document.getElementById('new-patient-address').value.trim();
+            const phone = document.getElementById('new-patient-phone').value.trim();
+            if (!name) { alert('أدخل اسم المريض'); return; }
+            
+            const patient = { name, nhi, dob, age: '', address, phone };
+            patientsData.push(patient);
+            localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData));
+            closeAddPatientModal();
+            renderPatientsList(patientsData);
+            populatePatientSuggestions();
+            updateOfficeStats();
+            document.getElementById('success-message').textContent = `تمت إضافة ${name}`;
+            document.getElementById('success-modal').classList.add('show');
+            saveCurrentDayToArchive();
+        }
+        
+        async function loadPatients() {
+            patientsData = [];
+            const saved = localStorage.getItem(getStorageKey('patients'));
+            if (saved) patientsData = JSON.parse(saved);
+            renderPatientsList(patientsData);
+        }
+        
+        function loadNotes() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const notesKey = getStorageKey(`notes_${todayStr}`);
+            const notes = localStorage.getItem(notesKey) || '';
+            document.getElementById('office-notes').value = notes;
+        }
+        
+        function saveNotes() {
+            const notes = document.getElementById('office-notes').value;
+            const todayStr = new Date().toISOString().split('T')[0];
+            const notesKey = getStorageKey(`notes_${todayStr}`);
+            localStorage.setItem(notesKey, notes);
+            
+            // أيضاً حفظ في الأرشيف
+            saveToArchiveForDate(todayStr);
+            
+            showToast('تم حفظ الملاحظات');
+        }
+        
+        function updateOfficeStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            document.getElementById('office-bookings').textContent = appointments.filter(a => a.date === today).length;
+            document.getElementById('office-patients').textContent = patientsData.length;
+        }
+        
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const prescriptions = JSON.parse(localStorage.getItem(getStorageKey('prescriptions')) || '[]');
+            document.getElementById('stat-today').textContent = appointments.filter(a => a.date === today).length;
+            document.getElementById('stat-recalls').textContent = prescriptions.length;
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
+            document.getElementById('offline-banner').classList.toggle('show', !isOnline);
+        }
+        
+        async function testAPIConnection() {
+            showToast('جاري اختبار الاتصال...');
+        }
+        
+        function addToHomeScreen() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') document.getElementById('install-banner').classList.remove('show');
+                    deferredPrompt = null;
+                });
+            } else {
+                showToast('اضغط مشاركة → إضافة إلى الشاشة الرئيسية');
+            }
+        }
+        
+        function debugLog(message) { console.log(message); }
+        function toggleDebug() { document.getElementById('api-debug').classList.toggle('show'); }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async function() {
+            generateWeekSelector();
+            updateProfileButtons();
+            loadAppointments();
+            await loadPatients();
+            loadPrescriptions();
+            loadNotes();
+            loadRevenueData();
+            updateStats();
+            updateOfficeStats();
+            updatePatientList();
+            populatePatientSuggestions();
+            renderArchive();
+            
+            document.getElementById('booking-date').value = new Date().toISOString().split('T')[0];
+            updateOnlineStatus();
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+            
+            // حفظ جميع التواريخ عند بدء التطبيق
+            setTimeout(() => {
+                saveAllDatesToArchive();
+            }, 1000);
+            
+            // حفظ اليوم عند الإغلاق
+            window.addEventListener('beforeunload', () => saveCurrentDayToArchive());
+            
+            // حفظ تلقائي كل دقيقة
+            setInterval(() => {
+                saveCurrentDayToArchive();
+                if (document.getElementById('view-archive').classList.contains('hidden') === false) {
+                    renderArchive();
+                }
+            }, 60000);
+            
+            if (!window.navigator.standalone && !window.matchMedia('(display-mode: standalone)').matches) {
+                setTimeout(() => document.getElementById('install-banner').classList.add('show'), 2000);
+            }
+        });
+        
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/elixir-sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>
