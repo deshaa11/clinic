@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Elixir">
+    <meta name="apple-mobile-web-app-title" content="ensgam clinic">
     <meta name="theme-color" content="#0F172A">
-    <title>Elixir | نظام إدارة العيادة</title>
+    <title>ensgam clinic | نظام إدارة العيادة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * { -webkit-tap-highlight-color: transparent; touch-action: manipulation; box-sizing: border-box; }
@@ -24,7 +24,7 @@
         .btn-secondary:active { transform: scale(0.98); background: #0F172A; }
         .btn-active { background: #14B8A6; color: white; border-color: #14B8A6; box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
         .card { background: #1E2937; border-radius: 28px; padding: 28px; }
-        .patient-card { background: #1E2937; border-radius: 28px; padding: 24px; margin-bottom: 16px; }
+        .patient-card { background: #1E2937; border-radius: 28px; padding: 24px; margin-bottom: 16px; position: relative; }
         .patient-nhi { font-size: 14px; color: #94A3B8; background: #0F172A; padding: 4px 12px; border-radius: 12px; display: inline-block; margin-bottom: 8px; }
         .patient-dob { font-size: 16px; color: #64748B; margin-bottom: 4px; }
         .patient-address { font-size: 14px; color: #64748B; margin-bottom: 12px; }
@@ -32,6 +32,7 @@
         .tab-inactive { color: #64748B; }
         .time-slot { min-height: 72px; border-radius: 20px; background: #1E2937; border: 3px solid #334155; font-size: 22px; font-weight: 600; }
         .time-slot.selected { background: #14B8A6; border-color: #14B8A6; color: white; }
+        .booking-type-btn.selected { background: #14B8A6; border-color: #14B8A6; color: white; }
         .day-pill { min-width: 64px; min-height: 88px; border-radius: 20px; font-size: 18px; }
         .day-pill.today { background: #14B8A6; color: white; box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
         .day-pill.other { background: #1E2937; color: #94A3B8; border: 3px solid #334155; }
@@ -226,6 +227,64 @@
             color: #22C55E;
             font-weight: bold;
         }
+        .payment-pending {
+            background: #F59E0B;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .payment-completed {
+            background: #22C55E;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .delete-patient-btn {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #EF4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .delete-patient-btn:hover {
+            background: #DC2626;
+            transform: scale(1.1);
+        }
+        .complete-payment-btn {
+            background: #22C55E;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+        .complete-payment-btn:hover {
+            background: #15803d;
+            transform: scale(1.02);
+        }
+        .complete-payment-btn:disabled {
+            background: #64748B;
+            cursor: not-allowed;
+            transform: none;
+        }
     </style>
 </head>
 <body class="safe-top safe-bottom rtl">
@@ -241,17 +300,17 @@
 
     <!-- شريط الأطباء (3 أطباء: فاطمة، أميرة، يسري) -->
     <div class="profile-bar flex items-center gap-2 sticky top-0 z-50">
-        <button onclick="switchProfile('dr-fatma')" class="btn-profile btn-active" id="btn-dr-fatma">د.<br>فاطمة</button>
-        <button onclick="switchProfile('dr-amira')" class="btn-profile btn-secondary" id="btn-dr-amira">د.<br>أميرة</button>
-        <button onclick="switchProfile('dr-yosry')" class="btn-profile btn-secondary" id="btn-dr-yosry">د.<br>يسري</button>
+        <button onclick="switchProfile('dr-fatma')" class="btn-profile btn-active" id="btn-dr-fatma">د.<br>فاطمة حبيب</button>
+        <button onclick="switchProfile('dr-amira')" class="btn-profile btn-secondary" id="btn-dr-amira">د.<br>ندي مرجان</button>
+        <button onclick="switchProfile('dr-yosry')" class="btn-profile btn-secondary" id="btn-dr-yosry">د.<br>الاء رجب</button>
     </div>
 
     <header class="bg-slate-900 px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-4">
             <div class="w-14 h-14 bg-teal-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">E</div>
             <div>
-                <span class="font-bold text-2xl">Elixir</span>
-                <div class="text-teal-400 text-sm" id="current-user">د. فاطمة محمد</div>
+                <span class="font-bold text-2xl">ensgam clinic</span>
+                <div class="text-teal-400 text-sm" id="current-user">د. فاطمة حبيب</div>
             </div>
         </div>
         <button onclick="toggleDebug()" class="text-teal-400 text-sm">تصحيح</button>
@@ -319,7 +378,7 @@
         </div>
 
         <div id="view-patients" class="view-section hidden">
-            <button onclick="testAPIConnection()" class="btn-huge btn-secondary w-full mb-4">🔄 مزامنة من Elixir</button>
+            <button onclick="testAPIConnection()" class="btn-huge btn-secondary w-full mb-4">🔄 مزامنة من ensgam clinic</button>
             <button onclick="openAddPatientModal()" class="btn-huge btn-primary w-full mb-4 flex items-center justify-center gap-2" style="background: #22C55E;">
                 <span class="text-3xl">+</span> إضافة مريض
             </button>
@@ -417,7 +476,6 @@
                 <div class="text-xl text-slate-400 mb-2">💰 إجمالي الإيرادات</div>
                 <div class="revenue-amount" id="totalRevenue">0</div>
                 <div class="text-sm text-slate-500">جنيه مصري</div>
-                <div class="mt-3 text-xs text-slate-500">سعر الحجز: 200 جنيه</div>
             </div>
 
             <!-- عدد الحجوزات المكتملة -->
@@ -450,10 +508,10 @@
         <div class="modal-content">
             <h2 class="font-bold text-3xl mb-6">حجز جديد</h2>
             <label class="block text-slate-400 mb-2 text-lg">الطبيب</label>
-            <select id="booking-doctor" class="mb-4">
-                <option value="dr-fatma">د. فاطمة محمد (أخصائية نفسية)</option>
-                <option value="dr-amira">د. أميرة حسن (طب نفسي)</option>
-                <option value="dr-yosry">د. يسري عبدالله (علاج سلوكي معرفي)</option>
+            <select id="booking-doctor" class="mb-4" onchange="updateBookingPrice()">
+                <option value="dr-fatma">د. فاطمة حبيب (أخصائية نفسية)</option>
+                <option value="dr-amira">د. ندي مرجان حسن (طب نفسي)</option>
+                <option value="dr-yosry">د. الاء رجب (علاج سلوكي معرفي)</option>
             </select>
             <label class="block text-slate-400 mb-2 text-lg">المريض</label>
             <input type="text" id="booking-patient" list="patient-suggestions" placeholder="اسم المريض" class="mb-4" autocomplete="off">
@@ -473,9 +531,24 @@
                 <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '09:00')">09:00</button>
                 <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '10:00')">10:00</button>
             </div>
+            <!-- إضافة نوع الحجز (أونلاين / أوف لاين) -->
+            <label class="block text-slate-400 mb-2 text-lg">نوع الحجز</label>
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <button type="button" onclick="selectBookingType(this, 'online')" class="booking-type-btn time-slot flex items-center justify-center" style="background: #1E2937;">
+                    📱 أونلاين
+                </button>
+                <button type="button" onclick="selectBookingType(this, 'offline')" class="booking-type-btn time-slot flex items-center justify-center" style="background: #1E2937;">
+                    🏢 أوف لاين
+                </button>
+            </div>
+            <div class="card mb-4 text-center">
+                <div class="text-lg text-slate-400">سعر الحجز</div>
+                <div class="text-2xl font-bold text-teal-400" id="booking-price-display">0</div>
+                <div class="text-xs text-slate-500">سيتم إضافة المبلغ عند إتمام الدفع بعد الحجز</div>
+            </div>
             <div class="flex gap-3">
                 <button onclick="closeBookingModal()" class="btn-huge btn-secondary flex-1">إلغاء</button>
-                <button onclick="saveAppointment()" class="btn-huge btn-primary flex-1">حفظ</button>
+                <button onclick="saveAppointment()" class="btn-huge btn-primary flex-1">حجز</button>
             </div>
         </div>
     </div>
@@ -489,7 +562,7 @@
         </div>
     </div>
 
-    <!-- Patient Modal - المعدل بالكامل مع 12 جلسة -->
+    <!-- Patient Modal - المعدل بالكامل مع جلسات حسب الطبيب -->
     <div id="patient-modal" class="modal">
         <div class="modal-content" style="max-width: 500px;">
             <div class="flex justify-between items-center mb-4">
@@ -502,11 +575,11 @@
             <div class="patient-address" id="patient-address"></div>
             <p class="text-teal-400 text-lg mb-4" id="patient-phone"></p>
             
-            <!-- جلسات المريض (12 جلسة) -->
+            <!-- جلسات المريض (حسب الطبيب) -->
             <div class="card mb-4 p-4">
-                <h3 class="font-bold text-xl mb-3 text-teal-400">📋 جلسات العلاج (12 جلسة)</h3>
+                <h3 class="font-bold text-xl mb-3 text-teal-400" id="sessions-title">📋 جلسات العلاج</h3>
                 <div class="grid grid-cols-4 gap-2" id="sessions-grid">
-                    <!-- سيتم إنشاء 12 مربع هنا ديناميكياً -->
+                    <!-- سيتم إنشاء الجلسات ديناميكياً حسب الطبيب -->
                 </div>
                 <div class="flex justify-between mt-4 pt-3 border-t border-slate-700">
                     <div class="text-sm text-slate-400">
@@ -566,8 +639,9 @@
             <h2 class="font-bold text-3xl mb-6">إضافة مريض</h2>
             <label class="block text-slate-400 mb-2 text-lg">الاسم</label>
             <input type="text" id="new-patient-name" placeholder="الاسم الكامل" class="mb-4">
-            <label class="block text-slate-400 mb-2 text-lg">NHI</label>
-            <input type="text" id="new-patient-nhi" placeholder="مثال: XRK2639" class="mb-4">
+            <label class="block text-slate-400 mb-2 text-lg">NHI (رقم المريض ID) *</label>
+            <input type="text" id="new-patient-nhi" placeholder="مثال: PAT001" class="mb-4">
+            <p class="text-xs text-slate-500 mb-2">⚠️ NHI هو المعرف الفريد للمريض ولا يمكن تكراره</p>
             <label class="block text-slate-400 mb-2 text-lg">تاريخ الميلاد</label>
             <input type="text" id="new-patient-dob" placeholder="مثال: 24/12/1997" class="mb-4">
             <label class="block text-slate-400 mb-2 text-lg">العنوان</label>
@@ -613,40 +687,61 @@
     <script>
         // State
         let selectedTime = null;
-        let currentProfile = localStorage.getItem('elixir_current_profile') || 'dr-fatma';
+        let selectedBookingType = 'offline';
+        let currentProfile = localStorage.getItem('ensgam clinic_current_profile') || 'dr-fatma';
         let currentPatientPhone = null;
         let currentPatientName = '';
+        let currentPatientNHI = '';
         let isOnline = navigator.onLine;
         let selectedDate = new Date().toISOString().split('T')[0];
         let deferredPrompt = null;
         
         // بيانات الأطباء الثلاثة
         const profileNames = {
-            'dr-fatma': 'د. فاطمة محمد',
-            'dr-amira': 'د. أميرة حسن',
-            'dr-yosry': 'د. يسري عبدالله'
+            'dr-fatma': 'د. فاطمة حبيب',
+            'dr-amira': 'د. ندي مرجان ',
+            'dr-yosry': 'د. الاء رجب'
         };
         
         const DOCTORS_DATA = {
             'dr-fatma': {
-                name: 'د. فاطمة محمد',
-                initials: 'ف م',
+                name: 'د. فاطمة حبيب',
+                initials: 'ف ح',
                 role: 'أخصائية نفسية',
+                sessionsCount: 4,
                 patients: ['أحمد سعيد', 'منى خالد', 'يوسف علي', 'ليلى إبراهيم', 'مصطفى']
             },
             'dr-amira': {
-                name: 'د. أميرة حسن',
-                initials: 'أ ح',
+                name: 'د. ندي مرجان ',
+                initials: 'ن ح',
                 role: 'طب نفسي',
+                sessionsCount: 12,
                 patients: ['سارة محمود', 'عمر رشاد', 'نورا سامي', 'كريم مصطفى']
             },
             'dr-yosry': {
-                name: 'د. يسري عبدالله',
+                name: 'د. الاء رجب',
                 initials: 'ي ع',
                 role: 'علاج سلوكي معرفي',
+                sessionsCount: 12,
                 patients: ['هبة سليمان', 'محمد إبراهيم', 'فاطمة علي', 'أحمد كمال']
             }
         };
+        
+        // دالة حساب سعر الحجز حسب الطبيب ونوع الحجز
+        function getAppointmentPrice(doctorId, bookingType) {
+            if (doctorId === 'dr-fatma') {
+                return bookingType === 'online' ? 350 : 275;
+            } else {
+                return 110;
+            }
+        }
+        
+        // تحديث عرض السعر في نموذج الحجز
+        function updateBookingPrice() {
+            const doctorId = document.getElementById('booking-doctor').value;
+            const price = getAppointmentPrice(doctorId, selectedBookingType);
+            document.getElementById('booking-price-display').textContent = `${price} جنيه`;
+        }
         
         let patientsData = [];
         let prescriptionsData = [];
@@ -654,17 +749,27 @@
         // بيانات الإيرادات المالية
         let totalRevenue = 0;
         let transactions = [];
-        const APPOINTMENT_PRICE = 200; // سعر الحجز 200 جنيه
         
         // أسماء الأشهر للمراجع
         const monthNames = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
         
+        // دالة اختيار نوع الحجز
+        function selectBookingType(element, type) {
+            document.querySelectorAll('.booking-type-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedBookingType = type;
+            updateBookingPrice();
+            console.log('نوع الحجز:', type);
+        }
+        
         // ============================================================
-        // دوال المراجع (قاعدة البيانات السنوية) - محسنة لحفظ جميع التواريخ
+        // دوال المراجع (قاعدة البيانات السنوية)
         // ============================================================
         
         function getArchiveKey() {
-            return `elixir_${currentProfile}_yearly_archive`;
+            return `ensgam clinic_${currentProfile}_yearly_archive`;
         }
         
         function loadYearlyArchive() {
@@ -672,7 +777,6 @@
             if (saved) {
                 return JSON.parse(saved);
             }
-            // إنشاء قاعدة بيانات سنة كاملة (12 شهر)
             const archive = {};
             for (let month = 0; month < 12; month++) {
                 archive[month] = {};
@@ -685,11 +789,9 @@
             localStorage.setItem(getArchiveKey(), JSON.stringify(archive));
         }
         
-        // دالة لحفظ أي تاريخ محدد في الأرشيف
         function saveToArchiveForDate(dateStr) {
             if (!dateStr) return;
             
-            // تحويل التاريخ إلى كائن Date
             const targetDate = new Date(dateStr);
             if (isNaN(targetDate.getTime())) return;
             
@@ -697,34 +799,27 @@
             const day = targetDate.getDate();
             const year = targetDate.getFullYear();
             
-            // جلب جميع المواعيد
             const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
             const dayAppointments = appointments.filter(a => a.date === dateStr);
             
-            // جلب المعاملات المالية لذلك التاريخ
             const transactionsData = JSON.parse(localStorage.getItem(getStorageKey('transactions')) || '[]');
             const targetDateFormatted = targetDate.toLocaleDateString('ar-EG');
             const dayTransactions = transactionsData.filter(t => t.date === targetDateFormatted);
             
-            // جلب الروشتات لذلك التاريخ
             const prescriptionsDataLocal = JSON.parse(localStorage.getItem(getStorageKey('prescriptions')) || '[]');
             const dayPrescriptions = prescriptionsDataLocal.filter(p => p.date === targetDateFormatted);
             
-            // ملاحظات ذلك اليوم
             const notesKey = getStorageKey(`notes_${dateStr}`);
             const notes = localStorage.getItem(notesKey) || '';
             
-            // حساب إيرادات ذلك اليوم
             const dayRevenue = dayTransactions.reduce((sum, t) => {
                 if (t.type === 'إيراد حجز') return sum + t.amount;
                 if (t.type === 'استرداد حجز') return sum - t.amount;
                 return sum;
             }, 0);
             
-            // حفظ في الأرشيف
             const archive = loadYearlyArchive();
             
-            // التأكد من وجود البيانات للشهر واليوم
             if (!archive[month]) archive[month] = {};
             
             archive[month][day] = {
@@ -740,35 +835,24 @@
             saveYearlyArchive(archive);
         }
         
-        // دالة لحفظ جميع التواريخ الموجودة في النظام
         function saveAllDatesToArchive() {
             const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            
-            // الحصول على جميع التواريخ الفريدة من المواعيد
             const uniqueDates = [...new Set(appointments.map(a => a.date))];
-            
-            // إضافة التاريخ الحالي أيضاً
             const todayStr = new Date().toISOString().split('T')[0];
             if (!uniqueDates.includes(todayStr)) {
                 uniqueDates.push(todayStr);
             }
-            
-            // حفظ كل تاريخ في الأرشيف
             uniqueDates.forEach(dateStr => {
                 saveToArchiveForDate(dateStr);
             });
-            
             console.log(`✅ تم حفظ ${uniqueDates.length} تاريخ في الأرشيف`);
             showToast(`✅ تم حفظ ${uniqueDates.length} تاريخ في المراجع`);
             renderArchive();
         }
         
         function saveCurrentDayToArchive() {
-            // حفظ التاريخ الحالي
             const todayStr = new Date().toISOString().split('T')[0];
             saveToArchiveForDate(todayStr);
-            
-            // أيضاً حفظ جميع التواريخ الأخرى
             saveAllDatesToArchive();
         }
         
@@ -782,7 +866,6 @@
             const container = document.getElementById('months-container');
             if (!container) return;
             
-            // جلب جميع المواعيد
             const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
             const today = new Date();
             const currentYear = today.getFullYear();
@@ -792,21 +875,17 @@
                 const monthName = monthNames[month];
                 let daysHtml = '<div class="days-grid">';
                 
-                // أيام الأسبوع
                 const weekDays = ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'];
                 daysHtml += weekDays.map(wd => `<div class="text-center text-slate-500 text-xs py-2">${wd}</div>`).join('');
                 
-                // الأيام
                 for (let day = 1; day <= 31; day++) {
-                    // التحقق من وجود تاريخ صحيح
                     const dateObj = new Date(currentYear, month, day);
-                    if (dateObj.getMonth() !== month) continue; // تجاوز الأيام غير الصحيحة
+                    if (dateObj.getMonth() !== month) continue;
                     
                     const dateStr = dateObj.toISOString().split('T')[0];
                     const dayData = archive[month]?.[day];
                     const hasData = dayData?.hasData || false;
                     
-                    // التحقق من وجود مواعيد مستقبلية لهذا اليوم
                     const hasFutureAppointments = appointments.some(a => a.date === dateStr);
                     const isFuture = dateObj > today;
                     const isToday = (today.getMonth() === month && today.getDate() === day);
@@ -862,17 +941,15 @@
             const dateStr = dateObj.toISOString().split('T')[0];
             const dateAr = `${day} ${monthNames[month]} ${dateObj.getFullYear()}`;
             
-            // جلب المواعيد لهذا التاريخ من التخزين الرئيسي
             const allAppointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
             const dayAppointmentsFromMain = allAppointments.filter(a => a.date === dateStr);
             
-            // دمج البيانات من الأرشيف والبيانات الحية
             const appointmentsToShow = dayData.appointments.length > 0 ? dayData.appointments : dayAppointmentsFromMain;
             
             document.getElementById('day-details-title').textContent = `📅 ${dateAr}`;
             
             const appointmentsHtml = appointmentsToShow.length > 0 
-                ? appointmentsToShow.map(a => `<div class="detail-item">🩺 ${a.patient} - ${a.time} (${a.doctor || a.doctorId || 'الطبيب'})</div>`).join('')
+                ? appointmentsToShow.map(a => `<div class="detail-item">🩺 ${a.patient} - ${a.time} (${a.doctor || a.doctorId || 'الطبيب'}) ${a.bookingType === 'online' ? '📱 أونلاين' : '🏢 أوف لاين'} ${a.paymentCompleted ? '✅ مدفوع' : '⏳ قيد الانتظار'}</div>`).join('')
                 : '<div class="detail-item text-slate-500">لا توجد مواعيد</div>';
             
             const transactionsHtml = dayData.transactions.length > 0
@@ -910,7 +987,6 @@
             document.getElementById('day-details-modal').classList.remove('show');
         }
         
-        // عرض الحجوزات المستقبلية
         function showUpcomingAppointments() {
             const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
             const today = new Date();
@@ -922,7 +998,6 @@
                 return aptDate > today;
             });
             
-            // ترتيب حسب التاريخ
             futureAppointments.sort((a, b) => new Date(a.date) - new Date(b.date));
             
             if (futureAppointments.length === 0) {
@@ -934,24 +1009,40 @@
             message += `📊 العدد: ${futureAppointments.length}\n`;
             message += '━'.repeat(30) + '\n';
             futureAppointments.forEach(apt => {
-                message += `\n📌 ${apt.date}:\n   🩺 ${apt.patient}\n   ⏰ ${apt.time}\n   👨‍⚕️ ${apt.doctor}\n`;
+                message += `\n📌 ${apt.date}:\n   🩺 ${apt.patient}\n   ⏰ ${apt.time}\n   👨‍⚕️ ${apt.doctor}\n   ${apt.bookingType === 'online' ? '📱 أونلاين' : '🏢 أوف لاين'}\n   ${apt.paymentCompleted ? '✅ مدفوع' : '⏳ لم يدفع بعد'}\n`;
             });
             
             alert(message);
         }
         
         // ============================================================
-        // دوال جلسات المريض (12 جلسة)
+        // دوال جلسات المريض (حسب الطبيب)
         // ============================================================
         
+        function getSessionsCountForPatient(patientNHI) {
+            const patient = patientsData.find(p => p.nhi === patientNHI);
+            if (!patient) return DOCTORS_DATA[currentProfile].sessionsCount;
+            
+            const appointment = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]')
+                .find(a => a.patient === patient.name);
+            
+            if (appointment && appointment.doctorId === 'dr-fatma') {
+                return 4;
+            }
+            return DOCTORS_DATA[currentProfile].sessionsCount;
+        }
+        
         function loadPatientSessions(patientName) {
+            const patient = patientsData.find(p => p.name === patientName);
+            const sessionsCount = getSessionsCountForPatient(patient?.nhi);
+            
             const sessionsKey = getStorageKey(`sessions_${patientName.replace(/\s/g, '_')}`);
             const saved = localStorage.getItem(sessionsKey);
             if (saved) {
                 return JSON.parse(saved);
             } else {
                 const sessions = {};
-                for (let i = 1; i <= 12; i++) {
+                for (let i = 1; i <= sessionsCount; i++) {
                     sessions[i] = 'pending';
                 }
                 localStorage.setItem(sessionsKey, JSON.stringify(sessions));
@@ -966,10 +1057,14 @@
         
         function renderSessionsGrid(patientName) {
             const sessions = loadPatientSessions(patientName);
+            const sessionsCount = Object.keys(sessions).length;
             const grid = document.getElementById('sessions-grid');
+            const titleElement = document.getElementById('sessions-title');
+            
+            titleElement.textContent = `📋 جلسات العلاج (${sessionsCount} جلسة)`;
             
             let html = '';
-            for (let i = 1; i <= 12; i++) {
+            for (let i = 1; i <= sessionsCount; i++) {
                 const status = sessions[i];
                 let bgClass = 'pending';
                 let icon = '○';
@@ -1019,14 +1114,15 @@
             let presentCount = 0;
             let absentCount = 0;
             let pendingCount = 0;
+            const sessionsCount = Object.keys(sessions).length;
             
-            for (let i = 1; i <= 12; i++) {
+            for (let i = 1; i <= sessionsCount; i++) {
                 if (sessions[i] === 'present') presentCount++;
                 else if (sessions[i] === 'absent') absentCount++;
                 else pendingCount++;
             }
             
-            const attendanceRate = ((presentCount / 12) * 100).toFixed(1);
+            const attendanceRate = sessionsCount > 0 ? ((presentCount / sessionsCount) * 100).toFixed(1) : 0;
             
             showToast(`
 📊 السجل الطبي لـ ${currentPatientName}:
@@ -1085,29 +1181,43 @@
         }
         
         // ============================================================
-        // دوال الإيرادات المالية
+        // دوال الإيرادات المالية (معدلة: الدفع عند الحضور)
         // ============================================================
         
-        function addRevenue(patientName, appointmentDate) {
-            totalRevenue += APPOINTMENT_PRICE;
+        function completePayment(appointmentId, patientName, amount, doctorId, bookingType, date) {
+            if (!confirm(`💰 هل تريد تأكيد استلام ${amount} جنيه من ${patientName}؟`)) return;
+            
+            totalRevenue += amount;
             
             const transaction = {
                 id: Date.now(),
                 patient: patientName,
-                amount: APPOINTMENT_PRICE,
+                amount: amount,
                 date: new Date().toLocaleDateString('ar-EG'),
                 time: new Date().toLocaleTimeString('ar-EG'),
                 type: 'إيراد حجز',
-                status: 'مكتمل'
+                status: 'مكتمل',
+                appointmentId: appointmentId
             };
             
             transactions.unshift(transaction);
             localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
             localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
             
+            // تحديث حالة الدفع في الموعد
+            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const appointmentIndex = appointments.findIndex(a => a.id === appointmentId);
+            if (appointmentIndex !== -1) {
+                appointments[appointmentIndex].paymentCompleted = true;
+                appointments[appointmentIndex].paymentAmount = amount;
+                appointments[appointmentIndex].paymentDate = new Date().toISOString();
+                localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
+            }
+            
             updateRevenueDisplay();
-            showToast(`✅ تم إضافة ${APPOINTMENT_PRICE} جنيه من ${patientName}`);
-            saveToArchiveForDate(appointmentDate);
+            showToast(`✅ تم استلام ${amount} جنيه من ${patientName}`);
+            saveToArchiveForDate(date);
+            loadAppointments(); // تحديث عرض المواعيد
         }
         
         function updateRevenueDisplay() {
@@ -1132,7 +1242,7 @@
                     <div class="text-center text-slate-500 py-8">
                         <div class="text-5xl mb-3">💰</div>
                         <p>لا توجد معاملات مالية مسجلة</p>
-                        <p class="text-xs mt-2">سيتم تسجيل الإيرادات تلقائياً عند إتمام الحجوزات</p>
+                        <p class="text-xs mt-2">سيتم تسجيل الإيرادات عند إتمام الدفع للحجوزات</p>
                     </div>
                 `;
                 return;
@@ -1286,10 +1396,145 @@
         }
         
         // ============================================================
-        // باقي دوال التطبيق
+        // دوال إدارة المرضى (معدلة: NHI إلزامي وفريد)
         // ============================================================
         
-        function getStorageKey(key) { return `elixir_${currentProfile}_${key}`; }
+        function deletePatient(nhi, name) {
+            if (!confirm(`⚠️ هل أنت متأكد من حذف المريض "${name}"؟\nسيتم حذف جميع بياناته بما فيها المواعيد والروشتات والجلسات. لا يمكن التراجع عن هذا الإجراء.`)) return;
+            
+            // حذف المواعيد المرتبطة بالمريض
+            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            appointments = appointments.filter(a => a.patient !== name);
+            localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
+            
+            // حذف الروشتات المرتبطة بالمريض
+            prescriptionsData = prescriptionsData.filter(p => p.patient !== name);
+            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
+            
+            // حذف جلسات المريض
+            const sessionsKey = getStorageKey(`sessions_${name.replace(/\s/g, '_')}`);
+            localStorage.removeItem(sessionsKey);
+            
+            // حذف المريض من قائمة المرضى
+            patientsData = patientsData.filter(p => p.nhi !== nhi);
+            localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData));
+            
+            renderPatientsList(patientsData);
+            populatePatientSuggestions();
+            updateOfficeStats();
+            loadAppointments();
+            updateStats();
+            saveCurrentDayToArchive();
+            
+            showToast(`✅ تم حذف المريض ${name} وجميع بياناته`);
+        }
+        
+        function renderPatientsList(patients) {
+            const list = document.getElementById('patients-list');
+            if (patients.length === 0) {
+                list.innerHTML = `<div class="card text-center py-8"><div class="text-6xl mb-4">👤</div><h3 class="font-bold text-xl mb-2">لا يوجد مرضى</h3><p class="text-slate-400">اضغط "+ إضافة مريض"</p></div>`;
+                return;
+            }
+            list.innerHTML = patients.map(p => `
+                <div class="patient-card" onclick="selectPatient('${p.name}', '${p.phone || ''}', '${p.nhi || ''}', '${p.dob || ''}', '${p.address || ''}')">
+                    <button class="delete-patient-btn" onclick="event.stopPropagation(); deletePatient('${p.nhi}', '${p.name}')">🗑</button>
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="font-bold text-2xl">${p.name}</div>
+                        ${p.nhi ? `<span class="patient-nhi">🆔 ${p.nhi}</span>` : ''}
+                    </div>
+                    ${p.dob ? `<div class="patient-dob">تاريخ الميلاد: ${p.dob}</div>` : ''}
+                    ${p.address ? `<div class="patient-address">📍 ${p.address}</div>` : ''}
+                    <button onclick="event.stopPropagation(); callZoom('${p.phone || ''}')" class="btn-zoom w-full flex items-center justify-center gap-3 mt-3">
+                        <span class="text-2xl">📞</span> ${p.phone || 'لا يوجد هاتف'}
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function searchPatients(query) {
+            const filtered = patientsData.filter(p => p.name.includes(query) || (p.nhi && p.nhi.includes(query)));
+            renderPatientsList(filtered);
+        }
+        
+        function selectPatient(name, phone, nhi, dob, address) {
+            currentPatientName = name;
+            currentPatientNHI = nhi;
+            document.getElementById('patient-name').textContent = name;
+            document.getElementById('patient-phone').textContent = phone || 'لا يوجد هاتف';
+            document.getElementById('patient-nhi').textContent = nhi ? `🆔 ${nhi}` : '';
+            document.getElementById('patient-dob').textContent = dob ? `تاريخ الميلاد: ${dob}` : '';
+            document.getElementById('patient-address').textContent = address ? `📍 ${address}` : '';
+            currentPatientPhone = phone;
+            
+            renderSessionsGrid(name);
+            
+            document.getElementById('patient-modal').classList.add('show');
+        }
+        
+        function closePatientModal() {
+            document.getElementById('patient-modal').classList.remove('show');
+            currentPatientPhone = null;
+        }
+        
+        function callPatientZoom() { if (currentPatientPhone) callZoom(currentPatientPhone); }
+        
+        function callZoom(phoneNumber) {
+            const cleanNumber = (phoneNumber || '').replace(/[^\d+]/g, '');
+            if (!cleanNumber) { showToast('لا يوجد رقم هاتف'); return; }
+            window.location.href = `zoomphonecall:${cleanNumber}`;
+            setTimeout(() => showToast('افتح تطبيق Zoom'), 500);
+        }
+        
+        function openAddPatientModal() { 
+            document.getElementById('add-patient-modal').classList.add('show');
+        }
+        
+        function closeAddPatientModal() {
+            document.getElementById('add-patient-modal').classList.remove('show');
+            ['name', 'nhi', 'dob', 'address', 'phone'].forEach(f => document.getElementById(`new-patient-${f}`).value = '');
+        }
+        
+        async function saveNewPatient() {
+            const name = document.getElementById('new-patient-name').value.trim();
+            const nhi = document.getElementById('new-patient-nhi').value.trim();
+            const dob = document.getElementById('new-patient-dob').value.trim();
+            const address = document.getElementById('new-patient-address').value.trim();
+            const phone = document.getElementById('new-patient-phone').value.trim();
+            
+            if (!name) { alert('أدخل اسم المريض'); return; }
+            if (!nhi) { alert('⚠️ NHI (رقم المريض) مطلوب! الرقم المعرف الفريد للمريض'); return; }
+            
+            // التحقق من عدم تكرار NHI
+            const existingPatient = patientsData.find(p => p.nhi === nhi);
+            if (existingPatient) {
+                alert(`⚠️ هذا الرقم NHI "${nhi}" مستخدم بالفعل للمريض ${existingPatient.name}. الرجاء استخدام رقم فريد.`);
+                return;
+            }
+            
+            const patient = { name, nhi, dob, age: '', address, phone };
+            patientsData.push(patient);
+            localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData));
+            closeAddPatientModal();
+            renderPatientsList(patientsData);
+            populatePatientSuggestions();
+            updateOfficeStats();
+            document.getElementById('success-message').textContent = `تمت إضافة ${name} (NHI: ${nhi})`;
+            document.getElementById('success-modal').classList.add('show');
+            saveCurrentDayToArchive();
+        }
+        
+        async function loadPatients() {
+            patientsData = [];
+            const saved = localStorage.getItem(getStorageKey('patients'));
+            if (saved) patientsData = JSON.parse(saved);
+            renderPatientsList(patientsData);
+        }
+        
+        // ============================================================
+        // دوال الحجوزات (معدلة: بدون إضافة إيراد تلقائي)
+        // ============================================================
+        
+        function getStorageKey(key) { return `ensgam clinic_${currentProfile}_${key}`; }
         
         function generateWeekSelector() {
             const container = document.getElementById('week-selector');
@@ -1324,7 +1569,7 @@
         function switchProfile(profileId) {
             saveCurrentDayToArchive();
             currentProfile = profileId;
-            localStorage.setItem('elixir_current_profile', profileId);
+            localStorage.setItem('ensgam clinic_current_profile', profileId);
             document.getElementById('current-user').textContent = profileNames[profileId];
             updateProfileButtons();
             updatePatientList();
@@ -1354,10 +1599,11 @@
         function updatePatientList() {
             const doctor = DOCTORS_DATA[currentProfile];
             const patientList = document.getElementById('patients-list');
-            if (patientList) {
+            if (patientList && doctor) {
                 patientList.innerHTML = doctor.patients.map(p => `<div class="patient-item" onclick="selectPatient('${p}')">${p}</div>`).join('');
             }
         }
+        
         function switchTab(tabName) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('view-' + tabName).classList.remove('hidden');
@@ -1374,7 +1620,15 @@
             if (tabName === 'archive') renderArchive();
         }
         
-        function openBookingModal() { document.getElementById('booking-modal').classList.add('show'); }
+        function openBookingModal() { 
+            document.getElementById('booking-modal').classList.add('show');
+            selectedBookingType = 'offline';
+            document.querySelectorAll('.booking-type-btn').forEach(btn => btn.classList.remove('selected'));
+            const offlineBtn = document.querySelector('.booking-type-btn[onclick*="offline"]');
+            if (offlineBtn) offlineBtn.classList.add('selected');
+            updateBookingPrice();
+        }
+        
         function closeBookingModal() {
             document.getElementById('booking-modal').classList.remove('show');
             selectedTime = null;
@@ -1400,23 +1654,36 @@
             if (!patient || !selectedTime) { alert('الرجاء إدخال اسم المريض واختيار الوقت'); return; }
             
             const doctor = DOCTORS_DATA[doctorId];
-            const appointment = { id: Date.now(), patient, doctor: doctor.name, doctorId, date, time: selectedTime, created: new Date().toISOString() };
+            const price = getAppointmentPrice(doctorId, selectedBookingType);
+            
+            const appointment = { 
+                id: Date.now(), 
+                patient, 
+                doctor: doctor.name, 
+                doctorId, 
+                date, 
+                time: selectedTime, 
+                bookingType: selectedBookingType,
+                price: price,
+                paymentCompleted: false,
+                created: new Date().toISOString() 
+            };
+            
             let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
             appointments.push(appointment);
             localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
             
-            addRevenue(patient, date);
+            // لا نضيف الإيرادات هنا - ستضاف عند الضغط على إتمام الدفع
             
-            // حفظ الأرشيف لهذا التاريخ فوراً
             saveToArchiveForDate(date);
             
             closeBookingModal();
-            document.getElementById('success-message').textContent = `تم حجز ${patient} مع ${doctor.name} الساعة ${selectedTime} (تم إضافة ${APPOINTMENT_PRICE} جنيه)`;
+            document.getElementById('success-message').textContent = `تم حجز ${patient} مع ${doctor.name} الساعة ${selectedTime} (${selectedBookingType === 'online' ? '📱 أونلاين' : '🏢 أوف لاين'}) - القيمة: ${price} جنيه (سيتم الدفع عند الحضور)`;
             document.getElementById('success-modal').classList.add('show');
             loadAppointments();
             updateStats();
             updateOfficeStats();
-            renderArchive(); // تحديث عرض الأرشيف
+            renderArchive();
         }
         
         function closeSuccessModal() { document.getElementById('success-modal').classList.remove('show'); }
@@ -1434,135 +1701,70 @@
                 list.classList.remove('hidden');
                 emptyState.classList.add('hidden');
                 list.innerHTML = dayAppointments.map(a => `
-                    <div class="card flex items-center justify-between">
-                        <div>
-                            <div class="font-bold text-2xl">${a.patient}</div>
-                            <div class="text-teal-400 text-xl mt-1">${a.time} · ${a.doctor}</div>
+                    <div class="card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="font-bold text-2xl">
+                                    ${a.bookingType === 'online' ? '📱 ' : '🏢 '}
+                                    ${a.patient}
+                                    ${a.bookingType === 'online' ? '<span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full mr-2">أونلاين</span>' : '<span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full mr-2">أوف لاين</span>'}
+                                </div>
+                                <div class="text-teal-400 text-xl mt-1">${a.time} · ${a.doctor}</div>
+                                <div class="text-sm mt-2">
+                                    <span class="text-slate-400">سعر الجلسة:</span>
+                                    <span class="font-bold text-teal-400">${a.price} جنيه</span>
+                                    ${a.paymentCompleted ? 
+                                        '<span class="payment-completed mr-2">✅ مدفوع</span>' : 
+                                        '<span class="payment-pending mr-2">⏳ لم يدفع</span>'}
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                ${!a.paymentCompleted ? 
+                                    `<button onclick="completePayment(${a.id}, '${a.patient}', ${a.price}, '${a.doctorId}', '${a.bookingType}', '${a.date}')" class="complete-payment-btn">
+                                        💰 إتمام الدفع (${a.price} جنيه)
+                                    </button>` : ''}
+                                <button onclick="deleteAppointment(${a.id})" class="text-red-400 p-3 text-3xl">🗑</button>
+                            </div>
                         </div>
-                        <button onclick="deleteAppointment(${a.id})" class="text-red-400 p-3 text-3xl">🗑</button>
                     </div>
                 `).join('');
             }
         }
         
         async function deleteAppointment(id) {
-            if (!confirm('هل أنت متأكد من حذف هذا الموعد؟ سيتم خصم الإيراد؟')) return;
+            if (!confirm('هل أنت متأكد من حذف هذا الموعد؟')) return;
             let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
             const appointmentToDelete = appointments.find(a => a.id === id);
-            if (appointmentToDelete) {
-                totalRevenue -= APPOINTMENT_PRICE;
-                localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
-                
-                const refundTransaction = {
-                    id: Date.now(),
-                    patient: appointmentToDelete.patient,
-                    amount: APPOINTMENT_PRICE,
-                    date: new Date().toLocaleDateString('ar-EG'),
-                    time: new Date().toLocaleTimeString('ar-EG'),
-                    type: 'استرداد حجز',
-                    status: 'ملغي'
-                };
-                transactions.unshift(refundTransaction);
-                localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
-                updateRevenueDisplay();
-                showToast(`تم استرداد ${APPOINTMENT_PRICE} جنيه من ${appointmentToDelete.patient}`);
-                
-                // حفظ الأرشيف بعد الحذف
-                saveToArchiveForDate(appointmentToDelete.date);
-            }
+            
             appointments = appointments.filter(a => a.id !== id);
             localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
+            
+            if (appointmentToDelete) {
+                saveToArchiveForDate(appointmentToDelete.date);
+                if (appointmentToDelete.paymentCompleted) {
+                    totalRevenue -= appointmentToDelete.price;
+                    localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
+                    
+                    const refundTransaction = {
+                        id: Date.now(),
+                        patient: appointmentToDelete.patient,
+                        amount: appointmentToDelete.price,
+                        date: new Date().toLocaleDateString('ar-EG'),
+                        time: new Date().toLocaleTimeString('ar-EG'),
+                        type: 'استرداد حجز',
+                        status: 'ملغي'
+                    };
+                    transactions.unshift(refundTransaction);
+                    localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
+                    updateRevenueDisplay();
+                    showToast(`تم استرداد ${appointmentToDelete.price} جنيه من ${appointmentToDelete.patient}`);
+                }
+            }
+            
             loadAppointments();
             updateStats();
             updateOfficeStats();
             renderArchive();
-        }
-        
-        function renderPatientsList(patients) {
-            const list = document.getElementById('patients-list');
-            if (patients.length === 0) {
-                list.innerHTML = `<div class="card text-center py-8"><div class="text-6xl mb-4">👤</div><h3 class="font-bold text-xl mb-2">لا يوجد مرضى</h3><p class="text-slate-400">اضغط "+ إضافة مريض"</p></div>`;
-                return;
-            }
-            list.innerHTML = patients.map(p => `
-                <div class="patient-card" onclick="selectPatient('${p.name}', '${p.phone || ''}', '${p.nhi || ''}', '${p.dob || ''}', '${p.address || ''}')">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="font-bold text-2xl">${p.name}</div>
-                        ${p.nhi ? `<span class="patient-nhi">${p.nhi}</span>` : ''}
-                    </div>
-                    ${p.dob ? `<div class="patient-dob">تاريخ الميلاد: ${p.dob}</div>` : ''}
-                    ${p.address ? `<div class="patient-address">📍 ${p.address}</div>` : ''}
-                    <button onclick="event.stopPropagation(); callZoom('${p.phone || ''}')" class="btn-zoom w-full flex items-center justify-center gap-3 mt-3">
-                        <span class="text-2xl">📞</span> ${p.phone || 'لا يوجد هاتف'}
-                    </button>
-                </div>
-            `).join('');
-        }
-        
-        function searchPatients(query) {
-            const filtered = patientsData.filter(p => p.name.includes(query) || (p.nhi && p.nhi.includes(query)));
-            renderPatientsList(filtered);
-        }
-        
-        function selectPatient(name, phone, nhi, dob, address) {
-            currentPatientName = name;
-            document.getElementById('patient-name').textContent = name;
-            document.getElementById('patient-phone').textContent = phone || 'لا يوجد هاتف';
-            document.getElementById('patient-nhi').textContent = nhi || '';
-            document.getElementById('patient-dob').textContent = dob ? `تاريخ الميلاد: ${dob}` : '';
-            document.getElementById('patient-address').textContent = address ? `📍 ${address}` : '';
-            currentPatientPhone = phone;
-            
-            renderSessionsGrid(name);
-            
-            document.getElementById('patient-modal').classList.add('show');
-        }
-        
-        function closePatientModal() {
-            document.getElementById('patient-modal').classList.remove('show');
-            currentPatientPhone = null;
-        }
-        
-        function callPatientZoom() { if (currentPatientPhone) callZoom(currentPatientPhone); }
-        
-        function callZoom(phoneNumber) {
-            const cleanNumber = (phoneNumber || '').replace(/[^\d+]/g, '');
-            if (!cleanNumber) { showToast('لا يوجد رقم هاتف'); return; }
-            window.location.href = `zoomphonecall:${cleanNumber}`;
-            setTimeout(() => showToast('افتح تطبيق Zoom'), 500);
-        }
-        
-        function openAddPatientModal() { document.getElementById('add-patient-modal').classList.add('show'); }
-        function closeAddPatientModal() {
-            document.getElementById('add-patient-modal').classList.remove('show');
-            ['name', 'nhi', 'dob', 'address', 'phone'].forEach(f => document.getElementById(`new-patient-${f}`).value = '');
-        }
-        
-        async function saveNewPatient() {
-            const name = document.getElementById('new-patient-name').value.trim();
-            const nhi = document.getElementById('new-patient-nhi').value.trim();
-            const dob = document.getElementById('new-patient-dob').value.trim();
-            const address = document.getElementById('new-patient-address').value.trim();
-            const phone = document.getElementById('new-patient-phone').value.trim();
-            if (!name) { alert('أدخل اسم المريض'); return; }
-            
-            const patient = { name, nhi, dob, age: '', address, phone };
-            patientsData.push(patient);
-            localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData));
-            closeAddPatientModal();
-            renderPatientsList(patientsData);
-            populatePatientSuggestions();
-            updateOfficeStats();
-            document.getElementById('success-message').textContent = `تمت إضافة ${name}`;
-            document.getElementById('success-modal').classList.add('show');
-            saveCurrentDayToArchive();
-        }
-        
-        async function loadPatients() {
-            patientsData = [];
-            const saved = localStorage.getItem(getStorageKey('patients'));
-            if (saved) patientsData = JSON.parse(saved);
-            renderPatientsList(patientsData);
         }
         
         function loadNotes() {
@@ -1577,10 +1779,7 @@
             const todayStr = new Date().toISOString().split('T')[0];
             const notesKey = getStorageKey(`notes_${todayStr}`);
             localStorage.setItem(notesKey, notes);
-            
-            // أيضاً حفظ في الأرشيف
             saveToArchiveForDate(todayStr);
-            
             showToast('تم حفظ الملاحظات');
         }
         
@@ -1651,15 +1850,12 @@
             window.addEventListener('offline', updateOnlineStatus);
             window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
             
-            // حفظ جميع التواريخ عند بدء التطبيق
             setTimeout(() => {
                 saveAllDatesToArchive();
             }, 1000);
             
-            // حفظ اليوم عند الإغلاق
             window.addEventListener('beforeunload', () => saveCurrentDayToArchive());
             
-            // حفظ تلقائي كل دقيقة
             setInterval(() => {
                 saveCurrentDayToArchive();
                 if (document.getElementById('view-archive').classList.contains('hidden') === false) {
@@ -1673,7 +1869,7 @@
         });
         
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/elixir-sw.js').catch(() => {});
+            navigator.serviceWorker.register('/ensgam clinic-sw.js').catch(() => {});
         }
     </script>
 </body>
