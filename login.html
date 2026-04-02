@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>تسجيل الدخول - العيادة</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    gap: 30px;
+}
+
+.card {
+    width: 220px;
+    height: 180px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-box input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.modal-box button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #4facfe;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-box button:hover {
+    background: #3a8de0;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.8);}
+    to {opacity: 1; transform: scale(1);}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card" onclick="openLogin('amira')">
+        <div class="icon">👩‍⚕️</div>
+        <div class="name">Amira</div>
+        <div style="font-size: 12px; color: #666; margin-top: 5px;">مساعدة</div>
+    </div>
+
+    <div class="card" onclick="openLogin('aya')">
+        <div class="icon">👩‍⚕️</div>
+        <div class="name">Aya</div>
+        <div style="font-size: 12px; color: #666; margin-top: 5px;">مساعدة</div>
+    </div>
+</div>
+
+<!-- نافذة كلمة السر -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <h3>🔐 ادخل كلمة السر</h3>
+        <input type="password" id="password" placeholder="كلمة السر" autocomplete="off">
+        <br>
+        <button onclick="login()">دخول</button>
+    </div>
+</div>
+
+<script>
+let currentUser = "";
+
+function openLogin(user) {
+    currentUser = user;
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("password").value = "";
+}
+
+function login() {
+    let password = document.getElementById("password").value;
+    
+    let assistantName = "";
+    let isValid = false;
+    
+    if(currentUser === "amira" && password === "1234") {
+        assistantName = "Amira";
+        isValid = true;
+    }
+    else if(currentUser === "aya" && password === "6789") {
+        assistantName = "Aya";
+        isValid = true;
+    }
+    
+    if(isValid) {
+        // حفظ معلومات المساعد في localStorage
+        const loginTime = new Date().toLocaleString('ar-EG');
+        localStorage.setItem('ensgam_assistant', JSON.stringify({
+            name: assistantName,
+            loginTime: loginTime,
+            isLoggedIn: true
+        }));
+        
+        // تسجيل وقت الدخول في السجل
+        let logs = JSON.parse(localStorage.getItem('assistant_activity_logs') || '[]');
+        logs.unshift({
+            id: Date.now(),
+            assistant: assistantName,
+            action: 'دخول',
+            time: loginTime,
+            status: 'active'
+        });
+        localStorage.setItem('assistant_activity_logs', JSON.stringify(logs));
+        
+        // التوجيه للصفحة الرئيسية
+        window.location.href = "index.html";
+    }
+    else {
+        alert("❌ كلمة السر غلط");
+        document.getElementById("password").value = "";
+    }
+}
+</script>
+</body>
+</html>
