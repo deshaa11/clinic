@@ -404,11 +404,57 @@
             <div id="appointments-list" class="space-y-3 hidden"></div>
         </div>
 
+        <!-- ==================== قسم قائمة اليوم (تم تعديله إلى تقرير وخطة علاجية) ==================== -->
         <div id="view-daylist" class="view-section hidden">
-            <div class="card text-center py-10">
-                <div class="text-7xl mb-4">📋</div>
-                <h3 class="font-bold text-2xl mb-2">قائمة اليوم</h3>
-                <p class="text-slate-400 text-lg">قائمة الانتظار تظهر هنا</p>
+            <!-- تقرير وخطة علاجية لكل عميل -->
+            <div class="card p-6 mb-4">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="font-bold text-2xl text-teal-400" id="daylist-patient-name">اختر مريضاً</h3>
+                        <p class="text-slate-400 text-sm" id="daylist-patient-details"></p>
+                    </div>
+                    <button onclick="loadCurrentPatientForDaylist()" class="bg-teal-500 p-2 rounded-xl">
+                        <span class="text-xl">🔄</span>
+                    </button>
+                </div>
+
+                <!-- التقرير الطبي -->
+                <div class="mb-6">
+                    <h4 class="font-bold text-xl text-white mb-3 flex items-center gap-2">📋 التقرير الطبي</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-slate-300 mb-1 text-sm">الشكوى الرئيسية</label>
+                            <div id="complaint-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('complaint')">انقر لإضافة الشكوى الرئيسية...</div>
+                            <textarea id="complaint-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 text-sm">العلامات الحيوية</label>
+                            <div id="vitals-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('vitals')">انقر لإضافة الضغط، النبض، درجة الحرارة...</div>
+                            <textarea id="vitals-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="2"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 text-sm">التشخيص</label>
+                            <div id="diagnosis-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('diagnosis')">انقر لإضافة التشخيص...</div>
+                            <textarea id="diagnosis-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 text-sm">ملاحظات إضافية</label>
+                            <div id="notes-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('notes')">انقر لإضافة ملاحظات...</div>
+                            <textarea id="notes-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الخطة العلاجية -->
+                <div class="mb-4">
+                    <h4 class="font-bold text-xl text-white mb-3 flex items-center gap-2">📝 خطة العلاج اليومية</h4>
+                    <div id="treatment-plan-list" class="space-y-2">
+                        <!-- المهام ستظهر هنا ديناميكياً -->
+                    </div>
+                    <button onclick="addCustomTask()" class="btn-secondary w-full mt-3 py-2 rounded-xl text-sm">+ إضافة مهمة جديدة</button>
+                </div>
+
+                <button onclick="saveTreatmentPlan()" class="btn-primary w-full py-3 rounded-xl font-bold">💾 حفظ التقرير والخطة</button>
             </div>
         </div>
 
@@ -766,7 +812,7 @@
             </button>
             <button onclick="switchTab('daylist')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="daylist">
                 <span class="text-3xl">📋</span>
-                <span class="text-sm font-bold">قائمة</span>
+                <span class="text-sm font-bold">الخطة العلاجية</span>
             </button>
             <button onclick="switchTab('archive')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="archive">
                 <span class="text-3xl">📆</span>
@@ -859,6 +905,186 @@
         
         // أسماء الأشهر للمراجع
         const monthNames = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+        
+        // ==================== دوال التقرير والخطة العلاجية (جديد) ====================
+        
+        // الحصول على مفتاح تخزين التقرير والخطة
+        function getTreatmentPlanKey(patientName, date) {
+            return `ensgam clinic_${currentProfile}_treatment_${patientName.replace(/\s/g, '_')}_${date}`;
+        }
+        
+        // تحميل خطة العلاج والتقرير للعميل الحالي
+        function loadTreatmentPlanForPatient(patientName) {
+            const today = new Date().toISOString().split('T')[0];
+            const key = getTreatmentPlanKey(patientName, today);
+            const saved = localStorage.getItem(key);
+            
+            const defaultTasks = [
+                { id: 1, text: "جلسة علاج نفسي (ساعة)", completed: false },
+                { id: 2, text: "تقييم الحالة المزاجية", completed: false },
+                { id: 3, text: "مراجعة الأدوية وجرعاتها", completed: false },
+                { id: 4, text: "تمارين التنفس والاسترخاء", completed: false },
+                { id: 5, text: "متابعة النوم والشهية", completed: false }
+            ];
+            
+            if (saved) {
+                const data = JSON.parse(saved);
+                // عرض البيانات في حقول التقرير
+                document.getElementById('complaint-text').innerHTML = data.complaint || 'انقر لإضافة الشكوى الرئيسية...';
+                document.getElementById('vitals-text').innerHTML = data.vitals || 'انقر لإضافة الضغط، النبض، درجة الحرارة...';
+                document.getElementById('diagnosis-text').innerHTML = data.diagnosis || 'انقر لإضافة التشخيص...';
+                document.getElementById('notes-text').innerHTML = data.notes || 'انقر لإضافة ملاحظات...';
+                
+                // عرض المهام
+                if (data.tasks && data.tasks.length > 0) {
+                    renderTasksList(data.tasks);
+                } else {
+                    renderTasksList(defaultTasks);
+                }
+            } else {
+                // بيانات افتراضية
+                document.getElementById('complaint-text').innerHTML = 'انقر لإضافة الشكوى الرئيسية...';
+                document.getElementById('vitals-text').innerHTML = 'انقر لإضافة الضغط، النبض، درجة الحرارة...';
+                document.getElementById('diagnosis-text').innerHTML = 'انقر لإضافة التشخيص...';
+                document.getElementById('notes-text').innerHTML = 'انقر لإضافة ملاحظات...';
+                renderTasksList(defaultTasks);
+            }
+        }
+        
+        // عرض قائمة المهام
+        function renderTasksList(tasks) {
+            const container = document.getElementById('treatment-plan-list');
+            if (!tasks || tasks.length === 0) {
+                container.innerHTML = '<div class="text-center text-slate-500 py-4">لا توجد مهام مضافة</div>';
+                return;
+            }
+            
+            container.innerHTML = tasks.map(task => `
+                <div class="flex items-center gap-3 bg-slate-800 p-3 rounded-xl">
+                    <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})" class="w-6 h-6 rounded border-teal-500">
+                    <span class="flex-1 text-slate-200 ${task.completed ? 'line-through text-slate-500' : ''}">${task.text}</span>
+                    <button onclick="deleteTask(${task.id})" class="text-red-400 text-xl">🗑</button>
+                </div>
+            `).join('');
+            
+            // حفظ المهام مؤقتاً في متغير عام
+            window.currentTasks = tasks;
+        }
+        
+        // تبديل حالة مهمة
+        function toggleTask(taskId) {
+            if (window.currentTasks) {
+                const task = window.currentTasks.find(t => t.id === taskId);
+                if (task) {
+                    task.completed = !task.completed;
+                    renderTasksList(window.currentTasks);
+                }
+            }
+        }
+        
+        // حذف مهمة
+        function deleteTask(taskId) {
+            if (window.currentTasks) {
+                window.currentTasks = window.currentTasks.filter(t => t.id !== taskId);
+                renderTasksList(window.currentTasks);
+            }
+        }
+        
+        // إضافة مهمة مخصصة
+        function addCustomTask() {
+            const taskText = prompt('أدخل اسم المهمة الجديدة:');
+            if (taskText && taskText.trim()) {
+                if (!window.currentTasks) window.currentTasks = [];
+                const newId = Date.now();
+                window.currentTasks.push({ id: newId, text: taskText, completed: false });
+                renderTasksList(window.currentTasks);
+            }
+        }
+        
+        // تحرير الحقل النصي
+        function editField(fieldName) {
+            const displayDiv = document.getElementById(`${fieldName}-text`);
+            const inputArea = document.getElementById(`${fieldName}-input`);
+            
+            if (inputArea.classList.contains('hidden')) {
+                // إظهار حقل الإدخال
+                const currentValue = displayDiv.innerHTML;
+                inputArea.value = currentValue === 'انقر لإضافة الشكوى الرئيسية...' || 
+                                   currentValue === 'انقر لإضافة الضغط، النبض، درجة الحرارة...' ||
+                                   currentValue === 'انقر لإضافة التشخيص...' ||
+                                   currentValue === 'انقر لإضافة ملاحظات...' ? '' : currentValue;
+                displayDiv.classList.add('hidden');
+                inputArea.classList.remove('hidden');
+                inputArea.focus();
+                
+                // حفظ عند فقدان التركيز
+                inputArea.onblur = function() {
+                    const newValue = inputArea.value;
+                    displayDiv.innerHTML = newValue || 'انقر للإضافة...';
+                    displayDiv.classList.remove('hidden');
+                    inputArea.classList.add('hidden');
+                };
+            }
+        }
+        
+        // حفظ التقرير والخطة
+        function saveTreatmentPlan() {
+            if (!currentDaylistPatientName) {
+                showToast('❌ لا يوجد عميل محدد');
+                return;
+            }
+            
+            const today = new Date().toISOString().split('T')[0];
+            const key = getTreatmentPlanKey(currentDaylistPatientName, today);
+            
+            const data = {
+                patientName: currentDaylistPatientName,
+                date: today,
+                complaint: document.getElementById('complaint-text').innerHTML,
+                vitals: document.getElementById('vitals-text').innerHTML,
+                diagnosis: document.getElementById('diagnosis-text').innerHTML,
+                notes: document.getElementById('notes-text').innerHTML,
+                tasks: window.currentTasks || []
+            };
+            
+            localStorage.setItem(key, JSON.stringify(data));
+            showToast('✅ تم حفظ التقرير وخطة العلاج بنجاح');
+            
+            // تسجيل نشاط المساعد
+            logAssistantActivity('تقرير علاجي', `تم حفظ تقرير وعلاج للعميل ${currentDaylistPatientName}`);
+        }
+        
+        let currentDaylistPatientName = null;
+        
+        // تحميل أول عميل من مواعيد اليوم لعرضه في قائمة اليوم
+        function loadCurrentPatientForDaylist() {
+            const today = new Date().toISOString().split('T')[0];
+            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
+            const todayAppointments = appointments.filter(a => a.date === today);
+            
+            if (todayAppointments.length === 0) {
+                document.getElementById('daylist-patient-name').innerHTML = 'لا توجد مواعيد اليوم';
+                document.getElementById('daylist-patient-details').innerHTML = 'قم بإضافة مواعيد من تبويب الحجز';
+                currentDaylistPatientName = null;
+                return;
+            }
+            
+            const firstPatient = todayAppointments[0];
+            currentDaylistPatientName = firstPatient.patient;
+            
+            // البحث عن تفاصيل العميل
+            const patient = patientsData.find(p => p.name === firstPatient.patient);
+            
+            document.getElementById('daylist-patient-name').innerHTML = firstPatient.patient;
+            if (patient) {
+                document.getElementById('daylist-patient-details').innerHTML = `🆔 ${patient.nhi || 'غير محدد'} | 📞 ${patient.phone || 'لا يوجد'}`;
+            } else {
+                document.getElementById('daylist-patient-details').innerHTML = `⏰ ${firstPatient.time} | ${firstPatient.doctor}`;
+            }
+            
+            // تحميل خطة العلاج لهذا العميل
+            loadTreatmentPlanForPatient(firstPatient.patient);
+        }
         
         // ==================== دوال المساعدين الجديدة ====================
         
@@ -1295,11 +1521,11 @@
                 localStorage.removeItem(`${prefix}_totalRevenue`);
                 localStorage.removeItem(`${prefix}_yearly_archive`);
                 
-                // مسح الجلسات
+                // مسح خطط العلاج
                 const keysToRemove = [];
                 for (let i = 0; i < localStorage.length; i++) {
                     const key = localStorage.key(i);
-                    if (key && key.startsWith(prefix) && key.includes('sessions_')) {
+                    if (key && key.startsWith(prefix) && (key.includes('treatment_') || key.includes('sessions_'))) {
                         keysToRemove.push(key);
                     }
                 }
@@ -1745,6 +1971,11 @@
             const sessionsKey = getStorageKey(`sessions_${name.replace(/\s/g, '_')}`);
             localStorage.removeItem(sessionsKey);
             
+            // حذف خطة العلاج للمريض
+            const today = new Date().toISOString().split('T')[0];
+            const treatmentKey = getTreatmentPlanKey(name, today);
+            localStorage.removeItem(treatmentKey);
+            
             // حذف المريض من قائمة المرضى
             patientsData = patientsData.filter(p => p.nhi !== nhi);
             localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData));
@@ -1912,6 +2143,10 @@
             updateOfficeStats();
             populatePatientSuggestions();
             renderArchive();
+            // إعادة تحميل العميل الحالي في قائمة اليوم
+            if (document.getElementById('view-daylist').classList.contains('hidden') === false) {
+                loadCurrentPatientForDaylist();
+            }
         }
         
         function updateProfileButtons() {
@@ -1949,6 +2184,7 @@
             if (tabName === 'office') updateOfficeStats();
             if (tabName === 'archive') renderArchive();
             if (tabName === 'reports') renderReports();
+            if (tabName === 'daylist') loadCurrentPatientForDaylist();
         }
         
         function openBookingModal() { 
