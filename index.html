@@ -36,82 +36,18 @@
         .day-pill { min-width: 64px; min-height: 88px; border-radius: 20px; font-size: 18px; }
         .day-pill.today { background: #14B8A6; color: white; box-shadow: 0 4px 20px rgba(20,184,166,0.4); }
         .day-pill.other { background: #1E2937; color: #94A3B8; border: 3px solid #334155; }
-        
-        /* أنماط المراجع */
-        .month-card {
-            background: #1E2937;
-            border-radius: 24px;
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-        .month-header {
-            background: #14B8A6;
-            padding: 16px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .days-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            padding: 16px;
-        }
-        .day-box {
-            aspect-ratio: 1;
-            background: #0F172A;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid #334155;
-            position: relative;
-        }
-        .day-box:hover {
-            transform: scale(1.05);
-            border-color: #14B8A6;
-        }
-        .day-box.has-data {
-            border-color: #14B8A6;
-            background: linear-gradient(135deg, #1E2937, #0F172A);
-        }
-        .day-box.future-data {
-            border-color: #22C55E;
-            background: linear-gradient(135deg, #1E2937, #0F172A);
-        }
-        .day-number {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .day-indicator {
-            font-size: 10px;
-            margin-top: 4px;
-            color: #94A3B8;
-        }
-        .day-badge {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 8px;
-            height: 8px;
-            background: #14B8A6;
-            border-radius: 50%;
-        }
-        .day-details-modal {
-            max-width: 600px;
-        }
-        .detail-item {
-            background: #0F172A;
-            border-radius: 16px;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-right: 3px solid #14B8A6;
-        }
-        
+        .month-card { background: #1E2937; border-radius: 24px; margin-bottom: 24px; overflow: hidden; }
+        .month-header { background: #14B8A6; padding: 16px; text-align: center; font-weight: bold; font-size: 20px; cursor: pointer; }
+        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; padding: 16px; }
+        .day-box { aspect-ratio: 1; background: #0F172A; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; border: 2px solid #334155; position: relative; }
+        .day-box:hover { transform: scale(1.05); border-color: #14B8A6; }
+        .day-box.has-data { border-color: #14B8A6; background: linear-gradient(135deg, #1E2937, #0F172A); }
+        .day-box.future-data { border-color: #22C55E; background: linear-gradient(135deg, #1E2937, #0F172A); }
+        .day-number { font-size: 18px; font-weight: bold; }
+        .day-indicator { font-size: 10px; margin-top: 4px; color: #94A3B8; }
+        .day-badge { position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; background: #14B8A6; border-radius: 50%; }
+        .day-details-modal { max-width: 600px; }
+        .detail-item { background: #0F172A; border-radius: 16px; padding: 12px; margin-bottom: 12px; border-right: 3px solid #14B8A6; }
         #install-banner { position: fixed; bottom: 120px; left: 20px; right: 20px; background: #14B8A6; border-radius: 28px; padding: 28px; z-index: 1000; display: none; }
         #install-banner.show { display: block; animation: slideUp 0.3s ease; }
         #offline-banner { position: fixed; top: 0; left: 0; right: 0; background: #EF4444; color: white; padding: 12px; z-index: 9999; display: none; font-weight: 600; text-align: center; }
@@ -133,191 +69,34 @@
         .notes-area { min-height: 200px; resize: vertical; padding: 16px; font-size: 18px; }
         .rtl { direction: rtl; }
         .text-right { text-align: right; }
-        
-        .medication-card {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .medication-card:hover {
-            transform: translateY(-4px);
-            background: #14B8A6 !important;
-            border-color: #14B8A6;
-        }
-        .medication-card:hover .text-teal-400 {
-            color: white !important;
-        }
-        .prescription-item {
-            transition: all 0.2s ease;
-            cursor: pointer;
-            background: #1E2937;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-right: 3px solid transparent;
-        }
-        .prescription-item:hover {
-            background: #0F172A;
-            border-right-color: #14B8A6;
-        }
-        
-        .session-box {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .session-box.present {
-            background: #22C55E;
-            color: white;
-            border: 2px solid #15803d;
-        }
-        .session-box.absent {
-            background: #EF4444;
-            color: white;
-            border: 2px solid #b91c1c;
-        }
-        .session-box.pending {
-            background: #334155;
-            color: #94A3B8;
-            border: 2px solid #475569;
-        }
-        .session-box:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
-        }
-        .session-number {
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .session-status-icon {
-            font-size: 16px;
-            margin-top: 2px;
-        }
-        
-        .revenue-card {
-            background: linear-gradient(135deg, #1E2937 0%, #0F172A 100%);
-            border-radius: 24px;
-            padding: 24px;
-            text-align: center;
-            border: 1px solid rgba(20,184,166,0.2);
-        }
-        .revenue-amount {
-            font-size: 48px;
-            font-weight: 800;
-            color: #14B8A6;
-            margin: 16px 0;
-        }
-        .transaction-item {
-            background: #1E2937;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 3px solid #14B8A6;
-        }
-        .transaction-positive {
-            color: #22C55E;
-            font-weight: bold;
-        }
-        .payment-pending {
-            background: #F59E0B;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            display: inline-block;
-        }
-        .payment-completed {
-            background: #22C55E;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            display: inline-block;
-        }
-        .delete-patient-btn {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: #EF4444;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        .delete-patient-btn:hover {
-            background: #DC2626;
-            transform: scale(1.1);
-        }
-        .complete-payment-btn {
-            background: #22C55E;
-            color: white;
-            border: none;
-            border-radius: 16px;
-            padding: 12px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 12px;
-        }
-        .complete-payment-btn:hover {
-            background: #15803d;
-            transform: scale(1.02);
-        }
-        .complete-payment-btn:disabled {
-            background: #64748B;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* أنماط إضافية لشريط المساعد */
-        .assistant-bar {
-            background: #0F172A;
-            border-bottom: 3px solid #14B8A6;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logout-btn {
-            background: #DC2626;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 25px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-        .logout-btn:hover {
-            background: #B91C1C;
-            transform: scale(1.02);
-        }
-        .report-stat-card {
-            background: linear-gradient(135deg, #1E2937, #0F172A);
-            border-radius: 20px;
-            padding: 16px;
-            text-align: center;
-        }
+        .medication-card { transition: all 0.3s ease; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+        .medication-card:hover { transform: translateY(-4px); background: #14B8A6 !important; border-color: #14B8A6; }
+        .medication-card:hover .text-teal-400 { color: white !important; }
+        .prescription-item { transition: all 0.2s ease; cursor: pointer; background: #1E2937; border-radius: 16px; padding: 16px; margin-bottom: 12px; border-right: 3px solid transparent; }
+        .prescription-item:hover { background: #0F172A; border-right-color: #14B8A6; }
+        .session-box { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s ease; }
+        .session-box.present { background: #22C55E; color: white; border: 2px solid #15803d; }
+        .session-box.absent { background: #EF4444; color: white; border: 2px solid #b91c1c; }
+        .session-box.pending { background: #334155; color: #94A3B8; border: 2px solid #475569; }
+        .session-box:hover { transform: scale(1.05); filter: brightness(1.1); }
+        .session-number { font-size: 12px; font-weight: bold; }
+        .session-status-icon { font-size: 16px; margin-top: 2px; }
+        .revenue-card { background: linear-gradient(135deg, #1E2937 0%, #0F172A 100%); border-radius: 24px; padding: 24px; text-align: center; border: 1px solid rgba(20,184,166,0.2); }
+        .revenue-amount { font-size: 48px; font-weight: 800; color: #14B8A6; margin: 16px 0; }
+        .transaction-item { background: #1E2937; border-radius: 16px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #14B8A6; }
+        .transaction-positive { color: #22C55E; font-weight: bold; }
+        .payment-pending { background: #F59E0B; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; display: inline-block; }
+        .payment-completed { background: #22C55E; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; display: inline-block; }
+        .delete-patient-btn { position: absolute; top: 16px; left: 16px; background: #EF4444; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .delete-patient-btn:hover { background: #DC2626; transform: scale(1.1); }
+        .complete-payment-btn { background: #22C55E; color: white; border: none; border-radius: 16px; padding: 12px 20px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+        .complete-payment-btn:hover { background: #15803d; transform: scale(1.02); }
+        .complete-payment-btn:disabled { background: #64748B; cursor: not-allowed; transform: none; }
+        .assistant-bar { background: #0F172A; border-bottom: 3px solid #14B8A6; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logout-btn { background: #DC2626; border: none; padding: 10px 25px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .logout-btn:hover { background: #B91C1C; transform: scale(1.02); }
+        .report-stat-card { background: linear-gradient(135deg, #1E2937, #0F172A); border-radius: 20px; padding: 16px; text-align: center; }
+        .report-card { background: #1E2937; border-radius: 16px; padding: 12px; margin-bottom: 12px; border-right: 3px solid #14B8A6; }
     </style>
 </head>
 <body class="safe-top safe-bottom rtl">
@@ -331,7 +110,7 @@
         <div id="debug-logs"></div>
     </div>
 
-    <!-- ==================== شريط المساعد (جديد) ==================== -->
+    <!-- شريط المساعد -->
     <div class="assistant-bar" id="assistant-bar">
         <div style="display: flex; align-items: center; gap: 15px;">
             <span style="font-size: 24px;">👩‍⚕️</span>
@@ -345,12 +124,10 @@
                 <div style="font-size: 14px; font-family: monospace;" id="assistant-login-time">--:--</div>
             </div>
         </div>
-        <button class="logout-btn" onclick="logoutAssistant()">
-            <span>🚪</span> تسجيل خروج
-        </button>
+        <button class="logout-btn" onclick="logoutAssistant()"><span>🚪</span> تسجيل خروج</button>
     </div>
 
-    <!-- شريط الأطباء (3 أطباء: فاطمة، أميرة، يسري) -->
+    <!-- شريط الأطباء -->
     <div class="profile-bar flex items-center gap-2 sticky top-0 z-50">
         <button onclick="switchProfile('dr-fatma')" class="btn-profile btn-active" id="btn-dr-fatma">د.<br>فاطمة حبيب</button>
         <button onclick="switchProfile('dr-amira')" class="btn-profile btn-secondary" id="btn-dr-amira">د.<br>ندي مرجان</button>
@@ -368,34 +145,20 @@
         <button onclick="toggleDebug()" class="text-teal-400 text-sm">تصحيح</button>
     </header>
 
-    <div class="px-6 py-3 text-center">
-        <span class="text-slate-400 text-lg" id="week-range">الاثنين 16 فبراير - الأحد 22 فبراير 2026</span>
-    </div>
+    <div class="px-6 py-3 text-center"><span class="text-slate-400 text-lg" id="week-range"></span></div>
 
     <div class="px-6 py-3 grid grid-cols-3 gap-3">
-        <div class="card text-center py-4">
-            <div class="stat-num text-teal-400" id="stat-today">0</div>
-            <div class="text-base text-slate-400 mt-1">اليوم</div>
-        </div>
-        <div class="card text-center py-4">
-            <div class="stat-num text-teal-400" id="stat-tasks">0</div>
-            <div class="text-base text-slate-400 mt-1">الإيرادات</div>
-        </div>
-        <div class="card text-center py-4">
-            <div class="stat-num text-teal-400" id="stat-recalls">0</div>
-            <div class="text-base text-slate-400 mt-1">الروشتات</div>
-        </div>
+        <div class="card text-center py-4"><div class="stat-num text-teal-400" id="stat-today">0</div><div class="text-base text-slate-400 mt-1">اليوم</div></div>
+        <div class="card text-center py-4"><div class="stat-num text-teal-400" id="stat-tasks">0</div><div class="text-base text-slate-400 mt-1">الإيرادات</div></div>
+        <div class="card text-center py-4"><div class="stat-num text-teal-400" id="stat-recalls">0</div><div class="text-base text-slate-400 mt-1">الروشتات</div></div>
     </div>
 
-    <div class="px-6 py-3 overflow-x-auto">
-        <div class="flex gap-2 min-w-max" id="week-selector"></div>
-    </div>
+    <div class="px-6 py-3 overflow-x-auto"><div class="flex gap-2 min-w-max" id="week-selector"></div></div>
 
     <main class="px-6 pb-40">
+        <!-- حجز -->
         <div id="view-schedule" class="view-section">
-            <button onclick="openBookingModal()" class="btn-huge btn-primary w-full mb-4 flex items-center justify-center gap-2">
-                <span class="text-3xl">+</span> حجز جديد
-            </button>
+            <button onclick="openBookingModal()" class="btn-huge btn-primary w-full mb-4 flex items-center justify-center gap-2"><span class="text-3xl">+</span> حجز جديد</button>
             <div class="card text-center py-8" id="empty-state">
                 <div class="text-7xl mb-4">📅</div>
                 <h3 class="font-bold text-2xl mb-2">لا توجد مواعيد</h3>
@@ -404,2048 +167,258 @@
             <div id="appointments-list" class="space-y-3 hidden"></div>
         </div>
 
-        <!-- ==================== قسم قائمة اليوم (تم تعديله إلى تقرير وخطة علاجية) ==================== -->
+        <!-- الخطة العلاجية -->
         <div id="view-daylist" class="view-section hidden">
-            <!-- تقرير وخطة علاجية لكل عميل -->
             <div class="card p-6 mb-4">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="font-bold text-2xl text-teal-400" id="daylist-patient-name">اختر مريضاً</h3>
-                        <p class="text-slate-400 text-sm" id="daylist-patient-details"></p>
-                    </div>
-                    <button onclick="loadCurrentPatientForDaylist()" class="bg-teal-500 p-2 rounded-xl">
-                        <span class="text-xl">🔄</span>
-                    </button>
+                <div class="mb-4">
+                    <label class="block text-slate-400 mb-2 text-lg">اختر العميل</label>
+                    <select id="daylist-patient-select" class="w-full bg-slate-800 border border-slate-600 rounded-xl p-3 text-white" onchange="onDaylistPatientChange()">
+                        <option value="">-- اختر عميلاً --</option>
+                    </select>
                 </div>
-
-                <!-- التقرير الطبي -->
+                <div class="flex justify-between items-start mb-4">
+                    <div><h3 class="font-bold text-2xl text-teal-400" id="daylist-patient-name">لم يتم اختيار عميل</h3><p class="text-slate-400 text-sm" id="daylist-patient-details"></p></div>
+                    <button onclick="refreshDaylistPatient()" class="bg-teal-500 p-2 rounded-xl"><span class="text-xl">🔄</span></button>
+                </div>
                 <div class="mb-6">
                     <h4 class="font-bold text-xl text-white mb-3 flex items-center gap-2">📋 التقرير الطبي</h4>
                     <div class="space-y-3">
-                        <div>
-                            <label class="block text-slate-300 mb-1 text-sm">الشكوى الرئيسية</label>
-                            <div id="complaint-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('complaint')">انقر لإضافة الشكوى الرئيسية...</div>
-                            <textarea id="complaint-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-slate-300 mb-1 text-sm">العلامات الحيوية</label>
-                            <div id="vitals-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('vitals')">انقر لإضافة الضغط، النبض، درجة الحرارة...</div>
-                            <textarea id="vitals-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="2"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-slate-300 mb-1 text-sm">التشخيص</label>
-                            <div id="diagnosis-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('diagnosis')">انقر لإضافة التشخيص...</div>
-                            <textarea id="diagnosis-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-slate-300 mb-1 text-sm">ملاحظات إضافية</label>
-                            <div id="notes-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('notes')">انقر لإضافة ملاحظات...</div>
-                            <textarea id="notes-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea>
-                        </div>
+                        <div><label class="block text-slate-300 mb-1 text-sm">الشكوى الرئيسية</label><div id="complaint-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('complaint')">انقر لإضافة الشكوى الرئيسية...</div><textarea id="complaint-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea></div>
+                        <div><label class="block text-slate-300 mb-1 text-sm">العلامات الحيوية</label><div id="vitals-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('vitals')">انقر لإضافة الضغط، النبض، درجة الحرارة...</div><textarea id="vitals-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="2"></textarea></div>
+                        <div><label class="block text-slate-300 mb-1 text-sm">التشخيص</label><div id="diagnosis-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('diagnosis')">انقر لإضافة التشخيص...</div><textarea id="diagnosis-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea></div>
+                        <div><label class="block text-slate-300 mb-1 text-sm">ملاحظات إضافية</label><div id="notes-text" class="bg-slate-800 p-3 rounded-xl text-slate-200 cursor-pointer hover:bg-slate-700" onclick="editField('notes')">انقر لإضافة ملاحظات...</div><textarea id="notes-input" class="hidden w-full bg-slate-800 p-3 rounded-xl text-slate-200" rows="3"></textarea></div>
                     </div>
                 </div>
-
-                <!-- الخطة العلاجية -->
                 <div class="mb-4">
                     <h4 class="font-bold text-xl text-white mb-3 flex items-center gap-2">📝 خطة العلاج اليومية</h4>
-                    <div id="treatment-plan-list" class="space-y-2">
-                        <!-- المهام ستظهر هنا ديناميكياً -->
-                    </div>
+                    <div id="treatment-plan-list" class="space-y-2"></div>
                     <button onclick="addCustomTask()" class="btn-secondary w-full mt-3 py-2 rounded-xl text-sm">+ إضافة مهمة جديدة</button>
                 </div>
-
-                <button onclick="saveTreatmentPlan()" class="btn-primary w-full py-3 rounded-xl font-bold">💾 حفظ التقرير والخطة</button>
+                <div class="flex gap-3">
+                    <button onclick="saveTreatmentPlan()" class="btn-primary flex-1 py-3 rounded-xl font-bold">💾 حفظ التقرير والخطة</button>
+                    <button onclick="loadTreatmentPlanForCurrentPatient()" class="btn-secondary flex-1 py-3 rounded-xl font-bold">📂 تحميل الخطة</button>
+                </div>
             </div>
         </div>
 
-        <!-- قسم المراجع الجديد -->
+        <!-- المراجع -->
         <div id="view-archive" class="view-section hidden">
-            <div class="card mb-4 text-center">
-                <h2 class="font-bold text-2xl mb-2">📆 المراجع - قاعدة بيانات سنوية</h2>
-                <p class="text-slate-400 text-sm">كل يوم يحفظ الكشوفات والمدفوعات | الأيام ذات اللون الأخضر تحتوي على بيانات</p>
-            </div>
+            <div class="card mb-4 text-center"><h2 class="font-bold text-2xl mb-2">📆 المراجع - قاعدة بيانات سنوية</h2><p class="text-slate-400 text-sm">كل يوم يحفظ الكشوفات والمدفوعات</p></div>
             <div class="flex gap-3 mb-4">
-                <button onclick="saveAllDatesToArchive()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">
-                    💾 حفظ جميع التواريخ
-                </button>
-                <button onclick="showUpcomingAppointments()" class="btn-huge btn-secondary flex-1">
-                    📅 الحجوزات المستقبلية
-                </button>
+                <button onclick="saveAllDatesToArchive()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">💾 حفظ جميع التواريخ</button>
+                <button onclick="showUpcomingAppointments()" class="btn-huge btn-secondary flex-1">📅 الحجوزات المستقبلية</button>
             </div>
             <div id="months-container"></div>
-            
-            <!-- زر التجديد الشامل مع كلمة سر - يظهر فقط في المراجع -->
             <div class="card mt-6" style="border: 3px solid #EF4444;">
                 <h3 class="font-bold text-xl mb-4 text-red-400">⚠️ منطقة الخطر</h3>
-                <button onclick="resetAllData()" class="btn-huge w-full" style="background: #EF4444; color: white;">
-                    🗑️ تجديد شامل ومسح كل البيانات (لكل الأطباء)
-                </button>
-                <p class="text-xs text-slate-500 mt-3 text-center">
-                    🔒 كلمة السر المطلوبة: <span class="text-red-400 font-mono">admin123</span><br>
-                    ⚠️ هذا الإجراء لا يمكن التراجع عنه - يمسح جميع العملاء والحجوزات والمدفوعات والمراجع
-                </p>
+                <button onclick="resetAllData()" class="btn-huge w-full" style="background: #EF4444; color: white;">🗑️ تجديد شامل ومسح كل البيانات</button>
+                <p class="text-xs text-slate-500 mt-3 text-center">🔒 كلمة السر: <span class="text-red-400 font-mono">admin123</span> | ⚠️ لا يمكن التراجع</p>
             </div>
         </div>
 
+        <!-- العملاء -->
         <div id="view-patients" class="view-section hidden">
-            <button onclick="testAPIConnection()" class="btn-huge btn-secondary w-full mb-4">🔄 مزامنة من ensgam clinic</button>
-            <button onclick="openAddPatientModal()" class="btn-huge btn-primary w-full mb-4 flex items-center justify-center gap-2" style="background: #22C55E;">
-                <span class="text-3xl">+</span> إضافة عميل
-            </button>
+            <button onclick="testAPIConnection()" class="btn-huge btn-secondary w-full mb-4">🔄 مزامنة</button>
+            <button onclick="openAddPatientModal()" class="btn-huge btn-primary w-full mb-4 flex items-center justify-center gap-2" style="background: #22C55E;"><span class="text-3xl">+</span> إضافة عميل</button>
             <input type="text" id="patient-search" placeholder="🔍 بحث عن عميل" class="mb-4" oninput="searchPatients(this.value)">
             <div id="patients-list" class="space-y-4"></div>
         </div>
 
-        <!-- قسم المكتب المعدل بالكامل -->
+        <!-- الأدوية -->
         <div id="view-office" class="view-section hidden">
-            <!-- ملخص اليوم -->
-            <div class="card mb-4">
-                <h3 class="font-bold text-xl mb-4">📊 ملخص اليوم</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
-                        <div class="text-3xl font-bold text-teal-400" id="office-bookings">0</div>
-                        <div class="text-sm text-slate-400">المواعيد</div>
-                    </div>
-                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
-                        <div class="text-3xl font-bold text-teal-400" id="office-patients">0</div>
-                        <div class="text-sm text-slate-400">العملاء</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8 أدوية للأمراض النفسية -->
-            <div class="card mb-4">
-                <h3 class="font-bold text-xl mb-4">💊 الأدوية النفسية</h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('سيرترالين (Zoloft) - مضاد اكتئاب SSRI')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">سيرترالين</div>
-                        <p class="text-xs text-slate-400 mt-1">Zoloft · مضاد اكتئاب SSRI</p>
-                    </div>
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('فلوكستين (Prozac) - مضاد اكتئاب SSRI')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">فلوكستين</div>
-                        <p class="text-xs text-slate-400 mt-1">Prozac · مضاد اكتئاب SSRI</p>
-                    </div>
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('إسيتالوبرام (Lexapro) - مضاد اكتئاب SSRI')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">إسيتالوبرام</div>
-                        <p class="text-xs text-slate-400 mt-1">Lexapro · مضاد اكتئاب SSRI</p>
-                    </div>
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('فينلافاكسين (Effexor) - مضاد اكتئاب SNRI')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">فينلافاكسين</div>
-                        <p class="text-xs text-slate-400 mt-1">Effexor · مضاد اكتئاب SNRI</p>
-                    </div>
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('أولانزابين (Zyprexa) - مضاد ذهان غير نمطي')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">أولانزابين</div>
-                        <p class="text-xs text-slate-400 mt-1">Zyprexa · مضاد ذهان</p>
-                    </div>
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('ريسبيريدون (Risperdal) - مضاد ذهان')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">ريسبيريدون</div>
-                        <p class="text-xs text-slate-400 mt-1">Risperdal · مضاد ذهان</p>
-                    </div>
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('كلونازيبام (Klonopin) - مزيل قلق')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">كلونازيبام</div>
-                        <p class="text-xs text-slate-400 mt-1">Klonopin · مزيل قلق</p>
-                    </div>
-                    <div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('ميثيلفينيديت (Ritalin) - منبه ADHD')">
-                        <div class="text-3xl mb-2">💊</div>
-                        <div class="font-bold text-teal-400">ميثيلفينيديت</div>
-                        <p class="text-xs text-slate-400 mt-1">Ritalin · علاج ADHD</p>
-                    </div>
-                </div>
-                <p class="text-xs text-slate-500 text-center mt-3">👆 اضغط على أي دواء لإضافته إلى الروشتة</p>
-            </div>
-
-            <!-- الروشتة -->
-            <div class="card mb-4">
-                <h3 class="font-bold text-xl mb-4">📋 الروشتة (الوصفات الطبية)</h3>
-                <div id="prescriptions-list" class="space-y-3"></div>
-                <div class="mt-4 flex gap-3">
-                    <button onclick="addPrescriptionWithInput()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">+ إضافة روشتة يدوياً</button>
-                    <button onclick="clearPrescriptions()" class="btn-huge btn-secondary flex-1" style="background: #EF4444;">مسح الكل</button>
-                </div>
-            </div>
-
-            <!-- الملاحظات -->
-            <div class="card">
-                <h3 class="font-bold text-xl mb-4">📝 ملاحظات</h3>
-                <textarea id="office-notes" class="notes-area" placeholder="اكتب ملاحظاتك هنا..."></textarea>
-                <button onclick="saveNotes()" class="btn-huge btn-primary w-full mt-4">حفظ الملاحظات</button>
-            </div>
+            <div class="card mb-4"><h3 class="font-bold text-xl mb-4">📊 ملخص اليوم</h3><div class="grid grid-cols-2 gap-4"><div class="text-center p-4 bg-slate-800 rounded-2xl"><div class="text-3xl font-bold text-teal-400" id="office-bookings">0</div><div class="text-sm text-slate-400">المواعيد</div></div><div class="text-center p-4 bg-slate-800 rounded-2xl"><div class="text-3xl font-bold text-teal-400" id="office-patients">0</div><div class="text-sm text-slate-400">العملاء</div></div></div></div>
+            <div class="card mb-4"><h3 class="font-bold text-xl mb-4">💊 الأدوية النفسية</h3><div class="grid grid-cols-2 gap-3"><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('سيرترالين (Zoloft) - مضاد اكتئاب SSRI')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">سيرترالين</div><p class="text-xs text-slate-400 mt-1">Zoloft · SSRI</p></div><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('فلوكستين (Prozac) - مضاد اكتئاب SSRI')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">فلوكستين</div><p class="text-xs text-slate-400 mt-1">Prozac · SSRI</p></div><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('إسيتالوبرام (Lexapro) - مضاد اكتئاب SSRI')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">إسيتالوبرام</div><p class="text-xs text-slate-400 mt-1">Lexapro · SSRI</p></div><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('فينلافاكسين (Effexor) - مضاد اكتئاب SNRI')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">فينلافاكسين</div><p class="text-xs text-slate-400 mt-1">Effexor · SNRI</p></div><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('أولانزابين (Zyprexa) - مضاد ذهان')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">أولانزابين</div><p class="text-xs text-slate-400 mt-1">Zyprexa · مضاد ذهان</p></div><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('ريسبيريدون (Risperdal) - مضاد ذهان')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">ريسبيريدون</div><p class="text-xs text-slate-400 mt-1">Risperdal · مضاد ذهان</p></div><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('كلونازيبام (Klonopin) - مزيل قلق')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">كلونازيبام</div><p class="text-xs text-slate-400 mt-1">Klonopin · مزيل قلق</p></div><div class="medication-card bg-slate-800 rounded-2xl p-4 text-center" onclick="selectMedication('ميثيلفينيديت (Ritalin) - منبه ADHD')"><div class="text-3xl mb-2">💊</div><div class="font-bold text-teal-400">ميثيلفينيديت</div><p class="text-xs text-slate-400 mt-1">Ritalin · ADHD</p></div></div><p class="text-xs text-slate-500 text-center mt-3">👆 اضغط على دواء لإضافته للروشتة</p></div>
+            <div class="card mb-4"><h3 class="font-bold text-xl mb-4">📋 الروشتة</h3><div id="prescriptions-list" class="space-y-3"></div><div class="mt-4 flex gap-3"><button onclick="addPrescriptionWithInput()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">+ إضافة روشتة</button><button onclick="clearPrescriptions()" class="btn-huge btn-secondary flex-1" style="background: #EF4444;">مسح الكل</button></div></div>
+            <div class="card"><h3 class="font-bold text-xl mb-4">📝 ملاحظات</h3><textarea id="office-notes" class="notes-area" placeholder="اكتب ملاحظاتك هنا..."></textarea><button onclick="saveNotes()" class="btn-huge btn-primary w-full mt-4">حفظ الملاحظات</button></div>
         </div>
 
-        <!-- قسم الإيرادات المالية -->
+        <!-- الدفع والإيرادات -->
         <div id="view-tasks" class="view-section hidden">
-            <!-- إجمالي الإيرادات -->
-            <div class="revenue-card mb-4">
-                <div class="text-xl text-slate-400 mb-2">💰 إجمالي الإيرادات</div>
-                <div class="revenue-amount" id="totalRevenue">0</div>
-                <div class="text-sm text-slate-500">جنيه مصري</div>
-            </div>
-
-            <!-- عدد الحجوزات المكتملة -->
-            <div class="card mb-4">
-                <h3 class="font-bold text-xl mb-4">📊 إحصائيات اليوم</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
-                        <div class="text-3xl font-bold text-teal-400" id="todayCompleted">0</div>
-                        <div class="text-sm text-slate-400">حجوزات اليوم المكتملة</div>
-                    </div>
-                    <div class="text-center p-4 bg-slate-800 rounded-2xl">
-                        <div class="text-3xl font-bold text-teal-400" id="todayRevenue">0</div>
-                        <div class="text-sm text-slate-400">إيرادات اليوم</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- سجل المعاملات المالية -->
-            <div class="card">
-                <h3 class="font-bold text-xl mb-4">📜 سجل المعاملات المالية</h3>
-                <div id="transactions-list" class="space-y-3 max-h-96 overflow-y-auto">
-                    <!-- سيتم عرض المعاملات هنا -->
-                </div>
-                <button onclick="clearAllTransactions()" class="btn-huge btn-secondary w-full mt-4" style="background: #EF4444;">مسح سجل المعاملات</button>
-            </div>
+            <div class="revenue-card mb-4"><div class="text-xl text-slate-400 mb-2">💰 إجمالي الإيرادات</div><div class="revenue-amount" id="totalRevenue">0</div><div class="text-sm text-slate-500">جنيه مصري</div></div>
+            <div class="card mb-4"><h3 class="font-bold text-xl mb-4">📊 إحصائيات اليوم</h3><div class="grid grid-cols-2 gap-4"><div class="text-center p-4 bg-slate-800 rounded-2xl"><div class="text-3xl font-bold text-teal-400" id="todayCompleted">0</div><div class="text-sm text-slate-400">حجوزات مكتملة</div></div><div class="text-center p-4 bg-slate-800 rounded-2xl"><div class="text-3xl font-bold text-teal-400" id="todayRevenue">0</div><div class="text-sm text-slate-400">إيرادات اليوم</div></div></div></div>
+            <div class="card"><h3 class="font-bold text-xl mb-4">📜 سجل المعاملات</h3><div id="transactions-list" class="space-y-3 max-h-96 overflow-y-auto"></div><button onclick="clearAllTransactions()" class="btn-huge btn-secondary w-full mt-4" style="background: #EF4444;">مسح السجل</button></div>
         </div>
 
-        <!-- ==================== قسم تقارير المساعدين (جديد) ==================== -->
+        <!-- تقارير المساعدين -->
         <div id="view-reports" class="view-section hidden">
-            <div class="card mb-4">
-                <h3 class="font-bold text-2xl mb-4 text-center">📊 تقارير نشاط المساعدين</h3>
-                <p class="text-slate-400 text-sm text-center mb-4">عرض الحجوزات والمدفوعات حسب كل مساعدة</p>
-            </div>
-            
-            <!-- إحصائيات سريعة -->
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <div class="report-stat-card">
-                    <div class="text-3xl mb-1">👩‍⚕️</div>
-                    <div class="font-bold text-teal-400 text-2xl" id="amira-count">0</div>
-                    <div class="text-sm text-slate-400">حجوزات Amira</div>
-                </div>
-                <div class="report-stat-card">
-                    <div class="text-3xl mb-1">👩‍⚕️</div>
-                    <div class="font-bold text-teal-400 text-2xl" id="aya-count">0</div>
-                    <div class="text-sm text-slate-400">حجوزات Aya</div>
-                </div>
-            </div>
-            
-            <!-- جدول الحجوزات حسب المساعد -->
-            <div class="card mb-4">
-                <h3 class="font-bold text-xl mb-3">📋 الحجوزات حسب المساعد</h3>
-                <div id="appointments-by-assistant"></div>
-            </div>
-            
-            <!-- جدول المدفوعات حسب المساعد -->
-            <div class="card mb-4">
-                <h3 class="font-bold text-xl mb-3">💰 المدفوعات حسب المساعد</h3>
-                <div id="payments-by-assistant"></div>
-            </div>
-            
-            <!-- سجل نشاط المساعدين -->
-            <div class="card">
-                <h3 class="font-bold text-xl mb-3">⏱️ سجل الدخول والخروج</h3>
-                <div id="activity-logs" style="max-height: 300px; overflow-y: auto;"></div>
-                <button onclick="clearActivityLogs()" class="btn-huge btn-secondary w-full mt-3" style="background: #EF4444;">مسح السجل</button>
-            </div>
+            <div class="card mb-4"><h3 class="font-bold text-2xl mb-4 text-center">📊 تقارير نشاط المساعدين</h3><p class="text-slate-400 text-sm text-center mb-4">الحجوزات والمدفوعات حسب كل مساعدة</p></div>
+            <div class="grid grid-cols-2 gap-3 mb-4"><div class="report-stat-card"><div class="text-3xl mb-1">👩‍⚕️</div><div class="font-bold text-teal-400 text-2xl" id="amira-count">0</div><div class="text-sm text-slate-400">حجوزات Amira</div></div><div class="report-stat-card"><div class="text-3xl mb-1">👩‍⚕️</div><div class="font-bold text-teal-400 text-2xl" id="aya-count">0</div><div class="text-sm text-slate-400">حجوزات Aya</div></div></div>
+            <div class="card mb-4"><h3 class="font-bold text-xl mb-3">📋 الحجوزات حسب المساعد</h3><div id="appointments-by-assistant"></div></div>
+            <div class="card mb-4"><h3 class="font-bold text-xl mb-3">💰 المدفوعات حسب المساعد</h3><div id="payments-by-assistant"></div></div>
+            <div class="card"><h3 class="font-bold text-xl mb-3">⏱️ سجل النشاط</h3><div id="activity-logs" style="max-height: 300px; overflow-y: auto;"></div><button onclick="clearActivityLogs()" class="btn-huge btn-secondary w-full mt-3" style="background: #EF4444;">مسح السجل</button></div>
         </div>
     </main>
 
-    <div id="booking-modal" class="modal">
-        <div class="modal-content">
-            <h2 class="font-bold text-3xl mb-6">حجز جديد</h2>
-            <label class="block text-slate-400 mb-2 text-lg">الطبيب</label>
-            <select id="booking-doctor" class="mb-4" onchange="updateBookingPrice()">
-                <option value="dr-fatma">د. فاطمة حبيب (أخصائية نفسية)</option>
-                <option value="dr-amira">د. ندي مرجان حسن (طب نفسي)</option>
-                <option value="dr-yosry">د. الاء رجب (علاج سلوكي معرفي)</option>
-            </select>
-            <label class="block text-slate-400 mb-2 text-lg">العميل</label>
-            <input type="text" id="booking-patient" list="patient-suggestions" placeholder="اسم العميل" class="mb-4" autocomplete="off">
-            <datalist id="patient-suggestions"></datalist>
-            <label class="block text-slate-400 mb-2 text-lg">التاريخ</label>
-            <input type="date" id="booking-date" class="mb-4">
-            <label class="block text-slate-400 mb-2 text-lg">الوقت</label>
-            <div class="grid grid-cols-2 gap-3 mb-6">
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '04:00')">04:00</button>
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '05:00')">05:00</button>
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '06:00')">06:00</button>
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '07:00')">07:00</button>
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '08:00')">08:00</button>
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '09:00')">09:00</button>
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '10:00')">10:00</button>
-                <button class="time-slot flex items-center justify-center" onclick="selectTime(this, '11:00')">11:00</button>
-            </div>
-            <!-- إضافة نوع الحجز (أونلاين / أوف لاين) -->
-            <label class="block text-slate-400 mb-2 text-lg">نوع الحجز</label>
-            <div class="grid grid-cols-2 gap-3 mb-6">
-                <button type="button" onclick="selectBookingType(this, 'online')" class="booking-type-btn time-slot flex items-center justify-center" style="background: #1E2937;">
-                    📱 أونلاين
-                </button>
-                <button type="button" onclick="selectBookingType(this, 'offline')" class="booking-type-btn time-slot flex items-center justify-center" style="background: #1E2937;">
-                    🏢 أوف لاين
-                </button>
-            </div>
-            <div class="card mb-4 text-center">
-                <div class="text-lg text-slate-400">سعر الحجز</div>
-                <div class="text-2xl font-bold text-teal-400" id="booking-price-display">0</div>
-                <div class="text-xs text-slate-500">سيتم إضافة المبلغ عند إتمام الدفع بعد الحجز</div>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="closeBookingModal()" class="btn-huge btn-secondary flex-1">إلغاء</button>
-                <button onclick="saveAppointment()" class="btn-huge btn-primary flex-1">حجز</button>
-            </div>
-        </div>
-    </div>
+    <!-- مودال الحجز -->
+    <div id="booking-modal" class="modal"><div class="modal-content"><h2 class="font-bold text-3xl mb-6">حجز جديد</h2><label class="block text-slate-400 mb-2 text-lg">الطبيب</label><select id="booking-doctor" class="mb-4" onchange="updateBookingPrice()"><option value="dr-fatma">د. فاطمة حبيب</option><option value="dr-amira">د. ندي مرجان</option><option value="dr-yosry">د. الاء رجب</option></select><label class="block text-slate-400 mb-2 text-lg">العميل</label><input type="text" id="booking-patient" list="patient-suggestions" placeholder="اسم العميل" class="mb-4"><datalist id="patient-suggestions"></datalist><label class="block text-slate-400 mb-2 text-lg">التاريخ</label><input type="date" id="booking-date" class="mb-4"><label class="block text-slate-400 mb-2 text-lg">الوقت</label><div class="grid grid-cols-2 gap-3 mb-6"><button class="time-slot" onclick="selectTime(this,'04:00')">04:00</button><button class="time-slot" onclick="selectTime(this,'05:00')">05:00</button><button class="time-slot" onclick="selectTime(this,'06:00')">06:00</button><button class="time-slot" onclick="selectTime(this,'07:00')">07:00</button><button class="time-slot" onclick="selectTime(this,'08:00')">08:00</button><button class="time-slot" onclick="selectTime(this,'09:00')">09:00</button><button class="time-slot" onclick="selectTime(this,'10:00')">10:00</button><button class="time-slot" onclick="selectTime(this,'11:00')">11:00</button></div><label class="block text-slate-400 mb-2 text-lg">نوع الحجز</label><div class="grid grid-cols-2 gap-3 mb-6"><button type="button" onclick="selectBookingType(this,'online')" class="booking-type-btn time-slot">📱 أونلاين</button><button type="button" onclick="selectBookingType(this,'offline')" class="booking-type-btn time-slot">🏢 أوف لاين</button></div><div class="card mb-4 text-center"><div class="text-lg text-slate-400">سعر الحجز</div><div class="text-2xl font-bold text-teal-400" id="booking-price-display">0</div><div class="text-xs text-slate-500">يتم الدفع عند الحضور</div></div><div class="flex gap-3"><button onclick="closeBookingModal()" class="btn-huge btn-secondary flex-1">إلغاء</button><button onclick="saveAppointment()" class="btn-huge btn-primary flex-1">حجز</button></div></div></div>
 
-    <div id="success-modal" class="modal">
-        <div class="modal-content text-center">
-            <div class="text-7xl mb-4">✅</div>
-            <h2 class="font-bold text-3xl mb-3">تم الحفظ!</h2>
-            <p class="text-slate-400 text-xl mb-6" id="success-message">تم حجز الموعد</p>
-            <button onclick="closeSuccessModal()" class="btn-huge btn-primary w-full">تم</button>
-        </div>
-    </div>
+    <div id="success-modal" class="modal"><div class="modal-content text-center"><div class="text-7xl mb-4">✅</div><h2 class="font-bold text-3xl mb-3">تم الحفظ!</h2><p class="text-slate-400 text-xl mb-6" id="success-message"></p><button onclick="closeSuccessModal()" class="btn-huge btn-primary w-full">تم</button></div></div>
 
-    <!-- Patient Modal - المعدل بالكامل مع جلسات حسب الطبيب -->
-    <div id="patient-modal" class="modal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="font-bold text-3xl" id="patient-name">العميل</h2>
-                <button onclick="closePatientModal()" class="text-slate-400 text-2xl">✕</button>
-            </div>
-            
-            <div class="patient-nhi" id="patient-nhi"></div>
-            <div class="patient-dob" id="patient-dob"></div>
-            <div class="patient-address" id="patient-address"></div>
-            <p class="text-teal-400 text-lg mb-4" id="patient-phone"></p>
-            
-            <!-- جلسات المريض (حسب الطبيب) -->
-            <div class="card mb-4 p-4">
-                <h3 class="font-bold text-xl mb-3 text-teal-400" id="sessions-title">📋 جلسات العلاج</h3>
-                <div class="grid grid-cols-4 gap-2" id="sessions-grid">
-                    <!-- سيتم إنشاء الجلسات ديناميكياً حسب الطبيب -->
-                </div>
-                <div class="flex justify-between mt-4 pt-3 border-t border-slate-700">
-                    <div class="text-sm text-slate-400">
-                        <span class="inline-block w-4 h-4 bg-green-500 rounded ml-1"></span> حاضر
-                    </div>
-                    <div class="text-sm text-slate-400">
-                        <span class="inline-block w-4 h-4 bg-red-500 rounded ml-1"></span> غائب
-                    </div>
-                    <div class="text-sm text-slate-400">
-                        <span class="inline-block w-4 h-4 bg-slate-600 rounded ml-1"></span> لم يحضر بعد
-                    </div>
-                </div>
-            </div>
-            
-            <div class="space-y-3">
-                <button onclick="viewPatientRecords()" class="btn-huge btn-primary w-full flex items-center justify-center gap-3">
-                    <span class="text-2xl">📋</span> السجل الطبي
-                </button>
-                <button onclick="openPatientPrescription()" class="btn-huge btn-primary w-full flex items-center justify-center gap-3" id="prescriptionBtn">
-                    <span class="text-2xl">💊</span> وصف دواء
-                </button>
-                <button onclick="callPatientZoom()" class="btn-zoom w-full flex items-center justify-center gap-3">
-                    <span class="text-2xl">📞</span> الاتصال عبر Zoom
-                </button>
-                <button class="btn-huge btn-secondary w-full" onclick="closePatientModal()">رجوع</button>
-            </div>
-        </div>
-    </div>
+    <!-- مودال العميل مع تبويبات الروشتات والتقارير -->
+    <div id="patient-modal" class="modal"><div class="modal-content" style="max-width: 600px;"><div class="flex justify-between items-center mb-4"><h2 class="font-bold text-3xl" id="patient-name">العميل</h2><button onclick="closePatientModal()" class="text-slate-400 text-2xl">✕</button></div><div class="patient-nhi" id="patient-nhi"></div><div class="patient-dob" id="patient-dob"></div><div class="patient-address" id="patient-address"></div><p class="text-teal-400 text-lg mb-4" id="patient-phone"></p><div class="card mb-4 p-4"><h3 class="font-bold text-xl mb-3 text-teal-400" id="sessions-title">📋 جلسات العلاج</h3><div class="grid grid-cols-4 gap-2" id="sessions-grid"></div><div class="flex justify-between mt-4 pt-3 border-t border-slate-700"><div class="text-sm text-slate-400"><span class="inline-block w-4 h-4 bg-green-500 rounded ml-1"></span> حاضر</div><div class="text-sm text-slate-400"><span class="inline-block w-4 h-4 bg-red-500 rounded ml-1"></span> غائب</div><div class="text-sm text-slate-400"><span class="inline-block w-4 h-4 bg-slate-600 rounded ml-1"></span> لم يحضر</div></div></div><div class="mb-4"><div class="flex gap-2 border-b border-slate-700 mb-3"><button onclick="showPatientPrescriptionsTab()" id="tab-prescriptions-btn" class="px-4 py-2 text-teal-400 border-b-2 border-teal-400">💊 الروشتات</button><button onclick="showPatientReportsTab()" id="tab-reports-btn" class="px-4 py-2 text-slate-400">📋 التقارير والخطط</button></div><div id="patient-prescriptions-container" class="max-h-60 overflow-y-auto"></div><div id="patient-reports-container" class="hidden max-h-60 overflow-y-auto"></div></div><div class="space-y-3"><button onclick="viewPatientRecords()" class="btn-huge btn-primary w-full">📊 إحصائيات الجلسات</button><button onclick="callPatientZoom()" class="btn-zoom w-full">📞 الاتصال عبر Zoom</button><button class="btn-huge btn-secondary w-full" onclick="closePatientModal()">رجوع</button></div></div></div>
 
-    <!-- نافذة عرض الروشتة -->
-    <div id="prescription-view-modal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="font-bold text-3xl">💊 روشتة العميل</h2>
-                <button onclick="closePrescriptionModal()" class="text-slate-400 text-2xl">✕</button>
-            </div>
-            <div id="prescription-details" class="space-y-3">
-                <!-- سيتم عرض الروشتة هنا -->
-            </div>
-            <button onclick="closePrescriptionModal()" class="btn-huge btn-secondary w-full mt-4">إغلاق</button>
-        </div>
-    </div>
+    <!-- مودال عرض الروشتة -->
+    <div id="prescription-view-modal" class="modal"><div class="modal-content"><div class="flex justify-between items-center mb-4"><h2 class="font-bold text-3xl">💊 روشتة العميل</h2><button onclick="closePrescriptionModal()" class="text-slate-400 text-2xl">✕</button></div><div id="prescription-details" class="space-y-3"></div><button onclick="closePrescriptionModal()" class="btn-huge btn-secondary w-full mt-4">إغلاق</button></div></div>
 
-    <!-- نافذة عرض تفاصيل اليوم من المراجع -->
-    <div id="day-details-modal" class="modal">
-        <div class="modal-content day-details-modal">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="font-bold text-3xl" id="day-details-title"></h2>
-                <button onclick="closeDayDetailsModal()" class="text-slate-400 text-2xl">✕</button>
-            </div>
-            <div id="day-details-content"></div>
-        </div>
-    </div>
+    <div id="day-details-modal" class="modal"><div class="modal-content day-details-modal"><div class="flex justify-between items-center mb-4"><h2 class="font-bold text-3xl" id="day-details-title"></h2><button onclick="closeDayDetailsModal()" class="text-slate-400 text-2xl">✕</button></div><div id="day-details-content"></div></div></div>
 
-    <div id="add-patient-modal" class="modal">
-        <div class="modal-content">
-            <h2 class="font-bold text-3xl mb-6">إضافة عميل</h2>
-            <label class="block text-slate-400 mb-2 text-lg">الاسم</label>
-            <input type="text" id="new-patient-name" placeholder="الاسم الكامل" class="mb-4">
-            <label class="block text-slate-400 mb-2 text-lg">NHI (رقم العميل ID) *</label>
-            <input type="text" id="new-patient-nhi" placeholder="مثال: PAT001" class="mb-4">
-            <p class="text-xs text-slate-500 mb-2">⚠️ NHI هو المعرف الفريد للعميل ولا يمكن تكراره</p>
-            <label class="block text-slate-400 mb-2 text-lg">تاريخ الميلاد</label>
-            <input type="text" id="new-patient-dob" placeholder="مثال: 24/12/1997" class="mb-4">
-            <label class="block text-slate-400 mb-2 text-lg">العنوان</label>
-            <input type="text" id="new-patient-address" placeholder="العنوان الكامل" class="mb-4">
-            <label class="block text-slate-400 mb-2 text-lg">رقم الهاتف</label>
-            <input type="tel" id="new-patient-phone" placeholder="+64 21 123 4567" class="mb-6">
-            <div class="flex gap-3">
-                <button onclick="closeAddPatientModal()" class="btn-huge btn-secondary flex-1">إلغاء</button>
-                <button onclick="saveNewPatient()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">حفظ</button>
-            </div>
-        </div>
-    </div>
+    <div id="add-patient-modal" class="modal"><div class="modal-content"><h2 class="font-bold text-3xl mb-6">إضافة عميل</h2><label class="block text-slate-400 mb-2 text-lg">الاسم</label><input type="text" id="new-patient-name" class="mb-4"><label class="block text-slate-400 mb-2 text-lg">NHI *</label><input type="text" id="new-patient-nhi" placeholder="PAT001" class="mb-4"><p class="text-xs text-slate-500 mb-2">⚠️ معرف فريد لا يمكن تكراره</p><label class="block text-slate-400 mb-2 text-lg">تاريخ الميلاد</label><input type="text" id="new-patient-dob" placeholder="24/12/1997" class="mb-4"><label class="block text-slate-400 mb-2 text-lg">العنوان</label><input type="text" id="new-patient-address" class="mb-4"><label class="block text-slate-400 mb-2 text-lg">رقم الهاتف</label><input type="tel" id="new-patient-phone" class="mb-6"><div class="flex gap-3"><button onclick="closeAddPatientModal()" class="btn-huge btn-secondary flex-1">إلغاء</button><button onclick="saveNewPatient()" class="btn-huge btn-primary flex-1" style="background: #22C55E;">حفظ</button></div></div></div>
 
     <nav class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t-4 border-slate-800 px-2 py-3 safe-bottom z-50">
         <div class="flex justify-around items-center">
-            <button onclick="switchTab('schedule')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-active" data-tab="schedule">
-                <span class="text-3xl">📅</span>
-                <span class="text-sm font-bold">حجز</span>
-            </button>
-            <button onclick="switchTab('daylist')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="daylist">
-                <span class="text-3xl">📋</span>
-                <span class="text-sm font-bold">الخطة العلاجية</span>
-            </button>
-            <button onclick="switchTab('archive')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="archive">
-                <span class="text-3xl">📆</span>
-                <span class="text-sm font-bold">المراجع</span>
-            </button>
-            <button onclick="switchTab('patients')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="patients">
-                <span class="text-3xl">👤</span>
-                <span class="text-sm font-bold">العملاء</span>
-            </button>
-            <button onclick="switchTab('office')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="office">
-                <span class="text-3xl">🏢</span>
-                <span class="text-sm font-bold">الادوية</span>
-            </button>
-            <button onclick="switchTab('tasks')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="tasks">
-                <span class="text-3xl">💰</span>
-                <span class="text-sm font-bold">الدفع</span>
-            </button>
-            <button onclick="switchTab('reports')" class="tab-btn flex flex-col items-center gap-1 p-2 tab-inactive" data-tab="reports">
-                <span class="text-3xl">📊</span>
-                <span class="text-sm font-bold">التقارير</span>
-            </button>
+            <button onclick="switchTab('schedule')" class="tab-btn tab-active" data-tab="schedule"><span class="text-3xl">📅</span><span class="text-sm font-bold">حجز</span></button>
+            <button onclick="switchTab('daylist')" class="tab-btn tab-inactive" data-tab="daylist"><span class="text-3xl">📋</span><span class="text-sm font-bold">الخطة العلاجية</span></button>
+            <button onclick="switchTab('archive')" class="tab-btn tab-inactive" data-tab="archive"><span class="text-3xl">📆</span><span class="text-sm font-bold">المراجع</span></button>
+            <button onclick="switchTab('patients')" class="tab-btn tab-inactive" data-tab="patients"><span class="text-3xl">👤</span><span class="text-sm font-bold">العملاء</span></button>
+            <button onclick="switchTab('office')" class="tab-btn tab-inactive" data-tab="office"><span class="text-3xl">🏢</span><span class="text-sm font-bold">الأدوية</span></button>
+            <button onclick="switchTab('tasks')" class="tab-btn tab-inactive" data-tab="tasks"><span class="text-3xl">💰</span><span class="text-sm font-bold">الدفع</span></button>
+            <button onclick="switchTab('reports')" class="tab-btn tab-inactive" data-tab="reports"><span class="text-3xl">📊</span><span class="text-sm font-bold">التقارير</span></button>
         </div>
     </nav>
 
     <script>
-        // State
-        let selectedTime = null;
-        let selectedBookingType = 'offline';
-        let currentProfile = localStorage.getItem('ensgam clinic_current_profile') || 'dr-fatma';
-        let currentPatientPhone = null;
-        let currentPatientName = '';
-        let currentPatientNHI = '';
-        let isOnline = navigator.onLine;
-        let selectedDate = new Date().toISOString().split('T')[0];
-        let deferredPrompt = null;
+        // ==================== المتغيرات العامة ====================
+        let selectedTime = null, selectedBookingType = 'offline', currentProfile = localStorage.getItem('ensgam clinic_current_profile') || 'dr-fatma';
+        let currentPatientPhone = null, currentPatientName = '', currentPatientNHI = '', isOnline = navigator.onLine, selectedDate = new Date().toISOString().split('T')[0], deferredPrompt = null;
+        let patientsData = [], prescriptionsData = [], totalRevenue = 0, transactions = [], currentDaylistPatientName = null, windowCurrentTasks = [];
         
-        // بيانات الأطباء الثلاثة
-        const profileNames = {
-            'dr-fatma': 'د. فاطمة حبيب',
-            'dr-amira': 'د. ندي مرجان ',
-            'dr-yosry': 'د. الاء رجب'
-        };
-        
-        const DOCTORS_DATA = {
-            'dr-fatma': {
-                name: 'د. فاطمة حبيب',
-                initials: 'ف ح',
-                role: 'أخصائية نفسية',
-                sessionsCount: 4,
-                patients: ['أحمد سعيد', 'منى خالد', 'يوسف علي', 'ليلى إبراهيم', 'مصطفى']
-            },
-            'dr-amira': {
-                name: 'د. ندي مرجان ',
-                initials: 'ن ح',
-                role: 'طب نفسي',
-                sessionsCount: 12,
-                patients: ['سارة محمود', 'عمر رشاد', 'نورا سامي', 'كريم مصطفى']
-            },
-            'dr-yosry': {
-                name: 'د. الاء رجب',
-                initials: 'ي ع',
-                role: 'علاج سلوكي معرفي',
-                sessionsCount: 12,
-                patients: ['هبة سليمان', 'محمد إبراهيم', 'فاطمة علي', 'أحمد كمال']
-            }
-        };
-        
-        // دالة حساب سعر الحجز حسب الطبيب ونوع الحجز
-        function getAppointmentPrice(doctorId, bookingType) {
-            if (doctorId === 'dr-fatma') {
-                return bookingType === 'online' ? 350 : 275;
-            } else {
-                return 110;
-            }
-        }
-        
-        // تحديث عرض السعر في نموذج الحجز
-        function updateBookingPrice() {
-            const doctorId = document.getElementById('booking-doctor').value;
-            const price = getAppointmentPrice(doctorId, selectedBookingType);
-            document.getElementById('booking-price-display').textContent = `${price} جنيه`;
-        }
-        
-        let patientsData = [];
-        let prescriptionsData = [];
-        
-        // بيانات الإيرادات المالية
-        let totalRevenue = 0;
-        let transactions = [];
-        
-        // أسماء الأشهر للمراجع
+        const profileNames = { 'dr-fatma': 'د. فاطمة حبيب', 'dr-amira': 'د. ندي مرجان', 'dr-yosry': 'د. الاء رجب' };
+        const DOCTORS_DATA = { 'dr-fatma': { name: 'د. فاطمة حبيب', sessionsCount: 4 }, 'dr-amira': { name: 'د. ندي مرجان', sessionsCount: 12 }, 'dr-yosry': { name: 'د. الاء رجب', sessionsCount: 12 } };
         const monthNames = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
         
-        // ==================== دوال التقرير والخطة العلاجية (جديد) ====================
-        
-        // الحصول على مفتاح تخزين التقرير والخطة
-        function getTreatmentPlanKey(patientName, date) {
-            return `ensgam clinic_${currentProfile}_treatment_${patientName.replace(/\s/g, '_')}_${date}`;
-        }
-        
-        // تحميل خطة العلاج والتقرير للعميل الحالي
-        function loadTreatmentPlanForPatient(patientName) {
-            const today = new Date().toISOString().split('T')[0];
-            const key = getTreatmentPlanKey(patientName, today);
-            const saved = localStorage.getItem(key);
-            
-            const defaultTasks = [
-                { id: 1, text: "جلسة علاج نفسي (ساعة)", completed: false },
-                { id: 2, text: "تقييم الحالة المزاجية", completed: false },
-                { id: 3, text: "مراجعة الأدوية وجرعاتها", completed: false },
-                { id: 4, text: "تمارين التنفس والاسترخاء", completed: false },
-                { id: 5, text: "متابعة النوم والشهية", completed: false }
-            ];
-            
-            if (saved) {
-                const data = JSON.parse(saved);
-                // عرض البيانات في حقول التقرير
-                document.getElementById('complaint-text').innerHTML = data.complaint || 'انقر لإضافة الشكوى الرئيسية...';
-                document.getElementById('vitals-text').innerHTML = data.vitals || 'انقر لإضافة الضغط، النبض، درجة الحرارة...';
-                document.getElementById('diagnosis-text').innerHTML = data.diagnosis || 'انقر لإضافة التشخيص...';
-                document.getElementById('notes-text').innerHTML = data.notes || 'انقر لإضافة ملاحظات...';
-                
-                // عرض المهام
-                if (data.tasks && data.tasks.length > 0) {
-                    renderTasksList(data.tasks);
-                } else {
-                    renderTasksList(defaultTasks);
-                }
-            } else {
-                // بيانات افتراضية
-                document.getElementById('complaint-text').innerHTML = 'انقر لإضافة الشكوى الرئيسية...';
-                document.getElementById('vitals-text').innerHTML = 'انقر لإضافة الضغط، النبض، درجة الحرارة...';
-                document.getElementById('diagnosis-text').innerHTML = 'انقر لإضافة التشخيص...';
-                document.getElementById('notes-text').innerHTML = 'انقر لإضافة ملاحظات...';
-                renderTasksList(defaultTasks);
-            }
-        }
-        
-        // عرض قائمة المهام
-        function renderTasksList(tasks) {
-            const container = document.getElementById('treatment-plan-list');
-            if (!tasks || tasks.length === 0) {
-                container.innerHTML = '<div class="text-center text-slate-500 py-4">لا توجد مهام مضافة</div>';
-                return;
-            }
-            
-            container.innerHTML = tasks.map(task => `
-                <div class="flex items-center gap-3 bg-slate-800 p-3 rounded-xl">
-                    <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})" class="w-6 h-6 rounded border-teal-500">
-                    <span class="flex-1 text-slate-200 ${task.completed ? 'line-through text-slate-500' : ''}">${task.text}</span>
-                    <button onclick="deleteTask(${task.id})" class="text-red-400 text-xl">🗑</button>
-                </div>
-            `).join('');
-            
-            // حفظ المهام مؤقتاً في متغير عام
-            window.currentTasks = tasks;
-        }
-        
-        // تبديل حالة مهمة
-        function toggleTask(taskId) {
-            if (window.currentTasks) {
-                const task = window.currentTasks.find(t => t.id === taskId);
-                if (task) {
-                    task.completed = !task.completed;
-                    renderTasksList(window.currentTasks);
-                }
-            }
-        }
-        
-        // حذف مهمة
-        function deleteTask(taskId) {
-            if (window.currentTasks) {
-                window.currentTasks = window.currentTasks.filter(t => t.id !== taskId);
-                renderTasksList(window.currentTasks);
-            }
-        }
-        
-        // إضافة مهمة مخصصة
-        function addCustomTask() {
-            const taskText = prompt('أدخل اسم المهمة الجديدة:');
-            if (taskText && taskText.trim()) {
-                if (!window.currentTasks) window.currentTasks = [];
-                const newId = Date.now();
-                window.currentTasks.push({ id: newId, text: taskText, completed: false });
-                renderTasksList(window.currentTasks);
-            }
-        }
-        
-        // تحرير الحقل النصي
-        function editField(fieldName) {
-            const displayDiv = document.getElementById(`${fieldName}-text`);
-            const inputArea = document.getElementById(`${fieldName}-input`);
-            
-            if (inputArea.classList.contains('hidden')) {
-                // إظهار حقل الإدخال
-                const currentValue = displayDiv.innerHTML;
-                inputArea.value = currentValue === 'انقر لإضافة الشكوى الرئيسية...' || 
-                                   currentValue === 'انقر لإضافة الضغط، النبض، درجة الحرارة...' ||
-                                   currentValue === 'انقر لإضافة التشخيص...' ||
-                                   currentValue === 'انقر لإضافة ملاحظات...' ? '' : currentValue;
-                displayDiv.classList.add('hidden');
-                inputArea.classList.remove('hidden');
-                inputArea.focus();
-                
-                // حفظ عند فقدان التركيز
-                inputArea.onblur = function() {
-                    const newValue = inputArea.value;
-                    displayDiv.innerHTML = newValue || 'انقر للإضافة...';
-                    displayDiv.classList.remove('hidden');
-                    inputArea.classList.add('hidden');
-                };
-            }
-        }
-        
-        // حفظ التقرير والخطة
-        function saveTreatmentPlan() {
-            if (!currentDaylistPatientName) {
-                showToast('❌ لا يوجد عميل محدد');
-                return;
-            }
-            
-            const today = new Date().toISOString().split('T')[0];
-            const key = getTreatmentPlanKey(currentDaylistPatientName, today);
-            
-            const data = {
-                patientName: currentDaylistPatientName,
-                date: today,
-                complaint: document.getElementById('complaint-text').innerHTML,
-                vitals: document.getElementById('vitals-text').innerHTML,
-                diagnosis: document.getElementById('diagnosis-text').innerHTML,
-                notes: document.getElementById('notes-text').innerHTML,
-                tasks: window.currentTasks || []
-            };
-            
-            localStorage.setItem(key, JSON.stringify(data));
-            showToast('✅ تم حفظ التقرير وخطة العلاج بنجاح');
-            
-            // تسجيل نشاط المساعد
-            logAssistantActivity('تقرير علاجي', `تم حفظ تقرير وعلاج للعميل ${currentDaylistPatientName}`);
-        }
-        
-        let currentDaylistPatientName = null;
-        
-        // تحميل أول عميل من مواعيد اليوم لعرضه في قائمة اليوم
-        function loadCurrentPatientForDaylist() {
-            const today = new Date().toISOString().split('T')[0];
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const todayAppointments = appointments.filter(a => a.date === today);
-            
-            if (todayAppointments.length === 0) {
-                document.getElementById('daylist-patient-name').innerHTML = 'لا توجد مواعيد اليوم';
-                document.getElementById('daylist-patient-details').innerHTML = 'قم بإضافة مواعيد من تبويب الحجز';
-                currentDaylistPatientName = null;
-                return;
-            }
-            
-            const firstPatient = todayAppointments[0];
-            currentDaylistPatientName = firstPatient.patient;
-            
-            // البحث عن تفاصيل العميل
-            const patient = patientsData.find(p => p.name === firstPatient.patient);
-            
-            document.getElementById('daylist-patient-name').innerHTML = firstPatient.patient;
-            if (patient) {
-                document.getElementById('daylist-patient-details').innerHTML = `🆔 ${patient.nhi || 'غير محدد'} | 📞 ${patient.phone || 'لا يوجد'}`;
-            } else {
-                document.getElementById('daylist-patient-details').innerHTML = `⏰ ${firstPatient.time} | ${firstPatient.doctor}`;
-            }
-            
-            // تحميل خطة العلاج لهذا العميل
-            loadTreatmentPlanForPatient(firstPatient.patient);
-        }
-        
-        // ==================== دوال المساعدين الجديدة ====================
-        
-        // الحصول على المساعد الحالي
-        function getCurrentAssistant() {
-            const data = localStorage.getItem('ensgam_assistant');
-            if (!data) return null;
-            return JSON.parse(data);
-        }
-        
-        // التحقق من حالة الدخول
-        function checkAssistantLogin() {
-            const assistant = getCurrentAssistant();
-            if (!assistant || !assistant.isLoggedIn) {
-                window.location.href = "login.html";
-                return false;
-            }
-            
-            // عرض معلومات المساعد في الشريط
-            document.getElementById('assistant-name-display').textContent = assistant.name;
-            document.getElementById('assistant-login-time').textContent = assistant.loginTime || '--:--';
-            return true;
-        }
-        
-        // تسجيل الخروج
-        function logoutAssistant() {
-            if (confirm('🚪 هل أنت متأكد من تسجيل الخروج؟')) {
-                const assistant = getCurrentAssistant();
-                if (assistant) {
-                    // تسجيل وقت الخروج
-                    let logs = JSON.parse(localStorage.getItem('assistant_activity_logs') || '[]');
-                    const activeLog = logs.find(log => log.assistant === assistant.name && log.status === 'active');
-                    if (activeLog) {
-                        activeLog.logout = new Date().toLocaleString('ar-EG');
-                        activeLog.status = 'completed';
-                        localStorage.setItem('assistant_activity_logs', JSON.stringify(logs));
-                    }
-                }
-                
-                // حذف حالة الدخول
-                localStorage.removeItem('ensgam_assistant');
-                // التوجيه لصفحة تسجيل الدخول
-                window.location.href = "login.html";
-            }
-        }
-        
-        // تسجيل نشاط المساعد (حجز أو دفع)
-        function logAssistantActivity(action, details) {
-            const assistant = getCurrentAssistant();
-            if (!assistant) return;
-            
-            let logs = JSON.parse(localStorage.getItem('assistant_activity_logs') || '[]');
-            logs.unshift({
-                id: Date.now(),
-                assistant: assistant.name,
-                action: action,
-                details: details,
-                time: new Date().toLocaleString('ar-EG'),
-                status: 'completed'
-            });
-            // الاحتفاظ بآخر 100 سجل فقط
-            if (logs.length > 100) logs = logs.slice(0, 100);
-            localStorage.setItem('assistant_activity_logs', JSON.stringify(logs));
-        }
-        
-        // عرض التقارير
-        function renderReports() {
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const allTransactions = JSON.parse(localStorage.getItem(getStorageKey('transactions')) || '[]');
-            const logs = JSON.parse(localStorage.getItem('assistant_activity_logs') || '[]');
-            
-            // إحصائيات الحجوزات حسب المساعد
-            let amiraBookings = 0;
-            let ayaBookings = 0;
-            
-            appointments.forEach(apt => {
-                if (apt.createdBy === 'Amira') amiraBookings++;
-                else if (apt.createdBy === 'Aya') ayaBookings++;
-            });
-            
-            document.getElementById('amira-count').textContent = amiraBookings;
-            document.getElementById('aya-count').textContent = ayaBookings;
-            
-            // عرض الحجوزات حسب المساعد
-            const appointmentsContainer = document.getElementById('appointments-by-assistant');
-            const amiraApps = appointments.filter(a => a.createdBy === 'Amira');
-            const ayaApps = appointments.filter(a => a.createdBy === 'Aya');
-            
-            appointmentsContainer.innerHTML = `
-                <div class="space-y-3">
-                    <div class="bg-slate-800 rounded-2xl p-4">
-                        <div class="font-bold text-teal-400 text-lg mb-2">👩‍⚕️ Amira - ${amiraApps.length} حجز</div>
-                        ${amiraApps.slice(0, 10).map(a => `<div class="text-sm text-slate-300 py-1 border-b border-slate-700">📅 ${a.date} - ${a.time} - ${a.patient}</div>`).join('') || '<div class="text-slate-500 text-sm">لا توجد حجوزات</div>'}
-                    </div>
-                    <div class="bg-slate-800 rounded-2xl p-4">
-                        <div class="font-bold text-teal-400 text-lg mb-2">👩‍⚕️ Aya - ${ayaApps.length} حجز</div>
-                        ${ayaApps.slice(0, 10).map(a => `<div class="text-sm text-slate-300 py-1 border-b border-slate-700">📅 ${a.date} - ${a.time} - ${a.patient}</div>`).join('') || '<div class="text-slate-500 text-sm">لا توجد حجوزات</div>'}
-                    </div>
-                </div>
-            `;
-            
-            // عرض المدفوعات حسب المساعد
-            const paymentsContainer = document.getElementById('payments-by-assistant');
-            const amiraPayments = allTransactions.filter(t => t.processedBy === 'Amira');
-            const ayaPayments = allTransactions.filter(t => t.processedBy === 'Aya');
-            const amiraTotal = amiraPayments.reduce((sum, t) => sum + t.amount, 0);
-            const ayaTotal = ayaPayments.reduce((sum, t) => sum + t.amount, 0);
-            
-            paymentsContainer.innerHTML = `
-                <div class="space-y-3">
-                    <div class="bg-slate-800 rounded-2xl p-4">
-                        <div class="font-bold text-teal-400 text-lg mb-2">💰 Amira - ${amiraTotal.toLocaleString()} جنيه (${amiraPayments.length} عملية)</div>
-                        ${amiraPayments.slice(0, 10).map(p => `<div class="text-sm text-slate-300 py-1 border-b border-slate-700">💰 ${p.amount} جنيه - ${p.patient} - ${p.date}</div>`).join('') || '<div class="text-slate-500 text-sm">لا توجد مدفوعات</div>'}
-                    </div>
-                    <div class="bg-slate-800 rounded-2xl p-4">
-                        <div class="font-bold text-teal-400 text-lg mb-2">💰 Aya - ${ayaTotal.toLocaleString()} جنيه (${ayaPayments.length} عملية)</div>
-                        ${ayaPayments.slice(0, 10).map(p => `<div class="text-sm text-slate-300 py-1 border-b border-slate-700">💰 ${p.amount} جنيه - ${p.patient} - ${p.date}</div>`).join('') || '<div class="text-slate-500 text-sm">لا توجد مدفوعات</div>'}
-                    </div>
-                </div>
-            `;
-            
-            // عرض سجل النشاط
-            const logsContainer = document.getElementById('activity-logs');
-            logsContainer.innerHTML = logs.map(log => `
-                <div class="bg-slate-800 rounded-xl p-3 mb-2">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="font-bold text-teal-400">${log.assistant}</span>
-                            <span class="text-slate-400 text-sm mx-2">-</span>
-                            <span class="text-white">${log.action}</span>
-                        </div>
-                        <div class="text-xs text-slate-500">${log.time}</div>
-                    </div>
-                    ${log.details ? `<div class="text-xs text-slate-400 mt-1">${log.details}</div>` : ''}
-                </div>
-            `).join('') || '<div class="text-center text-slate-500 py-4">لا توجد سجلات نشاط</div>';
-        }
-        
-        function clearActivityLogs() {
-            if (confirm('⚠️ هل أنت متأكد من مسح سجل النشاط؟')) {
-                localStorage.setItem('assistant_activity_logs', '[]');
-                renderReports();
-                showToast('تم مسح سجل النشاط');
-            }
-        }
-        
-        // دالة اختيار نوع الحجز
-        function selectBookingType(element, type) {
-            document.querySelectorAll('.booking-type-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            element.classList.add('selected');
-            selectedBookingType = type;
-            updateBookingPrice();
-            console.log('نوع الحجز:', type);
-        }
-        
-        // ============================================================
-        // دوال المراجع (قاعدة البيانات السنوية)
-        // ============================================================
-        
-        function getArchiveKey() {
-            return `ensgam clinic_${currentProfile}_yearly_archive`;
-        }
-        
-        function loadYearlyArchive() {
-            const saved = localStorage.getItem(getArchiveKey());
-            if (saved) {
-                return JSON.parse(saved);
-            }
-            const archive = {};
-            for (let month = 0; month < 12; month++) {
-                archive[month] = {};
-            }
-            localStorage.setItem(getArchiveKey(), JSON.stringify(archive));
-            return archive;
-        }
-        
-        function saveYearlyArchive(archive) {
-            localStorage.setItem(getArchiveKey(), JSON.stringify(archive));
-        }
-        
-        function saveToArchiveForDate(dateStr) {
-            if (!dateStr) return;
-            
-            const targetDate = new Date(dateStr);
-            if (isNaN(targetDate.getTime())) return;
-            
-            const month = targetDate.getMonth();
-            const day = targetDate.getDate();
-            const year = targetDate.getFullYear();
-            
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const dayAppointments = appointments.filter(a => a.date === dateStr);
-            
-            const transactionsData = JSON.parse(localStorage.getItem(getStorageKey('transactions')) || '[]');
-            const targetDateFormatted = targetDate.toLocaleDateString('ar-EG');
-            const dayTransactions = transactionsData.filter(t => t.date === targetDateFormatted);
-            
-            const prescriptionsDataLocal = JSON.parse(localStorage.getItem(getStorageKey('prescriptions')) || '[]');
-            const dayPrescriptions = prescriptionsDataLocal.filter(p => p.date === targetDateFormatted);
-            
-            const notesKey = getStorageKey(`notes_${dateStr}`);
-            const notes = localStorage.getItem(notesKey) || '';
-            
-            const dayRevenue = dayTransactions.reduce((sum, t) => {
-                if (t.type === 'إيراد حجز') return sum + t.amount;
-                if (t.type === 'استرداد حجز') return sum - t.amount;
-                return sum;
-            }, 0);
-            
-            const archive = loadYearlyArchive();
-            
-            if (!archive[month]) archive[month] = {};
-            
-            archive[month][day] = {
-                appointments: dayAppointments,
-                transactions: dayTransactions,
-                prescriptions: dayPrescriptions,
-                notes: notes,
-                totalRevenue: dayRevenue,
-                hasData: dayAppointments.length > 0 || dayTransactions.length > 0 || dayPrescriptions.length > 0 || notes !== '',
-                date: dateStr
-            };
-            
-            saveYearlyArchive(archive);
-        }
-        
-        function saveAllDatesToArchive() {
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const uniqueDates = [...new Set(appointments.map(a => a.date))];
-            const todayStr = new Date().toISOString().split('T')[0];
-            if (!uniqueDates.includes(todayStr)) {
-                uniqueDates.push(todayStr);
-            }
-            uniqueDates.forEach(dateStr => {
-                saveToArchiveForDate(dateStr);
-            });
-            console.log(`✅ تم حفظ ${uniqueDates.length} تاريخ في الأرشيف`);
-            showToast(`✅ تم حفظ ${uniqueDates.length} تاريخ في المراجع`);
-            renderArchive();
-        }
-        
-        function saveCurrentDayToArchive() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            saveToArchiveForDate(todayStr);
-            saveAllDatesToArchive();
-        }
-        
-        function getDayData(month, day) {
-            const archive = loadYearlyArchive();
-            return archive[month]?.[day] || { appointments: [], transactions: [], prescriptions: [], notes: '', totalRevenue: 0, hasData: false };
-        }
-        
-        function renderArchive() {
-            const archive = loadYearlyArchive();
-            const container = document.getElementById('months-container');
-            if (!container) return;
-            
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const today = new Date();
-            const currentYear = today.getFullYear();
-            
-            let html = '';
-            for (let month = 0; month < 12; month++) {
-                const monthName = monthNames[month];
-                let daysHtml = '<div class="days-grid">';
-                
-                const weekDays = ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'];
-                daysHtml += weekDays.map(wd => `<div class="text-center text-slate-500 text-xs py-2">${wd}</div>`).join('');
-                
-                for (let day = 1; day <= 31; day++) {
-                    const dateObj = new Date(currentYear, month, day);
-                    if (dateObj.getMonth() !== month) continue;
-                    
-                    const dateStr = dateObj.toISOString().split('T')[0];
-                    const dayData = archive[month]?.[day];
-                    const hasData = dayData?.hasData || false;
-                    
-                    const hasFutureAppointments = appointments.some(a => a.date === dateStr);
-                    const isFuture = dateObj > today;
-                    const isToday = (today.getMonth() === month && today.getDate() === day);
-                    
-                    let indicator = '○';
-                    let extraClass = '';
-                    let badgeHtml = '';
-                    
-                    if (hasData || hasFutureAppointments) {
-                        indicator = '📋';
-                        extraClass = 'has-data';
-                        badgeHtml = '<div class="day-badge"></div>';
-                        if (isFuture && !hasData && hasFutureAppointments) {
-                            extraClass += ' future-data';
-                        }
-                    }
-                    
-                    daysHtml += `
-                        <div class="day-box ${extraClass}" onclick="showDayDetails(${month}, ${day})">
-                            ${badgeHtml}
-                            <div class="day-number ${isToday ? 'text-teal-400' : ''}">${day}</div>
-                            <div class="day-indicator">${indicator}</div>
-                            ${isFuture && hasFutureAppointments && !hasData ? '<div class="text-[8px] text-green-400">مستقبل</div>' : ''}
-                        </div>
-                    `;
-                }
-                daysHtml += '</div>';
-                
-                html += `
-                    <div class="month-card">
-                        <div class="month-header" onclick="toggleMonth(${month})">
-                            📅 ${monthName} ${currentYear}
-                        </div>
-                        <div id="month-${month}" class="month-content">
-                            ${daysHtml}
-                        </div>
-                    </div>
-                `;
-            }
-            container.innerHTML = html;
-        }
-        
-        function toggleMonth(month) {
-            const content = document.getElementById(`month-${month}`);
-            if (content) {
-                content.classList.toggle('hidden');
-            }
-        }
-        
-        function showDayDetails(month, day) {
-            const dayData = getDayData(month, day);
-            const dateObj = new Date(new Date().getFullYear(), month, day);
-            const dateStr = dateObj.toISOString().split('T')[0];
-            const dateAr = `${day} ${monthNames[month]} ${dateObj.getFullYear()}`;
-            
-            const allAppointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const dayAppointmentsFromMain = allAppointments.filter(a => a.date === dateStr);
-            
-            const appointmentsToShow = dayData.appointments.length > 0 ? dayData.appointments : dayAppointmentsFromMain;
-            
-            document.getElementById('day-details-title').textContent = `📅 ${dateAr}`;
-            
-            const appointmentsHtml = appointmentsToShow.length > 0 
-                ? appointmentsToShow.map(a => `<div class="detail-item">🩺 ${a.patient} - ${a.time} (${a.doctor || a.doctorId || 'الطبيب'}) ${a.bookingType === 'online' ? '📱 أونلاين' : '🏢 أوف لاين'} ${a.paymentCompleted ? '✅ مدفوع' : '⏳ قيد الانتظار'} ${a.createdBy ? `👩‍⚕️ بواسطة: ${a.createdBy}` : ''}</div>`).join('')
-                : '<div class="detail-item text-slate-500">لا توجد مواعيد</div>';
-            
-            const transactionsHtml = dayData.transactions.length > 0
-                ? dayData.transactions.map(t => `<div class="detail-item">💰 ${t.patient} - ${t.amount} جنيه (${t.type}) ${t.processedBy ? `👩‍⚕️ بواسطة: ${t.processedBy}` : ''}</div>`).join('')
-                : '<div class="detail-item text-slate-500">لا توجد معاملات مالية</div>';
-            
-            const prescriptionsHtml = dayData.prescriptions.length > 0
-                ? dayData.prescriptions.map(p => `<div class="detail-item">💊 ${p.patient} - ${p.medication} ${p.createdBy ? `👩‍⚕️ بواسطة: ${p.createdBy}` : ''}</div>`).join('')
-                : '<div class="detail-item text-slate-500">لا توجد روشتات</div>';
-            
-            document.getElementById('day-details-content').innerHTML = `
-                <div class="revenue-card mb-4">
-                    <div class="text-xl">💰 إجمالي إيرادات اليوم</div>
-                    <div class="revenue-amount">${dayData.totalRevenue?.toLocaleString() || 0} جنيه</div>
-                </div>
-                <div class="card mb-4">
-                    <h3 class="font-bold text-xl mb-3">📋 المواعيد</h3>
-                    ${appointmentsHtml}
-                </div>
-                <div class="card mb-4">
-                    <h3 class="font-bold text-xl mb-3">💰 المعاملات المالية</h3>
-                    ${transactionsHtml}
-                </div>
-                <div class="card mb-4">
-                    <h3 class="font-bold text-xl mb-3">💊 الروشتات</h3>
-                    ${prescriptionsHtml}
-                </div>
-                ${dayData.notes ? `<div class="card"><h3 class="font-bold text-xl mb-3">📝 ملاحظات</h3><p class="text-slate-300">${dayData.notes}</p></div>` : ''}
-            `;
-            
-            document.getElementById('day-details-modal').classList.add('show');
-        }
-        
-        function closeDayDetailsModal() {
-            document.getElementById('day-details-modal').classList.remove('show');
-        }
-        
-        function showUpcomingAppointments() {
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            const futureAppointments = appointments.filter(a => {
-                const aptDate = new Date(a.date);
-                aptDate.setHours(0, 0, 0, 0);
-                return aptDate > today;
-            });
-            
-            futureAppointments.sort((a, b) => new Date(a.date) - new Date(b.date));
-            
-            if (futureAppointments.length === 0) {
-                showToast('📅 لا توجد حجوزات مستقبلية');
-                return;
-            }
-            
-            let message = '📅 الحجوزات المستقبلية:\n';
-            message += `📊 العدد: ${futureAppointments.length}\n`;
-            message += '━'.repeat(30) + '\n';
-            futureAppointments.forEach(apt => {
-                message += `\n📌 ${apt.date}:\n   🩺 ${apt.patient}\n   ⏰ ${apt.time}\n   👨‍⚕️ ${apt.doctor}\n   ${apt.bookingType === 'online' ? '📱 أونلاين' : '🏢 أوف لاين'}\n   ${apt.paymentCompleted ? '✅ مدفوع' : '⏳ لم يدفع بعد'}\n   👩‍⚕️ بواسطة: ${apt.createdBy || 'غير معروف'}\n`;
-            });
-            
-            alert(message);
-        }
-        
-        // ============================================================
-        // دالة مسح جميع البيانات (التجديد الشامل) مع كلمة سر
-        // ============================================================
-        
-        function resetAllData() {
-            const password = prompt('🔐 أدخل كلمة السر لتأكيد مسح جميع البيانات:\n(كلمة السر: admin123)');
-            if (password !== 'admin123') {
-                showToast('❌ كلمة سر غير صحيحة - تم إلغاء العملية');
-                return;
-            }
-            
-            if (!confirm('⚠️ تحذير نهائي: هل أنت متأكد من مسح كل بيانات جميع الأطباء؟\nالعملاء - الحجوزات - المدفوعات - المراجع - الروشتات - الجلسات\nهذا الإجراء لا يمكن التراجع عنه!')) {
-                showToast('تم إلغاء عملية المسح');
-                return;
-            }
-            
-            // مسح بيانات الأطباء الثلاثة
-            const profiles = ['dr-fatma', 'dr-amira', 'dr-yosry'];
-            profiles.forEach(profile => {
-                const prefix = `ensgam clinic_${profile}`;
-                
-                localStorage.removeItem(`${prefix}_appointments`);
-                localStorage.removeItem(`${prefix}_patients`);
-                localStorage.removeItem(`${prefix}_prescriptions`);
-                localStorage.removeItem(`${prefix}_transactions`);
-                localStorage.removeItem(`${prefix}_totalRevenue`);
-                localStorage.removeItem(`${prefix}_yearly_archive`);
-                
-                // مسح خطط العلاج
-                const keysToRemove = [];
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith(prefix) && (key.includes('treatment_') || key.includes('sessions_'))) {
-                        keysToRemove.push(key);
-                    }
-                }
-                keysToRemove.forEach(key => localStorage.removeItem(key));
-                
-                // مسح الملاحظات
-                const notesKeysToRemove = [];
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith(prefix) && key.includes('notes_')) {
-                        notesKeysToRemove.push(key);
-                    }
-                }
-                notesKeysToRemove.forEach(key => localStorage.removeItem(key));
-            });
-            
-            // إعادة تحميل الصفحة لتهيئة كل شيء
-            showToast('✅ تم مسح جميع البيانات بنجاح! سيتم إعادة تحميل الصفحة...');
-            setTimeout(() => {
-                location.reload();
-            }, 1500);
-        }
-        
-        // ============================================================
-        // دوال جلسات المريض (حسب الطبيب)
-        // ============================================================
-        
-        function getSessionsCountForPatient(patientNHI) {
-            const patient = patientsData.find(p => p.nhi === patientNHI);
-            if (!patient) return DOCTORS_DATA[currentProfile].sessionsCount;
-            
-            const appointment = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]')
-                .find(a => a.patient === patient.name);
-            
-            if (appointment && appointment.doctorId === 'dr-fatma') {
-                return 4;
-            }
-            return DOCTORS_DATA[currentProfile].sessionsCount;
-        }
-        
-        function loadPatientSessions(patientName) {
-            const patient = patientsData.find(p => p.name === patientName);
-            const sessionsCount = getSessionsCountForPatient(patient?.nhi);
-            
-            const sessionsKey = getStorageKey(`sessions_${patientName.replace(/\s/g, '_')}`);
-            const saved = localStorage.getItem(sessionsKey);
-            if (saved) {
-                return JSON.parse(saved);
-            } else {
-                const sessions = {};
-                for (let i = 1; i <= sessionsCount; i++) {
-                    sessions[i] = 'pending';
-                }
-                localStorage.setItem(sessionsKey, JSON.stringify(sessions));
-                return sessions;
-            }
-        }
-        
-        function savePatientSessions(patientName, sessions) {
-            const sessionsKey = getStorageKey(`sessions_${patientName.replace(/\s/g, '_')}`);
-            localStorage.setItem(sessionsKey, JSON.stringify(sessions));
-        }
-        
-        function renderSessionsGrid(patientName) {
-            const sessions = loadPatientSessions(patientName);
-            const sessionsCount = Object.keys(sessions).length;
-            const grid = document.getElementById('sessions-grid');
-            const titleElement = document.getElementById('sessions-title');
-            
-            titleElement.textContent = `📋 جلسات العلاج (${sessionsCount} جلسة)`;
-            
-            let html = '';
-            for (let i = 1; i <= sessionsCount; i++) {
-                const status = sessions[i];
-                let bgClass = 'pending';
-                let icon = '○';
-                let statusText = 'قادم';
-                
-                if (status === 'present') {
-                    bgClass = 'present';
-                    icon = '✓';
-                    statusText = 'حاضر';
-                } else if (status === 'absent') {
-                    bgClass = 'absent';
-                    icon = '✗';
-                    statusText = 'غائب';
-                }
-                
-                html += `
-                    <div class="session-box ${bgClass}" onclick="toggleSessionStatus(${i}, '${patientName}')">
-                        <div class="session-number">جلسة ${i}</div>
-                        <div class="session-status-icon">${icon}</div>
-                        <div class="text-xs mt-1">${statusText}</div>
-                    </div>
-                `;
-            }
-            grid.innerHTML = html;
-        }
-        
-        function toggleSessionStatus(sessionNumber, patientName) {
-            const sessions = loadPatientSessions(patientName);
-            
-            if (!sessions[sessionNumber] || sessions[sessionNumber] === 'pending') {
-                sessions[sessionNumber] = 'present';
-                showToast(`✅ تم تسجيل حضور الجلسة ${sessionNumber} للعميل ${patientName}`);
-            } else if (sessions[sessionNumber] === 'present') {
-                sessions[sessionNumber] = 'absent';
-                showToast(`❌ تم تسجيل غياب الجلسة ${sessionNumber} للعميل ${patientName}`);
-            } else if (sessions[sessionNumber] === 'absent') {
-                sessions[sessionNumber] = 'pending';
-                showToast(`🔄 تم إعادة تعيين الجلسة ${sessionNumber} للعميل ${patientName}`);
-            }
-            
-            savePatientSessions(patientName, sessions);
-            renderSessionsGrid(patientName);
-        }
-        
-        function viewPatientRecords() {
-            const sessions = loadPatientSessions(currentPatientName);
-            let presentCount = 0;
-            let absentCount = 0;
-            let pendingCount = 0;
-            const sessionsCount = Object.keys(sessions).length;
-            
-            for (let i = 1; i <= sessionsCount; i++) {
-                if (sessions[i] === 'present') presentCount++;
-                else if (sessions[i] === 'absent') absentCount++;
-                else pendingCount++;
-            }
-            
-            const attendanceRate = sessionsCount > 0 ? ((presentCount / sessionsCount) * 100).toFixed(1) : 0;
-            
-            showToast(`
-📊 السجل الطبي لـ ${currentPatientName}:
-✅ حاضر: ${presentCount} جلسة
-❌ غائب: ${absentCount} جلسة
-⏳ قادم: ${pendingCount} جلسة
-📈 نسبة الحضور: ${attendanceRate}%
-            `);
-        }
-        
-        // ============================================================
-        // دوال عرض الروشتة
-        // ============================================================
-        
-        function openPatientPrescription() {
-            const prescriptions = JSON.parse(localStorage.getItem(getStorageKey('prescriptions')) || '[]');
-            const patientPrescriptions = prescriptions.filter(p => p.patient === currentPatientName);
-            
-            const modal = document.getElementById('prescription-view-modal');
-            const details = document.getElementById('prescription-details');
-            
-            if (patientPrescriptions.length === 0) {
-                details.innerHTML = `
-                    <div class="text-center text-slate-500 py-8">
-                        <div class="text-6xl mb-3">💊</div>
-                        <p>لا توجد روشتة مسجلة للعميل ${currentPatientName}</p>
-                        <p class="text-xs mt-2">يمكنك إضافة روشتة من قسم "الأدوية" في المكتب</p>
-                    </div>
-                `;
-            } else {
-                let html = '<div class="space-y-3">';
-                patientPrescriptions.forEach(p => {
-                    html += `
-                        <div class="prescription-item bg-slate-800 rounded-2xl p-4">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <div class="font-bold text-teal-400 text-lg">💊 ${p.medication.split(' - ')[0]}</div>
-                                    <div class="text-sm text-slate-300 mt-1">${p.medication}</div>
-                                    <div class="text-xs text-slate-500 mt-2">📅 تاريخ الوصفة: ${p.date}</div>
-                                    <div class="text-xs text-teal-400 mt-1">👨‍⚕️ وصف بواسطة: ${DOCTORS_DATA[currentProfile].name}</div>
-                                    ${p.createdBy ? `<div class="text-xs text-slate-500 mt-1">👩‍⚕️ بواسطة: ${p.createdBy}</div>` : ''}
-                                </div>
-                                <div class="text-xs bg-teal-500/20 text-teal-400 px-2 py-1 rounded-full">${p.status}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                details.innerHTML = html;
-            }
-            
-            modal.classList.add('show');
-        }
-        
-        function closePrescriptionModal() {
-            document.getElementById('prescription-view-modal').classList.remove('show');
-        }
-        
-        // ============================================================
-        // دوال الإيرادات المالية (معدلة: الدفع عند الحضور)
-        // ============================================================
-        
-        function completePayment(appointmentId, patientName, amount, doctorId, bookingType, date) {
-            if (!confirm(`💰 هل تريد تأكيد استلام ${amount} جنيه من ${patientName}؟`)) return;
-            
-            const assistant = getCurrentAssistant();
-            const assistantName = assistant ? assistant.name : 'غير معروف';
-            
-            totalRevenue += amount;
-            
-            const transaction = {
-                id: Date.now(),
-                patient: patientName,
-                amount: amount,
-                date: new Date().toLocaleDateString('ar-EG'),
-                time: new Date().toLocaleTimeString('ar-EG'),
-                type: 'إيراد حجز',
-                status: 'مكتمل',
-                appointmentId: appointmentId,
-                processedBy: assistantName
-            };
-            
-            transactions.unshift(transaction);
-            localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
-            localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
-            
-            // تحديث حالة الدفع في الموعد
-            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const appointmentIndex = appointments.findIndex(a => a.id === appointmentId);
-            if (appointmentIndex !== -1) {
-                appointments[appointmentIndex].paymentCompleted = true;
-                appointments[appointmentIndex].paymentAmount = amount;
-                appointments[appointmentIndex].paymentDate = new Date().toISOString();
-                appointments[appointmentIndex].paymentProcessedBy = assistantName;
-                localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
-            }
-            
-            // تسجيل نشاط المساعد
-            logAssistantActivity('دفع', `تم استلام ${amount} جنيه من ${patientName}`);
-            
-            updateRevenueDisplay();
-            showToast(`✅ تم استلام ${amount} جنيه من ${patientName} بواسطة ${assistantName}`);
-            saveToArchiveForDate(date);
-            loadAppointments(); // تحديث عرض المواعيد
-            if (document.getElementById('view-reports').classList.contains('hidden') === false) {
-                renderReports();
-            }
-        }
-        
-        function updateRevenueDisplay() {
-            document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString();
-            
-            const today = new Date().toLocaleDateString('ar-EG');
-            const todayTransactions = transactions.filter(t => t.date === today);
-            const todayRevenue = todayTransactions.reduce((sum, t) => sum + t.amount, 0);
-            document.getElementById('todayRevenue').textContent = todayRevenue.toLocaleString();
-            document.getElementById('todayCompleted').textContent = todayTransactions.length;
-            
-            document.getElementById('stat-tasks').textContent = totalRevenue.toLocaleString();
-            
-            renderTransactionsList();
-        }
-        
-        function renderTransactionsList() {
-            const list = document.getElementById('transactions-list');
-            
-            if (transactions.length === 0) {
-                list.innerHTML = `
-                    <div class="text-center text-slate-500 py-8">
-                        <div class="text-5xl mb-3">💰</div>
-                        <p>لا توجد معاملات مالية مسجلة</p>
-                        <p class="text-xs mt-2">سيتم تسجيل الإيرادات عند إتمام الدفع للحجوزات</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            list.innerHTML = transactions.map(t => `
-                <div class="transaction-item">
-                    <div>
-                        <div class="font-bold text-teal-400">${t.patient}</div>
-                        <div class="text-xs text-slate-500 mt-1">${t.date} - ${t.time}</div>
-                        ${t.processedBy ? `<div class="text-xs text-slate-500">👩‍⚕️ بواسطة: ${t.processedBy}</div>` : ''}
-                    </div>
-                    <div class="text-right">
-                        <div class="transaction-positive text-lg">+ ${t.amount.toLocaleString()} جنيه</div>
-                        <div class="text-xs text-slate-500">${t.type}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-        
-        function clearAllTransactions() {
-            if (!confirm('⚠️ هل أنت متأكد من مسح جميع المعاملات المالية؟ هذا الإجراء لا يمكن التراجع عنه.')) return;
-            totalRevenue = 0;
-            transactions = [];
-            localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
-            localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
-            updateRevenueDisplay();
-            showToast('تم مسح جميع المعاملات المالية');
-            saveCurrentDayToArchive();
-        }
-        
-        function loadRevenueData() {
-            const savedRevenue = localStorage.getItem(getStorageKey('totalRevenue'));
-            if (savedRevenue) {
-                totalRevenue = parseInt(savedRevenue);
-            } else {
-                totalRevenue = 0;
-            }
-            
-            const savedTransactions = localStorage.getItem(getStorageKey('transactions'));
-            if (savedTransactions) {
-                transactions = JSON.parse(savedTransactions);
-            } else {
-                transactions = [];
-            }
-            
-            updateRevenueDisplay();
-        }
-        
-        // ============================================================
-        // دوال الروشتة والأدوية
-        // ============================================================
-        
-        function selectMedication(medicationName) {
-            const patientName = prompt('اسم العميل:');
-            if (!patientName) return;
-            const assistant = getCurrentAssistant();
-            const assistantName = assistant ? assistant.name : 'غير معروف';
-            const today = new Date().toLocaleDateString('ar-EG');
-            const prescription = {
-                id: Date.now(),
-                patient: patientName,
-                medication: medicationName,
-                date: today,
-                status: 'نشط',
-                createdBy: assistantName
-            };
-            prescriptionsData.push(prescription);
-            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
-            renderPrescriptionsList();
-            showToast(`تمت إضافة ${medicationName.split(' - ')[0]} للعميل ${patientName} بواسطة ${assistantName}`);
-            updateStats();
-            saveCurrentDayToArchive();
-            logAssistantActivity('إضافة روشتة', `تم إضافة دواء ${medicationName.split(' - ')[0]} للعميل ${patientName}`);
-        }
-        
-        function addPrescriptionWithInput() {
-            const patientName = prompt('اسم العميل:');
-            if (!patientName) return;
-            const medication = prompt('الدواء والجرعة:');
-            if (!medication) return;
-            const assistant = getCurrentAssistant();
-            const assistantName = assistant ? assistant.name : 'غير معروف';
-            const today = new Date().toLocaleDateString('ar-EG');
-            const prescription = {
-                id: Date.now(),
-                patient: patientName,
-                medication: medication,
-                date: today,
-                status: 'نشط',
-                createdBy: assistantName
-            };
-            prescriptionsData.push(prescription);
-            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
-            renderPrescriptionsList();
-            showToast(`تمت إضافة الروشتة للعميل ${patientName} بواسطة ${assistantName}`);
-            updateStats();
-            saveCurrentDayToArchive();
-            logAssistantActivity('إضافة روشتة يدوية', `تم إضافة روشتة للعميل ${patientName}`);
-        }
-        
-        function renderPrescriptionsList() {
-            const list = document.getElementById('prescriptions-list');
-            if (prescriptionsData.length === 0) {
-                list.innerHTML = `
-                    <div class="text-center text-slate-500 py-8">
-                        <div class="text-5xl mb-3">📋</div>
-                        <p>لا توجد روشتات مسجلة</p>
-                        <p class="text-xs mt-2">اختر دواء من القائمة أعلاه أو أضف روشتة يدوياً</p>
-                    </div>
-                `;
-                return;
-            }
-            const sortedPrescriptions = [...prescriptionsData].reverse();
-            list.innerHTML = sortedPrescriptions.map(p => `
-                <div class="prescription-item">
-                    <div class="flex justify-between items-start">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="font-bold text-teal-400 text-lg">${p.patient}</span>
-                                <span class="text-xs bg-slate-700 px-2 py-1 rounded-full">${p.status}</span>
-                            </div>
-                            <div class="text-sm text-slate-300 mb-1">💊 ${p.medication}</div>
-                            <div class="text-xs text-slate-500 mt-1">📅 ${p.date}</div>
-                            ${p.createdBy ? `<div class="text-xs text-slate-500">👩‍⚕️ بواسطة: ${p.createdBy}</div>` : ''}
-                        </div>
-                        <button onclick="deletePrescription(${p.id})" class="text-red-400 text-xl p-2 hover:bg-red-500/20 rounded-full">🗑</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-        
-        function deletePrescription(id) {
-            if (!confirm('هل أنت متأكد من حذف هذه الروشتة؟')) return;
-            prescriptionsData = prescriptionsData.filter(p => p.id !== id);
-            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
-            renderPrescriptionsList();
-            showToast('تم حذف الروشتة');
-            updateStats();
-            saveCurrentDayToArchive();
-        }
-        
-        function clearPrescriptions() {
-            if (!confirm('⚠️ هل أنت متأكد من مسح جميع الروشتات؟')) return;
-            prescriptionsData = [];
-            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
-            renderPrescriptionsList();
-            showToast('تم مسح جميع الروشتات');
-            updateStats();
-            saveCurrentDayToArchive();
-        }
-        
-        function loadPrescriptions() {
-            const saved = localStorage.getItem(getStorageKey('prescriptions'));
-            if (saved) {
-                prescriptionsData = JSON.parse(saved);
-            } else {
-                prescriptionsData = [];
-            }
-            renderPrescriptionsList();
-        }
-        
-        // ============================================================
-        // دوال إدارة المرضى (معدلة: NHI إلزامي وفريد)
-        // ============================================================
-        
-        function deletePatient(nhi, name) {
-            if (!confirm(`⚠️ هل أنت متأكد من حذف العميل "${name}"؟\nسيتم حذف جميع بياناته بما فيها المواعيد والروشتات والجلسات. لا يمكن التراجع عن هذا الإجراء.`)) return;
-            
-            // حذف المواعيد المرتبطة بالمريض
-            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            appointments = appointments.filter(a => a.patient !== name);
-            localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
-            
-            // حذف الروشتات المرتبطة بالمريض
-            prescriptionsData = prescriptionsData.filter(p => p.patient !== name);
-            localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData));
-            
-            // حذف جلسات المريض
-            const sessionsKey = getStorageKey(`sessions_${name.replace(/\s/g, '_')}`);
-            localStorage.removeItem(sessionsKey);
-            
-            // حذف خطة العلاج للمريض
-            const today = new Date().toISOString().split('T')[0];
-            const treatmentKey = getTreatmentPlanKey(name, today);
-            localStorage.removeItem(treatmentKey);
-            
-            // حذف المريض من قائمة المرضى
-            patientsData = patientsData.filter(p => p.nhi !== nhi);
-            localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData));
-            
-            renderPatientsList(patientsData);
-            populatePatientSuggestions();
-            updateOfficeStats();
-            loadAppointments();
-            updateStats();
-            saveCurrentDayToArchive();
-            
-            showToast(`✅ تم حذف العميل ${name} وجميع بياناته`);
-        }
-        
-        function renderPatientsList(patients) {
-            const list = document.getElementById('patients-list');
-            if (patients.length === 0) {
-                list.innerHTML = `<div class="card text-center py-8"><div class="text-6xl mb-4">👤</div><h3 class="font-bold text-xl mb-2">لا يوجد مرضى</h3><p class="text-slate-400">اضغط "+ إضافة عميل"</p></div>`;
-                return;
-            }
-            list.innerHTML = patients.map(p => `
-                <div class="patient-card" onclick="selectPatient('${p.name}', '${p.phone || ''}', '${p.nhi || ''}', '${p.dob || ''}', '${p.address || ''}')">
-                    <button class="delete-patient-btn" onclick="event.stopPropagation(); deletePatient('${p.nhi}', '${p.name}')">🗑</button>
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="font-bold text-2xl">${p.name}</div>
-                        ${p.nhi ? `<span class="patient-nhi">🆔 ${p.nhi}</span>` : ''}
-                    </div>
-                    ${p.dob ? `<div class="patient-dob">تاريخ الميلاد: ${p.dob}</div>` : ''}
-                    ${p.address ? `<div class="patient-address">📍 ${p.address}</div>` : ''}
-                    <button onclick="event.stopPropagation(); callZoom('${p.phone || ''}')" class="btn-zoom w-full flex items-center justify-center gap-3 mt-3">
-                        <span class="text-2xl">📞</span> ${p.phone || 'لا يوجد هاتف'}
-                    </button>
-                </div>
-            `).join('');
-        }
-        
-        function searchPatients(query) {
-            const filtered = patientsData.filter(p => p.name.includes(query) || (p.nhi && p.nhi.includes(query)));
-            renderPatientsList(filtered);
-        }
-        
-        function selectPatient(name, phone, nhi, dob, address) {
-            currentPatientName = name;
-            currentPatientNHI = nhi;
-            document.getElementById('patient-name').textContent = name;
-            document.getElementById('patient-phone').textContent = phone || 'لا يوجد هاتف';
-            document.getElementById('patient-nhi').textContent = nhi ? `🆔 ${nhi}` : '';
-            document.getElementById('patient-dob').textContent = dob ? `تاريخ الميلاد: ${dob}` : '';
-            document.getElementById('patient-address').textContent = address ? `📍 ${address}` : '';
-            currentPatientPhone = phone;
-            
-            renderSessionsGrid(name);
-            
-            document.getElementById('patient-modal').classList.add('show');
-        }
-        
-        function closePatientModal() {
-            document.getElementById('patient-modal').classList.remove('show');
-            currentPatientPhone = null;
-        }
-        
-        function callPatientZoom() { if (currentPatientPhone) callZoom(currentPatientPhone); }
-        
-        function callZoom(phoneNumber) {
-            const cleanNumber = (phoneNumber || '').replace(/[^\d+]/g, '');
-            if (!cleanNumber) { showToast('لا يوجد رقم هاتف'); return; }
-            window.location.href = `zoomphonecall:${cleanNumber}`;
-            setTimeout(() => showToast('افتح تطبيق Zoom'), 500);
-        }
-        
-        function openAddPatientModal() { 
-            document.getElementById('add-patient-modal').classList.add('show');
-        }
-        
-        function closeAddPatientModal() {
-            document.getElementById('add-patient-modal').classList.remove('show');
-            ['name', 'nhi', 'dob', 'address', 'phone'].forEach(f => document.getElementById(`new-patient-${f}`).value = '');
-        }
-        
-        async function saveNewPatient() {
-            const name = document.getElementById('new-patient-name').value.trim();
-            const nhi = document.getElementById('new-patient-nhi').value.trim();
-            const dob = document.getElementById('new-patient-dob').value.trim();
-            const address = document.getElementById('new-patient-address').value.trim();
-            const phone = document.getElementById('new-patient-phone').value.trim();
-            
-            if (!name) { alert('أدخل اسم العميل'); return; }
-            if (!nhi) { alert('⚠️ NHI (رقم العميل) مطلوب! الرقم المعرف الفريد للعميل'); return; }
-            
-            // التحقق من عدم تكرار NHI
-            const existingPatient = patientsData.find(p => p.nhi === nhi);
-            if (existingPatient) {
-                alert(`⚠️ هذا الرقم NHI "${nhi}" مستخدم بالفعل للعميل ${existingPatient.name}. الرجاء استخدام رقم فريد.`);
-                return;
-            }
-            
-            const patient = { name, nhi, dob, age: '', address, phone };
-            patientsData.push(patient);
-            localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData));
-            closeAddPatientModal();
-            renderPatientsList(patientsData);
-            populatePatientSuggestions();
-            updateOfficeStats();
-            document.getElementById('success-message').textContent = `تمت إضافة ${name} (NHI: ${nhi})`;
-            document.getElementById('success-modal').classList.add('show');
-            saveCurrentDayToArchive();
-        }
-        
-        async function loadPatients() {
-            patientsData = [];
-            const saved = localStorage.getItem(getStorageKey('patients'));
-            if (saved) patientsData = JSON.parse(saved);
-            renderPatientsList(patientsData);
-        }
-        
-        // ============================================================
-        // دوال الحجوزات (معدلة: بدون إضافة إيراد تلقائي)
-        // ============================================================
-        
         function getStorageKey(key) { return `ensgam clinic_${currentProfile}_${key}`; }
+        function getTreatmentPlanKey(patientName, date) { return `ensgam clinic_${currentProfile}_treatment_${patientName.replace(/\s/g, '_')}_${date}`; }
+        function showToast(msg) { let t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+        function getAppointmentPrice(doctorId, type) { return doctorId === 'dr-fatma' ? (type === 'online' ? 350 : 275) : 110; }
+        function updateBookingPrice() { document.getElementById('booking-price-display').textContent = `${getAppointmentPrice(document.getElementById('booking-doctor').value, selectedBookingType)} جنيه`; }
         
-        function generateWeekSelector() {
-            const container = document.getElementById('week-selector');
-            const today = new Date();
-            const weekStart = new Date(today);
-            weekStart.setDate(today.getDate() - today.getDay() + 1);
-            const days = ['الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد'];
-            const engDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            container.innerHTML = days.map((day, index) => {
-                const date = new Date(weekStart);
-                date.setDate(weekStart.getDate() + index);
-                const dateStr = date.toISOString().split('T')[0];
-                const dayNum = date.getDate();
-                const isToday = dateStr === today.toISOString().split('T')[0];
-                return `<button class="day-pill ${isToday ? 'today' : 'other'} flex flex-col items-center justify-center" onclick="selectDay('${engDays[index]}', '${dateStr}')"><span class="text-sm">${day}</span><span class="font-bold text-xl">${dayNum}</span></button>`;
-            }).join('');
-        }
+        // ==================== دوال المساعدين ====================
+        function getCurrentAssistant() { let d = localStorage.getItem('ensgam_assistant'); return d ? JSON.parse(d) : null; }
+        function checkAssistantLogin() { let a = getCurrentAssistant(); if (!a || !a.isLoggedIn) { window.location.href = "login.html"; return false; } document.getElementById('assistant-name-display').textContent = a.name; document.getElementById('assistant-login-time').textContent = a.loginTime || '--:--'; return true; }
+        function logoutAssistant() { if (confirm('تسجيل الخروج؟')) { localStorage.removeItem('ensgam_assistant'); window.location.href = "login.html"; } }
+        function logAssistantActivity(action, details) { let a = getCurrentAssistant(); if (!a) return; let logs = JSON.parse(localStorage.getItem('assistant_activity_logs') || '[]'); logs.unshift({ id: Date.now(), assistant: a.name, action, details, time: new Date().toLocaleString('ar-EG') }); if (logs.length > 100) logs = logs.slice(0, 100); localStorage.setItem('assistant_activity_logs', JSON.stringify(logs)); }
         
-        function selectDay(day, date) {
-            selectedDate = date;
-            document.querySelectorAll('.day-pill').forEach(pill => {
-                pill.classList.remove('today');
-                pill.classList.add('other');
-            });
-            event.currentTarget.classList.remove('other');
-            event.currentTarget.classList.add('today');
-            const dateObj = new Date(date);
-            document.getElementById('selected-date-display').textContent = dateObj.toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'short' });
-            loadAppointments();
-        }
+        // ==================== دوال الروشتات ====================
+        function selectMedication(medName) { let p = prompt('اسم العميل:'); if (!p) return; let a = getCurrentAssistant(); prescriptionsData.push({ id: Date.now(), patient: p, medication: medName, date: new Date().toLocaleDateString('ar-EG'), status: 'نشط', createdBy: a?.name || 'غير معروف' }); localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData)); renderPrescriptionsList(); showToast(`تمت إضافة الدواء للعميل ${p}`); updateStats(); saveCurrentDayToArchive(); }
+        function addPrescriptionWithInput() { let p = prompt('اسم العميل:'); if (!p) return; let m = prompt('الدواء والجرعة:'); if (!m) return; let a = getCurrentAssistant(); prescriptionsData.push({ id: Date.now(), patient: p, medication: m, date: new Date().toLocaleDateString('ar-EG'), status: 'نشط', createdBy: a?.name || 'غير معروف' }); localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData)); renderPrescriptionsList(); showToast(`تمت إضافة الروشتة للعميل ${p}`); updateStats(); saveCurrentDayToArchive(); }
+        function renderPrescriptionsList() { let list = document.getElementById('prescriptions-list'); if (!prescriptionsData.length) { list.innerHTML = '<div class="text-center text-slate-500 py-8"><div class="text-5xl mb-3">📋</div><p>لا توجد روشتات</p></div>'; return; } list.innerHTML = [...prescriptionsData].reverse().map(p => `<div class="prescription-item"><div class="flex justify-between"><div><div class="font-bold text-teal-400">${p.patient}</div><div class="text-sm">💊 ${p.medication}</div><div class="text-xs text-slate-500">📅 ${p.date}</div></div><button onclick="deletePrescription(${p.id})" class="text-red-400 text-xl p-2">🗑</button></div></div>`).join(''); }
+        function deletePrescription(id) { if (!confirm('حذف الروشتة؟')) return; prescriptionsData = prescriptionsData.filter(p => p.id !== id); localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData)); renderPrescriptionsList(); showToast('تم الحذف'); }
+        function clearPrescriptions() { if (!confirm('مسح كل الروشتات؟')) return; prescriptionsData = []; localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData)); renderPrescriptionsList(); showToast('تم المسح'); }
+        function loadPrescriptions() { let s = localStorage.getItem(getStorageKey('prescriptions')); prescriptionsData = s ? JSON.parse(s) : []; renderPrescriptionsList(); }
         
-        function switchProfile(profileId) {
-            saveCurrentDayToArchive();
-            currentProfile = profileId;
-            localStorage.setItem('ensgam clinic_current_profile', profileId);
-            document.getElementById('current-user').textContent = profileNames[profileId];
-            updateProfileButtons();
-            updatePatientList();
-            loadAppointments();
-            loadPatients();
-            loadPrescriptions();
-            loadNotes();
-            loadRevenueData();
-            updateStats();
-            updateOfficeStats();
-            populatePatientSuggestions();
-            renderArchive();
-            // إعادة تحميل العميل الحالي في قائمة اليوم
-            if (document.getElementById('view-daylist').classList.contains('hidden') === false) {
-                loadCurrentPatientForDaylist();
-            }
-        }
+        // ==================== دوال الخطة العلاجية ====================
+        function renderTasksList(tasks) { windowCurrentTasks = tasks || []; let c = document.getElementById('treatment-plan-list'); if (!windowCurrentTasks.length) { c.innerHTML = '<div class="text-center text-slate-500 py-4">لا توجد مهام</div>'; return; } c.innerHTML = windowCurrentTasks.map(t => `<div class="flex items-center gap-3 bg-slate-800 p-3 rounded-xl"><input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask(${t.id})" class="w-6 h-6"><span class="flex-1 ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${t.text}</span><button onclick="deleteTask(${t.id})" class="text-red-400 text-xl">🗑</button></div>`).join(''); }
+        function toggleTask(id) { let t = windowCurrentTasks.find(t => t.id === id); if (t) { t.completed = !t.completed; renderTasksList(windowCurrentTasks); } }
+        function deleteTask(id) { windowCurrentTasks = windowCurrentTasks.filter(t => t.id !== id); renderTasksList(windowCurrentTasks); }
+        function addCustomTask() { let txt = prompt('أدخل اسم المهمة:'); if (txt?.trim()) { windowCurrentTasks.push({ id: Date.now(), text: txt, completed: false }); renderTasksList(windowCurrentTasks); } }
+        function editField(field) { let d = document.getElementById(`${field}-text`), i = document.getElementById(`${field}-input`); if (i.classList.contains('hidden')) { i.value = d.innerHTML.includes('انقر') ? '' : d.innerHTML; d.classList.add('hidden'); i.classList.remove('hidden'); i.focus(); i.onblur = () => { d.innerHTML = i.value || 'انقر للإضافة...'; d.classList.remove('hidden'); i.classList.add('hidden'); }; } }
+        function saveTreatmentPlan() { if (!currentDaylistPatientName) { showToast('❌ اختر عميلاً أولاً'); return; } let today = new Date().toISOString().split('T')[0]; let data = { patientName: currentDaylistPatientName, date: today, complaint: document.getElementById('complaint-text').innerHTML, vitals: document.getElementById('vitals-text').innerHTML, diagnosis: document.getElementById('diagnosis-text').innerHTML, notes: document.getElementById('notes-text').innerHTML, tasks: windowCurrentTasks }; localStorage.setItem(getTreatmentPlanKey(currentDaylistPatientName, today), JSON.stringify(data)); showToast('✅ تم حفظ التقرير والخطة'); logAssistantActivity('تقرير علاجي', `حفظ خطة للعميل ${currentDaylistPatientName}`); }
+        function populateDaylistPatientSelect() { let s = document.getElementById('daylist-patient-select'); if (!s) return; s.innerHTML = '<option value="">-- اختر عميلاً --</option>'; patientsData.forEach(p => { s.innerHTML += `<option value="${p.name}">${p.name} ${p.nhi ? `(${p.nhi})` : ''}</option>`; }); }
+        function onDaylistPatientChange() { let s = document.getElementById('daylist-patient-select'); currentDaylistPatientName = s.value; if (!currentDaylistPatientName) { document.getElementById('daylist-patient-name').innerHTML = 'لم يتم اختيار عميل'; document.getElementById('daylist-patient-details').innerHTML = ''; return; } let p = patientsData.find(p => p.name === currentDaylistPatientName); document.getElementById('daylist-patient-name').innerHTML = p?.name || currentDaylistPatientName; document.getElementById('daylist-patient-details').innerHTML = p ? `🆔 ${p.nhi || 'غير محدد'} | 📞 ${p.phone || 'لا يوجد'}` : ''; loadTreatmentPlanForCurrentPatient(); }
+        function refreshDaylistPatient() { populateDaylistPatientSelect(); if (currentDaylistPatientName) { let s = document.getElementById('daylist-patient-select'); if (s) s.value = currentDaylistPatientName; loadTreatmentPlanForCurrentPatient(); } }
+        function loadTreatmentPlanForCurrentPatient() { if (!currentDaylistPatientName) { showToast('❌ اختر عميلاً'); return; } let today = new Date().toISOString().split('T')[0]; let saved = localStorage.getItem(getTreatmentPlanKey(currentDaylistPatientName, today)); let defaultTasks = [{ id: 1, text: "جلسة علاج نفسي", completed: false }, { id: 2, text: "تقييم الحالة المزاجية", completed: false }, { id: 3, text: "مراجعة الأدوية", completed: false }, { id: 4, text: "تمارين الاسترخاء", completed: false }, { id: 5, text: "متابعة النوم", completed: false }]; if (saved) { let d = JSON.parse(saved); document.getElementById('complaint-text').innerHTML = d.complaint || 'انقر للإضافة...'; document.getElementById('vitals-text').innerHTML = d.vitals || 'انقر للإضافة...'; document.getElementById('diagnosis-text').innerHTML = d.diagnosis || 'انقر للإضافة...'; document.getElementById('notes-text').innerHTML = d.notes || 'انقر للإضافة...'; renderTasksList(d.tasks || defaultTasks); } else { document.getElementById('complaint-text').innerHTML = 'انقر لإضافة الشكوى...'; document.getElementById('vitals-text').innerHTML = 'انقر لإضافة العلامات...'; document.getElementById('diagnosis-text').innerHTML = 'انقر لإضافة التشخيص...'; document.getElementById('notes-text').innerHTML = 'انقر لإضافة ملاحظات...'; renderTasksList(defaultTasks); } }
         
-        function updateProfileButtons() {
-            document.querySelectorAll('.btn-profile').forEach(btn => {
-                btn.classList.remove('btn-active');
-                btn.classList.add('btn-secondary');
-            });
-            const activeBtn = document.getElementById('btn-' + currentProfile);
-            if (activeBtn) {
-                activeBtn.classList.remove('btn-secondary');
-                activeBtn.classList.add('btn-active');
-            }
-        }
+        // ==================== دوال عرض الروشتات والتقارير في صفحة العميل ====================
+        function showPatientPrescriptionsTab() { document.getElementById('patient-prescriptions-container').classList.remove('hidden'); document.getElementById('patient-reports-container').classList.add('hidden'); document.getElementById('tab-prescriptions-btn').classList.add('text-teal-400', 'border-b-2', 'border-teal-400'); document.getElementById('tab-prescriptions-btn').classList.remove('text-slate-400'); document.getElementById('tab-reports-btn').classList.remove('text-teal-400', 'border-b-2', 'border-teal-400'); document.getElementById('tab-reports-btn').classList.add('text-slate-400'); }
+        function showPatientReportsTab() { document.getElementById('patient-prescriptions-container').classList.add('hidden'); document.getElementById('patient-reports-container').classList.remove('hidden'); document.getElementById('tab-reports-btn').classList.add('text-teal-400', 'border-b-2', 'border-teal-400'); document.getElementById('tab-reports-btn').classList.remove('text-slate-400'); document.getElementById('tab-prescriptions-btn').classList.remove('text-teal-400', 'border-b-2', 'border-teal-400'); document.getElementById('tab-prescriptions-btn').classList.add('text-slate-400'); loadPatientReports(); }
+        function loadPatientReports() { let c = document.getElementById('patient-reports-container'); if (!currentPatientName) return; let reports = []; for (let i = 0; i < localStorage.length; i++) { let k = localStorage.key(i); if (k && k.includes(`ensgam clinic_${currentProfile}_treatment_${currentPatientName.replace(/\s/g, '_')}`)) { try { reports.push(JSON.parse(localStorage.getItem(k))); } catch(e) {} } } if (!reports.length) { c.innerHTML = '<div class="text-center text-slate-500 py-4"><div class="text-5xl mb-3">📋</div><p>لا توجد تقارير</p></div>'; return; } reports.sort((a,b) => (b.date || '').localeCompare(a.date || '')); c.innerHTML = reports.map(r => `<div class="report-card"><div class="text-teal-400 text-xs mb-1">📅 ${r.date || 'غير محدد'}</div><div class="text-sm"><span class="text-slate-400">الشكوى:</span> ${(r.complaint || '').substring(0,80)}</div><div class="text-sm"><span class="text-slate-400">التشخيص:</span> ${(r.diagnosis || '').substring(0,80)}</div>${r.tasks?.length ? `<div class="text-xs text-slate-500 mt-1">✅ ${r.tasks.filter(t=>t.completed).length}/${r.tasks.length} مكتملة</div>` : ''}</div>`).join(''); }
         
-        function updatePatientList() {
-            const doctor = DOCTORS_DATA[currentProfile];
-            const patientList = document.getElementById('patients-list');
-            if (patientList && doctor) {
-                patientList.innerHTML = doctor.patients.map(p => `<div class="patient-item" onclick="selectPatient('${p}')">${p}</div>`).join('');
-            }
-        }
+        // ==================== دوال الجلسات ====================
+        function loadPatientSessions(name) { let sc = DOCTORS_DATA[currentProfile].sessionsCount; let key = getStorageKey(`sessions_${name.replace(/\s/g, '_')}`); let s = localStorage.getItem(key); if (s) return JSON.parse(s); let sessions = {}; for (let i = 1; i <= sc; i++) sessions[i] = 'pending'; localStorage.setItem(key, JSON.stringify(sessions)); return sessions; }
+        function savePatientSessions(name, sessions) { localStorage.setItem(getStorageKey(`sessions_${name.replace(/\s/g, '_')}`), JSON.stringify(sessions)); }
+        function renderSessionsGrid(name) { let s = loadPatientSessions(name); let c = Object.keys(s).length; let g = document.getElementById('sessions-grid'); document.getElementById('sessions-title').innerHTML = `📋 جلسات العلاج (${c} جلسة)`; let html = ''; for (let i = 1; i <= c; i++) { let status = s[i]; let bg = 'pending', icon = '○', txt = 'قادم'; if (status === 'present') { bg = 'present'; icon = '✓'; txt = 'حاضر'; } else if (status === 'absent') { bg = 'absent'; icon = '✗'; txt = 'غائب'; } html += `<div class="session-box ${bg}" onclick="toggleSessionStatus(${i}, '${name}')"><div class="session-number">جلسة ${i}</div><div class="session-status-icon">${icon}</div><div class="text-xs">${txt}</div></div>`; } g.innerHTML = html; }
+        function toggleSessionStatus(num, name) { let s = loadPatientSessions(name); if (s[num] === 'pending') s[num] = 'present'; else if (s[num] === 'present') s[num] = 'absent'; else s[num] = 'pending'; savePatientSessions(name, s); renderSessionsGrid(name); showToast(`جلسة ${num}: ${s[num] === 'present' ? 'حاضر' : s[num] === 'absent' ? 'غائب' : 'قادم'}`); }
+        function viewPatientRecords() { let s = loadPatientSessions(currentPatientName); let p=0,a=0,pen=0,tot=Object.keys(s).length; for(let i=1;i<=tot;i++){ if(s[i]==='present') p++; else if(s[i]==='absent') a++; else pen++; } showToast(`📊 ${currentPatientName}: ✅ حاضر ${p} | ❌ غائب ${a} | ⏳ متبقي ${pen}`); }
         
-        function switchTab(tabName) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById('view-' + tabName).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                if (btn.dataset.tab === tabName) {
-                    btn.classList.remove('tab-inactive');
-                    btn.classList.add('tab-active');
-                } else {
-                    btn.classList.remove('tab-active');
-                    btn.classList.add('tab-inactive');
-                }
-            });
-            if (tabName === 'office') updateOfficeStats();
-            if (tabName === 'archive') renderArchive();
-            if (tabName === 'reports') renderReports();
-            if (tabName === 'daylist') loadCurrentPatientForDaylist();
-        }
+        // ==================== دوال المرضى ====================
+        function deletePatient(nhi, name) { if (!confirm(`حذف "${name}" بكل بياناته؟`)) return; let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]').filter(a => a.patient !== name); localStorage.setItem(getStorageKey('appointments'), JSON.stringify(apps)); prescriptionsData = prescriptionsData.filter(p => p.patient !== name); localStorage.setItem(getStorageKey('prescriptions'), JSON.stringify(prescriptionsData)); localStorage.removeItem(getStorageKey(`sessions_${name.replace(/\s/g, '_')}`)); patientsData = patientsData.filter(p => p.nhi !== nhi); localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData)); renderPatientsList(patientsData); populatePatientSuggestions(); populateDaylistPatientSelect(); updateOfficeStats(); loadAppointments(); updateStats(); showToast(`✅ تم حذف ${name}`); }
+        function renderPatientsList(patients) { let l = document.getElementById('patients-list'); if (!patients.length) { l.innerHTML = `<div class="card text-center py-8"><div class="text-6xl mb-4">👤</div><h3 class="font-bold text-xl">لا يوجد مرضى</h3></div>`; return; } l.innerHTML = patients.map(p => `<div class="patient-card" onclick="selectPatient('${p.name}','${p.phone||''}','${p.nhi||''}','${p.dob||''}','${p.address||''}')"><button class="delete-patient-btn" onclick="event.stopPropagation(); deletePatient('${p.nhi}','${p.name}')">🗑</button><div class="font-bold text-2xl">${p.name}</div>${p.nhi?`<span class="patient-nhi">🆔 ${p.nhi}</span>`:''}${p.dob?`<div class="patient-dob">📅 ${p.dob}</div>`:''}${p.address?`<div class="patient-address">📍 ${p.address}</div>`:''}<button onclick="event.stopPropagation(); callZoom('${p.phone||''}')" class="btn-zoom w-full mt-3">📞 ${p.phone||'لا يوجد هاتف'}</button></div>`).join(''); }
+        function searchPatients(q) { renderPatientsList(patientsData.filter(p => p.name.includes(q) || (p.nhi && p.nhi.includes(q)))); }
+        function selectPatient(name, phone, nhi, dob, address) { currentPatientName = name; currentPatientNHI = nhi; currentPatientPhone = phone; document.getElementById('patient-name').textContent = name; document.getElementById('patient-phone').textContent = phone || 'لا يوجد'; document.getElementById('patient-nhi').innerHTML = nhi ? `🆔 ${nhi}` : ''; document.getElementById('patient-dob').innerHTML = dob ? `📅 ${dob}` : ''; document.getElementById('patient-address').innerHTML = address ? `📍 ${address}` : ''; renderSessionsGrid(name); let pRx = prescriptionsData.filter(p => p.patient === name); let pDiv = document.getElementById('patient-prescriptions-container'); if (!pRx.length) pDiv.innerHTML = '<div class="text-center text-slate-500 py-4"><div class="text-5xl mb-3">💊</div><p>لا توجد روشتات</p></div>'; else pDiv.innerHTML = pRx.map(p => `<div class="bg-slate-800 rounded-xl p-3 mb-2 border-r-2 border-teal-500"><div class="font-bold text-teal-400">💊 ${p.medication.split(' - ')[0]}</div><div class="text-xs text-slate-400">📅 ${p.date}</div></div>`).join(''); document.getElementById('patient-reports-container').innerHTML = '<div class="text-center text-slate-500 py-4">📋 اضغط على تبويب التقارير</div>'; showPatientPrescriptionsTab(); document.getElementById('patient-modal').classList.add('show'); }
+        function closePatientModal() { document.getElementById('patient-modal').classList.remove('show'); currentPatientPhone = null; }
+        function callPatientZoom() { if (currentPatientPhone) callZoom(currentPatientPhone); }
+        function callZoom(phone) { let n = (phone || '').replace(/[^\d+]/g, ''); if (!n) { showToast('لا يوجد رقم'); return; } window.location.href = `zoomphonecall:${n}`; setTimeout(() => showToast('افتح Zoom'), 500); }
+        function openAddPatientModal() { document.getElementById('add-patient-modal').classList.add('show'); }
+        function closeAddPatientModal() { document.getElementById('add-patient-modal').classList.remove('show'); ['name','nhi','dob','address','phone'].forEach(f => document.getElementById(`new-patient-${f}`).value = ''); }
+        async function saveNewPatient() { let name = document.getElementById('new-patient-name').value.trim(), nhi = document.getElementById('new-patient-nhi').value.trim(), dob = document.getElementById('new-patient-dob').value.trim(), addr = document.getElementById('new-patient-address').value.trim(), phone = document.getElementById('new-patient-phone').value.trim(); if (!name) { alert('أدخل الاسم'); return; } if (!nhi) { alert('NHI مطلوب'); return; } if (patientsData.find(p => p.nhi === nhi)) { alert(`NHI "${nhi}" مستخدم`); return; } patientsData.push({ name, nhi, dob, address: addr, phone }); localStorage.setItem(getStorageKey('patients'), JSON.stringify(patientsData)); closeAddPatientModal(); renderPatientsList(patientsData); populatePatientSuggestions(); populateDaylistPatientSelect(); updateOfficeStats(); showToast(`✅ تمت إضافة ${name}`); saveCurrentDayToArchive(); }
+        async function loadPatients() { let s = localStorage.getItem(getStorageKey('patients')); patientsData = s ? JSON.parse(s) : []; renderPatientsList(patientsData); populateDaylistPatientSelect(); }
+        function populatePatientSuggestions() { let dl = document.getElementById('patient-suggestions'); dl.innerHTML = patientsData.map(p => `<option value="${p.name}">`).join(''); }
         
-        function openBookingModal() { 
-            document.getElementById('booking-modal').classList.add('show');
-            selectedBookingType = 'offline';
-            document.querySelectorAll('.booking-type-btn').forEach(btn => btn.classList.remove('selected'));
-            const offlineBtn = document.querySelector('.booking-type-btn[onclick*="offline"]');
-            if (offlineBtn) offlineBtn.classList.add('selected');
-            updateBookingPrice();
-        }
-        
-        function closeBookingModal() {
-            document.getElementById('booking-modal').classList.remove('show');
-            selectedTime = null;
-            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
-            document.getElementById('booking-patient').value = '';
-        }
-        
-        function selectTime(element, time) {
-            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedTime = time;
-        }
-        
-        function populatePatientSuggestions() {
-            const dl = document.getElementById('patient-suggestions');
-            dl.innerHTML = patientsData.map(p => `<option value="${p.name}">`).join('');
-        }
-        
-        async function saveAppointment() {
-            const doctorId = document.getElementById('booking-doctor').value;
-            const patient = document.getElementById('booking-patient').value;
-            const date = document.getElementById('booking-date').value;
-            if (!patient || !selectedTime) { alert('الرجاء إدخال اسم العميل واختيار الوقت'); return; }
-            
-            const assistant = getCurrentAssistant();
-            const assistantName = assistant ? assistant.name : 'غير معروف';
-            const doctor = DOCTORS_DATA[doctorId];
-            const price = getAppointmentPrice(doctorId, selectedBookingType);
-            
-            const appointment = { 
-                id: Date.now(), 
-                patient, 
-                doctor: doctor.name, 
-                doctorId, 
-                date, 
-                time: selectedTime, 
-                bookingType: selectedBookingType,
-                price: price,
-                paymentCompleted: false,
-                created: new Date().toISOString(),
-                createdBy: assistantName
-            };
-            
-            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            appointments.push(appointment);
-            localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
-            
-            // تسجيل نشاط المساعد
-            logAssistantActivity('حجز جديد', `تم حجز ${patient} مع ${doctor.name} الساعة ${selectedTime} - القيمة: ${price} جنيه`);
-            
-            saveToArchiveForDate(date);
-            
-            closeBookingModal();
-            document.getElementById('success-message').textContent = `تم حجز ${patient} مع ${doctor.name} الساعة ${selectedTime} (${selectedBookingType === 'online' ? '📱 أونلاين' : '🏢 أوف لاين'}) - القيمة: ${price} جنيه (سيتم الدفع عند الحضور) بواسطة ${assistantName}`;
-            document.getElementById('success-modal').classList.add('show');
-            loadAppointments();
-            updateStats();
-            updateOfficeStats();
-            renderArchive();
-        }
-        
+        // ==================== دوال الحجوزات والإيرادات ====================
+        function generateWeekSelector() { let c = document.getElementById('week-selector'); let today = new Date(); let ws = new Date(today); ws.setDate(today.getDate() - today.getDay() + 1); let days = ['الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد']; c.innerHTML = days.map((d,i)=>{ let date = new Date(ws); date.setDate(ws.getDate()+i); let ds = date.toISOString().split('T')[0]; let isToday = ds === today.toISOString().split('T')[0]; return `<button class="day-pill ${isToday ? 'today' : 'other'}" onclick="selectDay('${ds}')"><span class="text-sm">${d}</span><span class="font-bold text-xl">${date.getDate()}</span></button>`; }).join(''); }
+        function selectDay(date) { selectedDate = date; document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('today','other')); event.currentTarget.classList.add('today'); document.getElementById('selected-date-display').textContent = new Date(date).toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'short'}); loadAppointments(); }
+        function switchProfile(pid) { saveCurrentDayToArchive(); currentProfile = pid; localStorage.setItem('ensgam clinic_current_profile', pid); document.getElementById('current-user').textContent = profileNames[pid]; document.querySelectorAll('.btn-profile').forEach(b => { b.classList.remove('btn-active'); b.classList.add('btn-secondary'); }); document.getElementById(`btn-${pid}`).classList.remove('btn-secondary'); document.getElementById(`btn-${pid}`).classList.add('btn-active'); loadAppointments(); loadPatients(); loadPrescriptions(); loadRevenueData(); updateStats(); updateOfficeStats(); populatePatientSuggestions(); renderArchive(); if (!document.getElementById('view-daylist').classList.contains('hidden')) refreshDaylistPatient(); }
+        function updateProfileButtons() { document.querySelectorAll('.btn-profile').forEach(b => { b.classList.remove('btn-active'); b.classList.add('btn-secondary'); }); document.getElementById(`btn-${currentProfile}`)?.classList.remove('btn-secondary'); document.getElementById(`btn-${currentProfile}`)?.classList.add('btn-active'); }
+        function updatePatientList() {}
+        function switchTab(tab) { document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden')); document.getElementById('view-'+tab).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(btn => { if(btn.dataset.tab === tab) { btn.classList.remove('tab-inactive'); btn.classList.add('tab-active'); } else { btn.classList.remove('tab-active'); btn.classList.add('tab-inactive'); } }); if(tab === 'office') updateOfficeStats(); if(tab === 'archive') renderArchive(); if(tab === 'reports') renderReports(); if(tab === 'daylist') { populateDaylistPatientSelect(); if(currentDaylistPatientName) { let s = document.getElementById('daylist-patient-select'); if(s) s.value = currentDaylistPatientName; loadTreatmentPlanForCurrentPatient(); } } }
+        function openBookingModal() { document.getElementById('booking-modal').classList.add('show'); document.getElementById('booking-date').value = new Date().toISOString().split('T')[0]; selectedBookingType = 'offline'; selectedTime = null; document.querySelectorAll('.booking-type-btn').forEach(b=>b.classList.remove('selected')); document.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('selected')); let off = document.querySelector('.booking-type-btn[onclick*="offline"]'); if(off) off.classList.add('selected'); updateBookingPrice(); }
+        function closeBookingModal() { document.getElementById('booking-modal').classList.remove('show'); selectedTime = null; document.getElementById('booking-patient').value = ''; }
+        function selectTime(el, time) { document.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('selected')); el.classList.add('selected'); selectedTime = time; }
+        function selectBookingType(el, type) { document.querySelectorAll('.booking-type-btn').forEach(b=>b.classList.remove('selected')); el.classList.add('selected'); selectedBookingType = type; updateBookingPrice(); }
+        async function saveAppointment() { let did = document.getElementById('booking-doctor').value, pat = document.getElementById('booking-patient').value, date = document.getElementById('booking-date').value; if(!pat || !selectedTime) { alert('أدخل اسم العميل والوقت'); return; } let a = getCurrentAssistant(), doc = DOCTORS_DATA[did], price = getAppointmentPrice(did, selectedBookingType); let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); apps.push({ id: Date.now(), patient: pat, doctor: doc.name, doctorId: did, date, time: selectedTime, bookingType: selectedBookingType, price, paymentCompleted: false, createdBy: a?.name || 'غير معروف' }); localStorage.setItem(getStorageKey('appointments'), JSON.stringify(apps)); logAssistantActivity('حجز جديد', `حجز ${pat} الساعة ${selectedTime}`); closeBookingModal(); showToast(`✅ تم حجز ${pat}`); loadAppointments(); updateStats(); updateOfficeStats(); renderArchive(); }
         function closeSuccessModal() { document.getElementById('success-modal').classList.remove('show'); }
+        async function loadAppointments() { let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]').filter(a => a.date === selectedDate); let list = document.getElementById('appointments-list'), empty = document.getElementById('empty-state'); if(!apps.length) { list.classList.add('hidden'); empty.classList.remove('hidden'); return; } list.classList.remove('hidden'); empty.classList.add('hidden'); list.innerHTML = apps.map(a => `<div class="card"><div class="flex justify-between"><div><div class="font-bold text-2xl">${a.bookingType==='online'?'📱 ':'🏢 '}${a.patient}</div><div class="text-teal-400 text-xl">${a.time} · ${a.doctor}</div><div class="text-sm mt-2">💰 ${a.price} جنيه ${a.paymentCompleted?'<span class="payment-completed">✅ مدفوع</span>':'<span class="payment-pending">⏳ لم يدفع</span>'}</div><div class="text-xs text-slate-500">👩‍⚕️ ${a.createdBy||''}</div></div><div class="flex flex-col gap-2">${!a.paymentCompleted?`<button onclick="completePayment(${a.id},'${a.patient}',${a.price},'${a.date}')" class="complete-payment-btn">💰 إتمام الدفع</button>`:''}<button onclick="deleteAppointment(${a.id})" class="text-red-400 p-3 text-3xl">🗑</button></div></div></div>`).join(''); }
+        function completePayment(id, pat, amt, date) { if(!confirm(`تأكيد استلام ${amt} جنيه؟`)) return; let a = getCurrentAssistant(); totalRevenue += amt; transactions.unshift({ id: Date.now(), patient: pat, amount: amt, date: new Date().toLocaleDateString('ar-EG'), type: 'إيراد حجز', processedBy: a?.name || 'غير معروف' }); localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue); localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions)); let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); let idx = apps.findIndex(ap => ap.id === id); if(idx !== -1) apps[idx].paymentCompleted = true; localStorage.setItem(getStorageKey('appointments'), JSON.stringify(apps)); logAssistantActivity('دفع', `استلام ${amt} جنيه من ${pat}`); updateRevenueDisplay(); showToast(`✅ تم استلام ${amt} جنيه`); loadAppointments(); }
+        async function deleteAppointment(id) { if(!confirm('حذف الموعد؟')) return; let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); let del = apps.find(a => a.id === id); apps = apps.filter(a => a.id !== id); localStorage.setItem(getStorageKey('appointments'), JSON.stringify(apps)); if(del?.paymentCompleted) { totalRevenue -= del.price; localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue); transactions.unshift({ id: Date.now(), patient: del.patient, amount: del.price, date: new Date().toLocaleDateString('ar-EG'), type: 'استرداد حجز' }); localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions)); updateRevenueDisplay(); } loadAppointments(); updateStats(); renderArchive(); }
+        function updateRevenueDisplay() { document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString(); let today = new Date().toLocaleDateString('ar-EG'); let todayRev = transactions.filter(t => t.date === today).reduce((s,t)=>s+t.amount,0); document.getElementById('todayRevenue').textContent = todayRev.toLocaleString(); document.getElementById('todayCompleted').textContent = transactions.filter(t => t.date === today).length; document.getElementById('stat-tasks').textContent = totalRevenue.toLocaleString(); renderTransactionsList(); }
+        function renderTransactionsList() { let l = document.getElementById('transactions-list'); if(!transactions.length) { l.innerHTML = '<div class="text-center text-slate-500 py-8"><div class="text-5xl mb-3">💰</div><p>لا توجد معاملات</p></div>'; return; } l.innerHTML = transactions.map(t => `<div class="transaction-item"><div><div class="font-bold text-teal-400">${t.patient}</div><div class="text-xs text-slate-500">${t.date}</div></div><div class="transaction-positive">+ ${t.amount} جنيه</div></div>`).join(''); }
+        function clearAllTransactions() { if(!confirm('مسح كل المعاملات؟')) return; totalRevenue = 0; transactions = []; localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue); localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions)); updateRevenueDisplay(); showToast('تم مسح المعاملات'); }
+        function loadRevenueData() { totalRevenue = parseInt(localStorage.getItem(getStorageKey('totalRevenue')) || '0'); transactions = JSON.parse(localStorage.getItem(getStorageKey('transactions')) || '[]'); updateRevenueDisplay(); }
         
-        async function loadAppointments() {
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const list = document.getElementById('appointments-list');
-            const emptyState = document.getElementById('empty-state');
-            const dayAppointments = appointments.filter(a => a.date === selectedDate);
-            
-            if (dayAppointments.length === 0) {
-                list.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-            } else {
-                list.classList.remove('hidden');
-                emptyState.classList.add('hidden');
-                list.innerHTML = dayAppointments.map(a => `
-                    <div class="card">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <div class="font-bold text-2xl">
-                                    ${a.bookingType === 'online' ? '📱 ' : '🏢 '}
-                                    ${a.patient}
-                                    ${a.bookingType === 'online' ? '<span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full mr-2">أونلاين</span>' : '<span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full mr-2">أوف لاين</span>'}
-                                </div>
-                                <div class="text-teal-400 text-xl mt-1">${a.time} · ${a.doctor}</div>
-                                <div class="text-sm mt-2">
-                                    <span class="text-slate-400">سعر الجلسة:</span>
-                                    <span class="font-bold text-teal-400">${a.price} جنيه</span>
-                                    ${a.paymentCompleted ? 
-                                        '<span class="payment-completed mr-2">✅ مدفوع</span>' : 
-                                        '<span class="payment-pending mr-2">⏳ لم يدفع</span>'}
-                                </div>
-                                ${a.createdBy ? `<div class="text-xs text-slate-500 mt-1">👩‍⚕️ بواسطة: ${a.createdBy}</div>` : ''}
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                ${!a.paymentCompleted ? 
-                                    `<button onclick="completePayment(${a.id}, '${a.patient}', ${a.price}, '${a.doctorId}', '${a.bookingType}', '${a.date}')" class="complete-payment-btn">
-                                        💰 إتمام الدفع (${a.price} جنيه)
-                                    </button>` : ''}
-                                <button onclick="deleteAppointment(${a.id})" class="text-red-400 p-3 text-3xl">🗑</button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
+        // ==================== دوال الملاحظات ====================
+        function loadNotes() { document.getElementById('office-notes').value = localStorage.getItem(getStorageKey(`notes_${new Date().toISOString().split('T')[0]}`)) || ''; }
+        function saveNotes() { localStorage.setItem(getStorageKey(`notes_${new Date().toISOString().split('T')[0]}`), document.getElementById('office-notes').value); showToast('تم حفظ الملاحظات'); }
         
-        async function deleteAppointment(id) {
-            if (!confirm('هل أنت متأكد من حذف هذا الموعد؟')) return;
-            let appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const appointmentToDelete = appointments.find(a => a.id === id);
-            
-            appointments = appointments.filter(a => a.id !== id);
-            localStorage.setItem(getStorageKey('appointments'), JSON.stringify(appointments));
-            
-            if (appointmentToDelete) {
-                saveToArchiveForDate(appointmentToDelete.date);
-                if (appointmentToDelete.paymentCompleted) {
-                    totalRevenue -= appointmentToDelete.price;
-                    localStorage.setItem(getStorageKey('totalRevenue'), totalRevenue);
-                    
-                    const refundTransaction = {
-                        id: Date.now(),
-                        patient: appointmentToDelete.patient,
-                        amount: appointmentToDelete.price,
-                        date: new Date().toLocaleDateString('ar-EG'),
-                        time: new Date().toLocaleTimeString('ar-EG'),
-                        type: 'استرداد حجز',
-                        status: 'ملغي'
-                    };
-                    transactions.unshift(refundTransaction);
-                    localStorage.setItem(getStorageKey('transactions'), JSON.stringify(transactions));
-                    updateRevenueDisplay();
-                    showToast(`تم استرداد ${appointmentToDelete.price} جنيه من ${appointmentToDelete.patient}`);
-                }
-            }
-            
-            loadAppointments();
-            updateStats();
-            updateOfficeStats();
-            renderArchive();
-        }
+        // ==================== دوال المراجع ====================
+        function getArchiveKey() { return `ensgam clinic_${currentProfile}_yearly_archive`; }
+        function loadYearlyArchive() { let s = localStorage.getItem(getArchiveKey()); if(s) return JSON.parse(s); let a={}; for(let i=0;i<12;i++) a[i]={}; localStorage.setItem(getArchiveKey(), JSON.stringify(a)); return a; }
+        function saveYearlyArchive(a) { localStorage.setItem(getArchiveKey(), JSON.stringify(a)); }
+        function saveToArchiveForDate(ds) { if(!ds) return; let td = new Date(ds); if(isNaN(td.getTime())) return; let m=td.getMonth(), d=td.getDate(); let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]').filter(a=>a.date===ds); let arch = loadYearlyArchive(); if(!arch[m]) arch[m]={}; arch[m][d] = { appointments: apps, hasData: apps.length>0, date: ds }; saveYearlyArchive(arch); }
+        function saveAllDatesToArchive() { let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); [...new Set(apps.map(a=>a.date)), new Date().toISOString().split('T')[0]].forEach(d=>saveToArchiveForDate(d)); showToast('✅ تم حفظ المراجع'); renderArchive(); }
+        function saveCurrentDayToArchive() { saveToArchiveForDate(new Date().toISOString().split('T')[0]); }
+        function renderArchive() { let arch = loadYearlyArchive(), c = document.getElementById('months-container'); if(!c) return; let today = new Date(), y = today.getFullYear(); let html = ''; for(let m=0;m<12;m++) { let days = '<div class="days-grid">'; for(let d=1;d<=31;d++) { let doj = new Date(y,m,d); if(doj.getMonth()!==m) continue; let has = arch[m]?.[d]?.hasData || false; days += `<div class="day-box ${has?'has-data':''}" onclick="showDayDetails(${m},${d})"><div class="day-number">${d}</div><div class="day-indicator">${has?'📋':'○'}</div></div>`; } days += '</div>'; html += `<div class="month-card"><div class="month-header" onclick="toggleMonth(${m})">📅 ${monthNames[m]} ${y}</div><div id="month-${m}" class="month-content">${days}</div></div>`; } c.innerHTML = html; }
+        function toggleMonth(m) { document.getElementById(`month-${m}`)?.classList.toggle('hidden'); }
+        function showDayDetails(m,d) { let arch = loadYearlyArchive(); let data = arch[m]?.[d] || { appointments: [] }; document.getElementById('day-details-title').innerHTML = `📅 ${d} ${monthNames[m]}`; document.getElementById('day-details-content').innerHTML = `<div class="card"><h3 class="font-bold text-xl mb-3">📋 المواعيد</h3>${data.appointments.length?data.appointments.map(a=>`<div class="detail-item">🩺 ${a.patient} - ${a.time} (${a.doctor}) ${a.paymentCompleted?'✅':'⏳'}</div>`).join(''):'<div class="text-slate-500">لا توجد</div>'}</div>`; document.getElementById('day-details-modal').classList.add('show'); }
+        function closeDayDetailsModal() { document.getElementById('day-details-modal').classList.remove('show'); }
+        function showUpcomingAppointments() { let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); let today = new Date(); today.setHours(0,0,0,0); let future = apps.filter(a=>new Date(a.date) > today).sort((a,b)=>new Date(a.date)-new Date(b.date)); if(!future.length) { showToast('لا توجد حجوزات مستقبلية'); return; } alert(`📅 الحجوزات المستقبلية (${future.length}):\n${future.map(a=>`${a.date} - ${a.patient}`).join('\n')}`); }
         
-        function loadNotes() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            const notesKey = getStorageKey(`notes_${todayStr}`);
-            const notes = localStorage.getItem(notesKey) || '';
-            document.getElementById('office-notes').value = notes;
-        }
+        // ==================== دوال التقارير الإحصائية ====================
+        function renderReports() { let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); let amira = apps.filter(a=>a.createdBy==='Amira'), aya = apps.filter(a=>a.createdBy==='Aya'); document.getElementById('amira-count').textContent = amira.length; document.getElementById('aya-count').textContent = aya.length; document.getElementById('appointments-by-assistant').innerHTML = `<div class="space-y-3"><div class="bg-slate-800 p-4 rounded-2xl"><div class="font-bold text-teal-400">👩‍⚕️ Amira (${amira.length})</div>${amira.slice(0,5).map(a=>`<div class="text-sm">${a.date} - ${a.patient}</div>`).join('')||'<div class="text-slate-500">لا توجد</div>'}</div><div class="bg-slate-800 p-4 rounded-2xl"><div class="font-bold text-teal-400">👩‍⚕️ Aya (${aya.length})</div>${aya.slice(0,5).map(a=>`<div class="text-sm">${a.date} - ${a.patient}</div>`).join('')||'<div class="text-slate-500">لا توجد</div>'}</div></div>`; let trans = JSON.parse(localStorage.getItem(getStorageKey('transactions')) || '[]'); let amiraPay = trans.filter(t=>t.processedBy==='Amira'), ayaPay = trans.filter(t=>t.processedBy==='Aya'); document.getElementById('payments-by-assistant').innerHTML = `<div class="space-y-3"><div class="bg-slate-800 p-4 rounded-2xl"><div class="font-bold text-teal-400">💰 Amira: ${amiraPay.reduce((s,t)=>s+t.amount,0)} جنيه</div></div><div class="bg-slate-800 p-4 rounded-2xl"><div class="font-bold text-teal-400">💰 Aya: ${ayaPay.reduce((s,t)=>s+t.amount,0)} جنيه</div></div></div>`; }
+        function clearActivityLogs() { localStorage.setItem('assistant_activity_logs', '[]'); showToast('تم مسح السجل'); }
         
-        function saveNotes() {
-            const notes = document.getElementById('office-notes').value;
-            const todayStr = new Date().toISOString().split('T')[0];
-            const notesKey = getStorageKey(`notes_${todayStr}`);
-            localStorage.setItem(notesKey, notes);
-            saveToArchiveForDate(todayStr);
-            showToast('تم حفظ الملاحظات');
-        }
-        
-        function updateOfficeStats() {
-            const today = new Date().toISOString().split('T')[0];
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            document.getElementById('office-bookings').textContent = appointments.filter(a => a.date === today).length;
-            document.getElementById('office-patients').textContent = patientsData.length;
-        }
-        
-        function updateStats() {
-            const today = new Date().toISOString().split('T')[0];
-            const appointments = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]');
-            const prescriptions = JSON.parse(localStorage.getItem(getStorageKey('prescriptions')) || '[]');
-            document.getElementById('stat-today').textContent = appointments.filter(a => a.date === today).length;
-            document.getElementById('stat-recalls').textContent = prescriptions.length;
-        }
-        
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-        
-        function updateOnlineStatus() {
-            isOnline = navigator.onLine;
-            document.getElementById('offline-banner').classList.toggle('show', !isOnline);
-        }
-        
-        async function testAPIConnection() {
-            showToast('جاري اختبار الاتصال...');
-        }
-        
-        function addToHomeScreen() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') document.getElementById('install-banner').classList.remove('show');
-                    deferredPrompt = null;
-                });
-            } else {
-                showToast('اضغط مشاركة → إضافة إلى الشاشة الرئيسية');
-            }
-        }
-        
-        function debugLog(message) { console.log(message); }
+        // ==================== دوال عامة ====================
+        function updateOfficeStats() { let today = new Date().toISOString().split('T')[0]; let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); document.getElementById('office-bookings').textContent = apps.filter(a=>a.date===today).length; document.getElementById('office-patients').textContent = patientsData.length; }
+        function updateStats() { let today = new Date().toISOString().split('T')[0]; let apps = JSON.parse(localStorage.getItem(getStorageKey('appointments')) || '[]'); document.getElementById('stat-today').textContent = apps.filter(a=>a.date===today).length; document.getElementById('stat-recalls').textContent = prescriptionsData.length; }
+        function resetAllData() { if(prompt('كلمة السر:') !== 'admin123') { showToast('كلمة سر خاطئة'); return; } if(!confirm('مسح كل البيانات؟')) return; ['dr-fatma','dr-amira','dr-yosry'].forEach(p=>{ let pre = `ensgam clinic_${p}`; for(let i=0;i<localStorage.length;i++){ let k = localStorage.key(i); if(k && k.startsWith(pre)) localStorage.removeItem(k); } }); showToast('✅ تم المسح، إعادة تحميل...'); setTimeout(()=>location.reload(),1500); }
+        function updateOnlineStatus() { document.getElementById('offline-banner').classList.toggle('show', !navigator.onLine); }
+        function testAPIConnection() { showToast('جاري الاختبار...'); }
         function toggleDebug() { document.getElementById('api-debug').classList.toggle('show'); }
         
-        // Initialize
+        // ==================== التهيئة ====================
         document.addEventListener('DOMContentLoaded', async function() {
-            // التحقق من تسجيل دخول المساعد
-            if (!checkAssistantLogin()) return;
-            
+            if(!checkAssistantLogin()) return;
             generateWeekSelector();
             updateProfileButtons();
             loadAppointments();
             await loadPatients();
+            populateDaylistPatientSelect();
             loadPrescriptions();
             loadNotes();
             loadRevenueData();
             updateStats();
             updateOfficeStats();
-            updatePatientList();
             populatePatientSuggestions();
             renderArchive();
-            
             document.getElementById('booking-date').value = new Date().toISOString().split('T')[0];
             updateOnlineStatus();
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
             window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
-            
-            setTimeout(() => {
-                saveAllDatesToArchive();
-            }, 1000);
-            
+            setTimeout(() => saveAllDatesToArchive(), 1000);
             window.addEventListener('beforeunload', () => saveCurrentDayToArchive());
-            
-            setInterval(() => {
-                saveCurrentDayToArchive();
-                if (document.getElementById('view-archive').classList.contains('hidden') === false) {
-                    renderArchive();
-                }
-            }, 60000);
-            
-            if (!window.navigator.standalone && !window.matchMedia('(display-mode: standalone)').matches) {
-                setTimeout(() => document.getElementById('install-banner').classList.add('show'), 2000);
-            }
+            setInterval(() => { saveCurrentDayToArchive(); if(!document.getElementById('view-archive').classList.contains('hidden')) renderArchive(); }, 60000);
         });
-        
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/ensgam clinic-sw.js').catch(() => {});
-        }
+        if('serviceWorker' in navigator) { navigator.serviceWorker.register('/ensgam clinic-sw.js').catch(()=>{}); }
     </script>
 </body>
 </html>
